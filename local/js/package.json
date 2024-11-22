@@ -1,0 +1,27 @@
+{
+  "name": "fe-test-task",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx vite",
+    "build": "npx vite build",
+    "preview": "npx vite preview"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "element-plus": "^2.8.4",
+    "vue": "^3.4.29",
+    "vue-axios": "^3.5.2",
+    "vue-router": "^4.3.3",
+    "vue-the-mask": "^0.11.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.5",
+    "sass-embedded": "^1.79.4",
+    "unplugin-element-plus": "^0.8.0",
+    "vite": "^5.3.1",
+    "vite-plugin-environment": "^1.1.3",
+    "vite-plugin-minify": "^2.0.1"
+  }
+}

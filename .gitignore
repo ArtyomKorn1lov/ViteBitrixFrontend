@@ -3,6 +3,7 @@
 /bitrix
 /upload
 /local/php_interface/constants.php
+/local/js/node_modules/
 /*.txt
 /*.html
 ~*.php
