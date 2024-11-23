@@ -8,7 +8,7 @@ return [
 	'css' => './dist/main.bundle.css',
 	'js' => './dist/main.bundle.umd.cjs',
     'rel' => [
-
+        "frontend.components.card"
     ],
 	'skip_core' => true,
 ];

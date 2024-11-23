@@ -291,7 +291,9 @@ function ct(t, n) {
     b("p", null, "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad assumenda at cum dicta dolor, eaque earum expedita fuga id magni maxime quae quis quisquam, rerum sint. Animi ex id maiores.", -1)
   ]));
 }
-const ot = /* @__PURE__ */ lt(it, [["render", ct]]);
+const ot = /* @__PURE__ */ lt(it, [["render", ct]]), rt = {
+  Card: ot
+};
 export {
-  ot as default
+  rt as default
 };

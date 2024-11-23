@@ -29,6 +29,9 @@ export default defineConfig({
       entry: resolve(__dirname, 'src/main.js'),
       name: 'list',
       fileName: '[name].bundle'
+    },
+    rollupOptions: {
+      external: ['MyLibrary']
     }
   }
 });

@@ -10,5 +10,5 @@
 </template>
 
 <script setup>
-import Card from "MyLibrary";
+import { Card } from "MyLibrary";
 </script>
