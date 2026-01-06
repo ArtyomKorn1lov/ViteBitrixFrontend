@@ -7,6 +7,12 @@ import Entrypoint from "./entrypoint.config.ts";
 export default defineConfig(({ mode }) => {
     const isDev: boolean = mode === 'development';
     return {
+        optimizeDeps: {
+            include: ['vue', 'element-plus'],
+        },
+        define: {
+            '__VUE_PROD_DEVTOOLS__': isDev,
+        },
         build: {
             watch: isDev ? {
                 include: 'src/**'
