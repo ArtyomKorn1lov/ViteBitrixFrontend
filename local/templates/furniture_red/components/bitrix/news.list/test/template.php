@@ -11,6 +11,16 @@
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
-?>
 
-<div id="app"></div>
+use Bitrix\Main\Web\Json;
+
+$arData = [
+    "templateId" => "news-list"
+];
+$arJSData = Json::encode($arData);
+?>
+<script>
+    BX.ready(function () {
+        BX.Citrus.Components.NewList(<?= $arJSData ?>);
+    });
+</script>
