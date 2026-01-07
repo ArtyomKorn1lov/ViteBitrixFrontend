@@ -1,5 +1,5 @@
 import Translations from '@/translations';
-import { ArgumentException } from '@/core/exceptions/index.ts';
+import { ArgumentException } from '@/core/exceptions';
 
 const t = Translations.global.t;
 
@@ -8,7 +8,7 @@ const t = Translations.global.t;
  * @description Хелпер для работы с файлами
  */
 
-export const convertToBase64 = (file: any) => {
+export const convertToBase64 = (file: Blob): Promise<string> => {
   if (!file) {
     throw new ArgumentException(t('core.utils.file.emptyFileErrorMessage'));
   }
@@ -16,7 +16,7 @@ export const convertToBase64 = (file: any) => {
     const reader: FileReader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      let encoded = reader?.result?.toString().replace(/^data:(.*,)?/, '') ?? '';
+      let encoded: string = reader?.result?.toString().replace(/^data:(.*,)?/, '') ?? '';
       if (encoded.length % 4 > 0) {
         encoded += '='.repeat(4 - (encoded.length % 4));
       }
@@ -26,13 +26,13 @@ export const convertToBase64 = (file: any) => {
   });
 };
 
-export const createFileUrl = (file: any) => {
+export const createFileUrl = (file: Blob): string => {
   if (!file) {
     throw new ArgumentException(t('core.utils.file.emptyFileErrorMessage'));
   }
   return URL.createObjectURL(file);
 };
 
-export const checkMaxFileSize = (file: any, maxFileSize: any) => {
+export const checkMaxFileSize = (file: Blob, maxFileSize: number) => {
   return file.size <= maxFileSize;
 };

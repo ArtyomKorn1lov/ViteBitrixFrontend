@@ -9,7 +9,7 @@ const t = Translations.global.t;
 export default {
   dependencies: new Map<string, any>(),
 
-  register(name: string, className: object, dependencyNames: [] = [], constructorArgs: [] = []) {
+  register(name: string, className: any, dependencyNames: any[] = [], constructorArgs: any[] = []): void {
     this.dependencies.set(name, {
       className,
       dependencyNames,
@@ -17,7 +17,7 @@ export default {
     });
   },
 
-  resolve(name: string) {
+  resolve(name: string): any {
     const registration = this.dependencies.get(name);
     if (!registration) {
       throw new NotFoundException(t('core.injection.notFound', { name: name }));

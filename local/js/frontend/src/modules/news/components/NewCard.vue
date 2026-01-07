@@ -31,18 +31,21 @@
 </template>
 <script setup lang="ts">
 import { ElButton } from "element-plus";
-import { NewItem } from "@/modules/news/models";
+import { News } from "@/modules/news/models";
 import type { PropType } from 'vue';
 
 const { item } = defineProps({
   item: {
-    type: Object as PropType<NewItem>,
+    type: Object as PropType<News>,
     required: true,
   },
 });
 
 const clickButton = (): void => {
-  console.log('click to button');
+  if (!item?.detailPageUrl) {
+    return;
+  }
+  window.location.href = item?.detailPageUrl;
 };
 </script>
 <style scoped module lang="scss">

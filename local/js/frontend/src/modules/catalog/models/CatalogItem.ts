@@ -1,4 +1,4 @@
-import { Picture } from "@/core/models";
+import { Picture } from "@/core";
 
 export default interface CatalogItem {
     id: number;

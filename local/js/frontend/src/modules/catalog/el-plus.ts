@@ -28,8 +28,8 @@ import {
 } from "element-plus";
 
 const ElPlus = {
-    ElDrawer,
     ElForm,
+    ElDrawer,
     ElFormItem,
     ElRow,
     ElCol,

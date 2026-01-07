@@ -2,6 +2,7 @@ import { createI18n } from 'vue-i18n';
 
 import * as core from '@/translations/core';
 import * as ui from '@/translations/ui';
+import * as catalog from '@/translations/catalog';
 
 type Namespaces = {
   [key: string]: any
@@ -10,6 +11,7 @@ type Namespaces = {
 const namespaces: Namespaces = {
   ui,
   core,
+  catalog,
 };
 
 const localisations: Namespaces = {};

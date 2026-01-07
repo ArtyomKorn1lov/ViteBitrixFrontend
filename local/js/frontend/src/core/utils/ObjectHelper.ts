@@ -1,18 +1,20 @@
+import { SimpleObject, ConvertedArrayToObject } from "@/core/types";
+
 /**
  * @fileOverview
  * @description Хелпер для работы с объектами
  */
 
-export const isObject = (object: any) => {
+export const isObject = (object?: any): boolean => {
   return typeof object === 'object';
 };
 
-export const convertObjectToArray = (object: any) => {
+export const convertObjectToArray = (object?: SimpleObject): ConvertedArrayToObject => {
   if (!object) {
     return [];
   }
 
-  let array = [];
+  const array: ConvertedArrayToObject = [];
   for (const key in object) {
     !!object[key] &&
       array.push({
@@ -24,12 +26,12 @@ export const convertObjectToArray = (object: any) => {
   return array;
 };
 
-export const hasProperty = (object: any, propCode: string) => {
+export const hasProperty = (object: SimpleObject, propCode: string): boolean => {
   // @ts-ignore
   return Object.hasOwn(object, propCode);
 };
 
-export const isEmpty = (object: any) => {
+export const isEmpty = (object: SimpleObject): boolean => {
   for (const key in object) {
     if (!hasProperty(object, key)) {
       continue;
@@ -39,7 +41,7 @@ export const isEmpty = (object: any) => {
   return true;
 };
 
-export const removeEmptyProperties = (object: any) => {
+export const removeEmptyProperties = (object: SimpleObject): SimpleObject => {
   for (const key in object) {
     if (isObject(object[key])) {
       object[key] = removeEmptyProperties(object[key]);
@@ -50,7 +52,7 @@ export const removeEmptyProperties = (object: any) => {
   return object;
 };
 
-export const getAllProperties = (obj: any) => {
+export const getAllProperties = (obj: SimpleObject): unknown[] => {
   const props = new Set();
   let current = obj;
 
@@ -62,7 +64,7 @@ export const getAllProperties = (obj: any) => {
   return Array.from(props).filter((prop) => prop !== 'constructor');
 };
 
-export const isCompatibleWithClass = (obj: any, className: any) => {
+export const isCompatibleWithClass = (obj: SimpleObject, className: any): boolean => {
   if (!isObject(obj) || obj === null) {
     return false;
   }

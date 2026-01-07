@@ -1,5 +1,7 @@
-import NewItem from "@/modules/news/models/NewItem";
+import type News from "@/modules/news/models/News";
+import type NewsFilter from "@/modules/news/models/NewsFilter";
 
 export {
-    NewItem
+    News,
+    NewsFilter
 }

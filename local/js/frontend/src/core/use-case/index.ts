@@ -1,3 +1,3 @@
-import BaseUseCase from '@/core/use-case/BaseUseCase.ts';
+import BaseUseCase from '@/core/use-case/BaseUseCase';
 
 export { BaseUseCase };
