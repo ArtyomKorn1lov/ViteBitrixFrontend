@@ -45,7 +45,7 @@ const clickButton = (): void => {
 };
 </script>
 <style scoped module lang="scss">
-.b-newCard {
+.b-catalogCard {
   display: flex;
   flex-direction: column;
   border-radius: 10px;

@@ -1,0 +1,17 @@
+{
+    "name": "test/project",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Site\\": "local/lib/"
+        }
+    },
+    "require": {
+        "php": "^8.4"
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    }
+}

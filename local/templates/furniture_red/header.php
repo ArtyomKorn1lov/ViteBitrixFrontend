@@ -26,6 +26,7 @@ IncludeTemplateLangFile(__FILE__);
 	</style>
 	<![endif]-->
 
+    <?php $APPLICATION->ShowViewContent("custom_dependencies"); ?>
 	<title><?$APPLICATION->ShowTitle()?></title>
 </head>
 <body>

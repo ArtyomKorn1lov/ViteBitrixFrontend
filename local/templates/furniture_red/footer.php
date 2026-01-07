@@ -39,3 +39,8 @@ $APPLICATION->IncludeComponent("bitrix:menu", "bottom", array(
 	</div>
 </body>
 </html>
+<?php
+ob_start();
+Site\ExtensionProvider::showDependencies();
+$APPLICATION->AddViewContent("custom_dependencies", ob_get_clean());
+?>

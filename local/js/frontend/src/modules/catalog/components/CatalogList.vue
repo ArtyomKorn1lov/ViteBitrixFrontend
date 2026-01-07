@@ -1,5 +1,5 @@
 <template>
-  <div class="b-catalogList">
+  <div :class="$style['b-catalogList']">
     <CatalogCard
         v-for="item in items"
         :key="item.id"
