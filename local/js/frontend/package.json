@@ -5,11 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "npx vite build --mode development",
-    "build": "npx vue-tsc -b && npx vite build",
     "eslint": "eslint . --ext .ts,.tsx,.mts,cts,.js,.mjs,.cjs,.vue,.json --cache",
     "prettier": "prettier --check . --ignore-path .prettierignore --cache",
     "lint": "npm run eslint && npm run prettier",
-    "format": "eslint . --ext .ts,.tsx,.mts,cts,.js,.jsx,.mjs,.cjs,.vue,.json --cache --fix && prettier . --write --ignore-path .prettierignore"
+    "format": "eslint . --ext .ts,.tsx,.mts,cts,.js,.jsx,.mjs,.cjs,.vue,.json --cache --fix && prettier . --write --ignore-path .prettierignore",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest",
+    "watch:test": "node --experimental-vm-modules node_modules/jest/bin/jest --watch",
+    "build": "npx vue-tsc -b && npx vite build"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
@@ -28,6 +30,7 @@
     "prettier": "^3.7.4",
     "sass-embedded": "^1.97.1",
     "terser": "^5.44.1",
+    "ts-jest": "^29.4.6",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.52.0",
     "unplugin-element-plus": "^0.11.2",

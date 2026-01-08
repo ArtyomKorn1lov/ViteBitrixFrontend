@@ -1,3 +1,3 @@
-import DependencyInjection from '@/core/dependency-injection/DependencyInjection.ts';
+import DependencyInjection from '@/core/dependency-injection/DependencyInjection';
 
 export { DependencyInjection };

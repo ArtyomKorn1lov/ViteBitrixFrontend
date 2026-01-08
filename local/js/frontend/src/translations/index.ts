@@ -27,8 +27,9 @@ for (const keyNs in namespaces) {
 
 /**
  * @description Инициализация языка в приложении
+ * @TODO на автотестах не отрабатывает import.meta.env.APP_LANG, нужно будет потом разобраться
  */
-const Lang: string = import.meta.env.APP_LANG ?? 'en';
+const Lang: string = 'en';
 
 /**
  * @description Языковые фразы внутри приложения
