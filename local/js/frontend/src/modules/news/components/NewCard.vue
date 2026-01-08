@@ -48,7 +48,6 @@ const { item } = defineProps({
 });
 
 const clickButton = (): void => {
-  console.log('click detail');
   if (!item?.detailPageUrl) {
     return;
   }
