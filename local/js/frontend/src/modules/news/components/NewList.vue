@@ -1,35 +1,35 @@
 <template>
   <div
-      class="news-list"
-      :class="$style['b-newList']"
-      v-loading="isLoading"
+    class="news-list"
+    :class="$style['b-newList']"
+    v-loading="isLoading"
   >
     <NewCard
-        v-for="item in items"
-        :key="item.id"
-        :item="item"
+      v-for="item in items"
+      :key="item.id"
+      :item="item"
     />
   </div>
   <el-pagination
-      background
-      layout="prev, pager, next"
-      v-model:current-page="page"
-      :page-count="3"
-      @change="nextPage"
+    background
+    layout="prev, pager, next"
+    v-model:current-page="page"
+    :page-count="3"
+    @change="nextPage"
   />
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
-import { ElPagination } from "element-plus";
-import { DependencyInjection, TemplateHelper, useFetch } from "@/core";
-import { News } from "@/modules/news/models";
-import { GetNews } from "@/modules/news/use-case";
-import NewCard from "@/modules/news/components/NewCard.vue";
+import { ref } from 'vue';
+import { ElPagination } from 'element-plus';
+import { DependencyInjection, TemplateHelper, useFetch } from '@/core';
+import { News } from '@/modules/news/models';
+import { GetNews } from '@/modules/news/use-case';
+import NewCard from '@/modules/news/components/NewCard.vue';
 
 const getNews: GetNews = DependencyInjection.resolve('GetNews');
 
 const fetchNews = useFetch<GetNews, News[]>({
-  useCase: getNews
+  useCase: getNews,
 });
 
 const items = ref<News[]>([]);
@@ -42,10 +42,11 @@ const nextPage = async (): Promise<void> => {
     isLoading.value = true;
     items.value = await fetchNews(page.value);
     isLoading.value = false;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (_) {
     isLoading.value = false;
   }
-}
+};
 
 nextPage();
 </script>

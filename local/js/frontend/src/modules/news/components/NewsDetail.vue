@@ -1,37 +1,37 @@
 <template>
   <div
-      :id="item.id.toString()"
-      :class="$style['b-newsDetail']"
+    :id="item.id.toString()"
+    :class="$style['b-newsDetail']"
   >
     <div :class="$style['b-newsDetail__top']">
       <div :class="$style['b-newsDetail__img-wrap']">
         <img
-            v-if="item.picture?.src"
-            :src="item.picture.src"
-            :class="$style['b-newsDetail__img']"
+          v-if="item.picture?.src"
+          :src="item.picture.src"
+          :class="$style['b-newsDetail__img']"
         />
       </div>
       <div :class="$style['b-newsDetail__info']">
         <div
-            v-if="item.tag"
-            :class="$style['b-newsDetail__tag']"
-            v-html="item.tag"
+          v-if="item.tag"
+          :class="$style['b-newsDetail__tag']"
+          v-html="item.tag"
         />
         <div
-            v-if="item.section"
-            :class="$style['b-newsDetail__section']"
-            v-html="item.section"
+          v-if="item.section"
+          :class="$style['b-newsDetail__section']"
+          v-html="item.section"
         />
         <time
-            v-if="item.date"
-            :class="$style['b-newsDetail__time']"
-            v-html="item.date"
+          v-if="item.date"
+          :class="$style['b-newsDetail__time']"
+          v-html="item.date"
         />
       </div>
     </div>
     <p
-        v-if="item.description"
-        v-html="item.description"
+      v-if="item.description"
+      v-html="item.description"
     />
     <div :class="$style['b-newsDetail__bottom']">
       <CatalogSlider />
@@ -39,25 +39,25 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
-import { CatalogSlider } from "@/modules/catalog";
-import { News } from "@/modules/news";
+import { ref } from 'vue';
+import { CatalogSlider } from '@/modules/catalog';
+import { News } from '@/modules/news';
 
 const item = ref<News>({
   id: 1,
-  date: "27.05.2010",
-  description: "Получено новое прочное водостойкое клеевое соединение.Изобретение относится к области получения и применения клеящих составов, используемых в деревообрабатывающей, мебельной и строительной промышленности. Данная клеевая композиция предназначена только для горячего прессования и имеет в своем составе многокомпонентный отвердитель.",
-  name: "Получено прочное водостойкое соединение",
+  date: '27.05.2010',
+  description:
+    'Получено новое прочное водостойкое клеевое соединение.Изобретение относится к области получения и применения клеящих составов, используемых в деревообрабатывающей, мебельной и строительной промышленности. Данная клеевая композиция предназначена только для горячего прессования и имеет в своем составе многокомпонентный отвердитель.',
+  name: 'Получено прочное водостойкое соединение',
   picture: {
-    src: '/local/js/frontend/dist/img/img_1.jpg'
+    src: '/local/js/frontend/dist/img/img_1.jpg',
   },
-  section: "Новости",
-  tag: "Новинка"
+  section: 'Новости',
+  tag: 'Новинка',
 });
 </script>
 <style scoped module lang="scss">
 .b-newsDetail {
-
   &__img {
     width: 100%;
     height: 100%;

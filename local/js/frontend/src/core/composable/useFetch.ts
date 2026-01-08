@@ -9,18 +9,15 @@ const t = Translations.global.t;
 /**
  * @description Примесь с общей логикой обработки запросов, вывод всплывающего окна сообщения об ошибке
  */
-export default function useFetch<T extends BaseUseCase, K>(
-    {
-      useCase = null,
-      showMessage = true,
-      messageType = MessageTypes.notification
-    }: {
-      useCase?: T | null,
-      showMessage?: boolean,
-      messageType?: MessageTypes
-    }
-) {
-
+export default function useFetch<T extends BaseUseCase, K>({
+  useCase = null,
+  showMessage = true,
+  messageType = MessageTypes.notification,
+}: {
+  useCase?: T | null;
+  showMessage?: boolean;
+  messageType?: MessageTypes;
+}) {
   const displayMessage = async (message: string): Promise<void> => {
     switch (messageType) {
       case MessageTypes.messageBox:

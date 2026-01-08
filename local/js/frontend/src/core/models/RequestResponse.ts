@@ -1,3 +1,5 @@
-export default interface RequestResponse<T> {
-    data?: T | null
+interface RequestResponse<T> {
+  data?: T | null;
 }
+
+export default RequestResponse;

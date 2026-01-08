@@ -1,28 +1,34 @@
 <template>
-  <div :id="item.id.toString()" :class="$style['b-newCard']">
+  <div
+    :id="item.id.toString()"
+    :class="$style['b-newCard']"
+  >
     <div :class="$style['b-newCard__img-wrap']">
       <img
-          v-if="item.picture?.src"
-          :src="item.picture.src"
-          :class="$style['b-newCard__img']"
+        v-if="item.picture?.src"
+        :src="item.picture.src"
+        :class="$style['b-newCard__img']"
       />
     </div>
     <div style="padding: 14px">
       <div :class="$style['b-newCard__top']">
         <span v-html="item.name"></span>
         <div
-            v-if="!!item.tag"
-            :class="$style['b-newCard__tag']"
-            v-html="item.tag"
+          v-if="!!item.tag"
+          :class="$style['b-newCard__tag']"
+          v-html="item.tag"
         ></div>
       </div>
       <div :class="$style['b-newCard__bottom']">
         <time
-            v-if="!!item.date"
-            :class="$style['b-newCard__time']"
-            v-html="item.date"
+          v-if="!!item.date"
+          :class="$style['b-newCard__time']"
+          v-html="item.date"
         ></time>
-        <el-button @click="clickButton" :class="$style['b-newCard__button']">
+        <el-button
+          @click="clickButton"
+          :class="$style['b-newCard__button']"
+        >
           Подробнее
         </el-button>
       </div>
@@ -30,8 +36,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ElButton } from "element-plus";
-import { News } from "@/modules/news/models";
+import { ElButton } from 'element-plus';
+import { News } from '@/modules/news/models';
 import type { PropType } from 'vue';
 
 const { item } = defineProps({
@@ -42,6 +48,7 @@ const { item } = defineProps({
 });
 
 const clickButton = (): void => {
+  console.log('click detail');
   if (!item?.detailPageUrl) {
     return;
   }

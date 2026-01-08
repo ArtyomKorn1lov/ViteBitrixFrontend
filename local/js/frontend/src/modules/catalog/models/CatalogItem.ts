@@ -1,10 +1,12 @@
-import { Picture } from "@/core";
+import { Picture } from '@/core';
 
-export default interface CatalogItem {
-    id: number;
-    name: string;
-    description?: string;
-    picture?: Picture;
-    tag?: string;
-    date?: string;
+interface CatalogItem {
+  id: number;
+  name: string;
+  description?: string;
+  picture?: Picture;
+  tag?: string;
+  date?: string;
 }
+
+export default CatalogItem;

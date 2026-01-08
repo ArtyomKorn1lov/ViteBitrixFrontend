@@ -5,7 +5,7 @@ import * as ui from '@/translations/ui';
 import * as catalog from '@/translations/catalog';
 
 type Namespaces = {
-  [key: string]: any
+  [key: string]: any;
 };
 
 const namespaces: Namespaces = {

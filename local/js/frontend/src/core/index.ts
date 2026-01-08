@@ -10,4 +10,4 @@ export * from '@/core/utils';
 export * from '@/core/constants';
 export * from '@/core/composable';
 
-import "@/core/di";
+import '@/core/di';

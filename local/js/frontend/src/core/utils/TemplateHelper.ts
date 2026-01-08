@@ -22,16 +22,15 @@ export const getElementByClassName = (className: string): Element | null => {
   return document.querySelector(`.${className}`);
 };
 
-
 export const scrollToElement = (elementSelector: string, offset: number = 150): void => {
-  let slide = elementSelector.length > 0 && document.querySelector(elementSelector);
+  const slide = elementSelector.length > 0 && document.querySelector(elementSelector);
   if (!slide) {
     return;
   }
 
-  let top = window.scrollY + slide.getBoundingClientRect().y - offset;
+  const top = window.scrollY + slide.getBoundingClientRect().y - offset;
   window.scrollTo({
     top: top,
-    behavior: 'smooth'
+    behavior: 'smooth',
   });
-}
+};

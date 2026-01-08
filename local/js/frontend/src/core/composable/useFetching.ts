@@ -9,17 +9,15 @@ const t = Translations.global.t;
 /**
  * @description Примесь с общей логикой обработки запросов, получение информации об ошибке, флаг isLoading и получение данных как реактивного значения
  */
-export default function useFetching<T extends BaseUseCase, K>(
-    {
-      useCase = null,
-      showMessage = true,
-      args = []
-    }: {
-      useCase?: T | null,
-      showMessage?: boolean,
-      args?: any[]
-    }
-) {
+export default function useFetching<T extends BaseUseCase, K>({
+  useCase = null,
+  showMessage = true,
+  args = [],
+}: {
+  useCase?: T | null;
+  showMessage?: boolean;
+  args?: any[];
+}) {
   const data = ref<K>();
   const isLoading = ref<boolean>(false);
   const error = ref<Error | null>(null);

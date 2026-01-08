@@ -1,3 +1,5 @@
-export default interface CommonResponse {
+interface CommonResponse {
   message?: string;
 }
+
+export default CommonResponse;

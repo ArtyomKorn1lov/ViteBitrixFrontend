@@ -1,5 +1,3 @@
-import GetNews from "@/modules/news/use-case/GetNews";
+import GetNews from '@/modules/news/use-case/GetNews';
 
-export {
-    GetNews
-}
+export { GetNews };

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Translations from '@/translations';
-import { SimpleObject } from "@/core/types";
+import { SimpleObject } from '@/core/types';
 import { BodyTypes, RequestTypes } from '@/core/enums';
 import { ResponseException } from '@/core/exceptions';
 import { RequestConfig, RequestResponse } from '@/core/models';
@@ -58,20 +58,16 @@ export default abstract class BaseApiClient {
   }
 
   protected async buildRequest<T, K>(
-      url: string,
-      {
-        data,
-        dataType = BodyTypes.json,
-        params = null,
-        headers = {},
-        requestType = RequestTypes.post
-      }: RequestConfig<T>
+    url: string,
+    { data, dataType = BodyTypes.json, params = null, headers = {}, requestType = RequestTypes.post }: RequestConfig<T>,
   ): Promise<RequestResponse<K>> {
     const requestUrl: string = this.prepareUrl(url, params);
 
     const payload = data ? this.setPayload(data, dataType) : {};
     const config: SimpleObject = {};
-    headers && (config.headers = { ...headers });
+    if (headers) {
+      config['headers'] = { ...headers };
+    }
 
     switch (requestType) {
       case RequestTypes.get:

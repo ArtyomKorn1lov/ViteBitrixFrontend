@@ -1,3 +1,5 @@
-export default interface NewsFilter {
-    page?: number;
+interface NewsFilter {
+  page?: number;
 }
+
+export default NewsFilter;

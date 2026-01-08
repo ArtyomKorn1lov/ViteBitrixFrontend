@@ -5,7 +5,35 @@
   "type": "module",
   "scripts": {
     "dev": "npx vite build --mode development",
-    "build": "npx vue-tsc -b && npx vite build"
+    "build": "npx vue-tsc -b && npx vite build",
+    "eslint": "eslint . --ext .ts,.tsx,.mts,cts,.js,.mjs,.cjs,.vue,.json --cache",
+    "prettier": "prettier --check . --ignore-path .prettierignore --cache",
+    "lint": "npm run eslint && npm run prettier",
+    "format": "eslint . --ext .ts,.tsx,.mts,cts,.js,.jsx,.mjs,.cjs,.vue,.json --cache --fix && prettier . --write --ignore-path .prettierignore"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@eslint/json": "^0.14.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.10.1",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vue/tsconfig": "^0.8.1",
+    "babel-jest": "^30.2.0",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jest": "^29.12.1",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-vue": "^10.6.2",
+    "jest": "^30.2.0",
+    "prettier": "^3.7.4",
+    "sass-embedded": "^1.97.1",
+    "terser": "^5.44.1",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.52.0",
+    "unplugin-element-plus": "^0.11.2",
+    "vite": "^7.2.4",
+    "vue-eslint-parser": "^10.2.0",
+    "vue-tsc": "^3.1.4"
   },
   "dependencies": {
     "axios": "^1.13.2",
@@ -14,16 +42,5 @@
     "vue": "^3.5.24",
     "vue-i18n": "^11.2.8",
     "vue-the-mask": "^0.11.1"
-  },
-  "devDependencies": {
-    "@types/node": "^24.10.1",
-    "@vitejs/plugin-vue": "^6.0.1",
-    "@vue/tsconfig": "^0.8.1",
-    "sass-embedded": "^1.97.1",
-    "terser": "^5.44.1",
-    "typescript": "~5.9.3",
-    "unplugin-element-plus": "^0.11.2",
-    "vite": "^7.2.4",
-    "vue-tsc": "^3.1.4"
   }
 }

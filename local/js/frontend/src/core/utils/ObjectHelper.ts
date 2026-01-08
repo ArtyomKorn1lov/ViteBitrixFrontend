@@ -1,4 +1,4 @@
-import { SimpleObject, ConvertedArrayToObject } from "@/core/types";
+import { SimpleObject, ConvertedArrayToObject } from '@/core/types';
 
 /**
  * @fileOverview

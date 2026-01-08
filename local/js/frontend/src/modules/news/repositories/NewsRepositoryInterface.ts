@@ -1,5 +1,7 @@
-import { News } from "@/modules/news/models";
+import { News } from '@/modules/news/models';
 
-export default interface NewsRepositoryInterface {
-    getList: (page: number) => Promise<News[] | null | undefined>;
+interface NewsRepositoryInterface {
+  getList: (page: number) => Promise<News[] | null | undefined>;
 }
+
+export default NewsRepositoryInterface;

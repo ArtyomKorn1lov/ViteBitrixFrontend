@@ -1,3 +1,5 @@
-export default interface Picture {
-    src: string;
+interface Picture {
+  src: string;
 }
+
+export default Picture;

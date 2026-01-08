@@ -1,7 +1,7 @@
 enum ResponseStatus {
-    success = 'success',
-    error = 'error',
-    warning = 'warning',
+  success = 'success',
+  error = 'error',
+  warning = 'warning',
 }
 
 export default ResponseStatus;

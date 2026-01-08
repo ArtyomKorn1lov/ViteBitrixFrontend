@@ -1,4 +1,4 @@
-import { SimpleObject } from "@/core/types";
+import { SimpleObject } from '@/core/types';
 
 /**
  * @fileOverview
@@ -18,7 +18,7 @@ export const convertArrayToObject = (array: []): SimpleObject => {
     return {};
   }
 
-  let object: SimpleObject = {};
+  const object: SimpleObject = {};
   array.forEach((item: SimpleObject): void => {
     !!item.code && (object[item.code] = item.value);
   });
@@ -26,7 +26,7 @@ export const convertArrayToObject = (array: []): SimpleObject => {
   return object;
 };
 
-export const changeArrayObjectsCode = (array: SimpleObject[], key: number|string, newKey: number|string): SimpleObject[] => {
+export const changeArrayObjectsCode = (array: SimpleObject[], key: number | string, newKey: number | string): SimpleObject[] => {
   if (!isArray(array)) {
     return [];
   }
@@ -36,7 +36,7 @@ export const changeArrayObjectsCode = (array: SimpleObject[], key: number|string
   }
 
   return array.map((item: SimpleObject): SimpleObject => {
-    let obj: any = {};
+    const obj: any = {};
     obj[newKey] = item[key];
     return obj;
   });

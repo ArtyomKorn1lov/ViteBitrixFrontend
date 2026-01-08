@@ -1,28 +1,34 @@
 <template>
-  <div :id="item.id.toString()" :class="$style['b-catalogCard']">
+  <div
+    :id="item.id.toString()"
+    :class="$style['b-catalogCard']"
+  >
     <div :class="$style['b-catalogCard__img-wrap']">
       <img
-          v-if="item.picture?.src"
-          :src="item.picture.src"
-          :class="$style['b-catalogCard__img']"
+        v-if="item.picture?.src"
+        :src="item.picture.src"
+        :class="$style['b-catalogCard__img']"
       />
     </div>
     <div style="padding: 14px">
       <div :class="$style['b-catalogCard__top']">
         <span v-html="item.name"></span>
         <div
-            v-if="!!item.tag"
-            :class="$style['b-catalogCard__tag']"
-            v-html="item.tag"
+          v-if="!!item.tag"
+          :class="$style['b-catalogCard__tag']"
+          v-html="item.tag"
         ></div>
       </div>
       <div :class="$style['b-catalogCard__bottom']">
         <time
-            v-if="!!item.date"
-            :class="$style['b-catalogCard__time']"
-            v-html="item.date"
+          v-if="!!item.date"
+          :class="$style['b-catalogCard__time']"
+          v-html="item.date"
         ></time>
-        <button @click="clickButton" :class="$style['b-catalogCard__button']">
+        <button
+          @click="clickButton"
+          :class="$style['b-catalogCard__button']"
+        >
           Подробнее
         </button>
       </div>
@@ -30,7 +36,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { CatalogItem } from "@/modules/catalog/models";
+import { CatalogItem } from '@/modules/catalog/models';
 import type { PropType } from 'vue';
 
 const { item } = defineProps({
