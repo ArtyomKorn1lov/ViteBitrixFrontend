@@ -1,4 +1,9 @@
 <template>
+  <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 5px">
+    <div>{{ count }}</div>
+    <el-button @click="increment">Increment</el-button>
+    <el-button @click="decrement">Decrement</el-button>
+  </div>
   <div
     class="news-list"
     :class="$style['b-newList']"
@@ -20,11 +25,14 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
-import { ElPagination } from 'element-plus';
+import { ElButton, ElPagination } from 'element-plus';
 import { DependencyInjection, TemplateHelper, useFetch } from '@/core';
+import { useCounterHook } from '@/modules/catalog';
 import { News } from '@/modules/news/models';
 import { GetNews } from '@/modules/news/use-case';
 import NewCard from '@/modules/news/components/NewCard.vue';
+
+const { count, increment, decrement } = useCounterHook();
 
 const getNews: GetNews = DependencyInjection.resolve('GetNews');
 

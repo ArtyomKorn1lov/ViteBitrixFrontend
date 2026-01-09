@@ -1,4 +1,9 @@
 <template>
+  <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 5px">
+    <div>{{ count }}</div>
+    <el-button @click="increment">Increment</el-button>
+    <el-button @click="decrement">Decrement</el-button>
+  </div>
   <div
     :id="item.id.toString()"
     :class="$style['b-newsDetail']"
@@ -40,8 +45,11 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
-import { CatalogSlider } from '@/modules/catalog';
+import { CatalogSlider, useCounterHook } from '@/modules/catalog';
 import { News } from '@/modules/news';
+import { ElButton } from 'element-plus';
+
+const { count, increment, decrement } = useCounterHook();
 
 const item = ref<News>({
   id: 1,

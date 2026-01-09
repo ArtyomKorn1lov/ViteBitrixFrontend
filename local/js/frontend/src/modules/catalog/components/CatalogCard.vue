@@ -36,8 +36,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { CatalogItem } from '@/modules/catalog/models';
 import type { PropType } from 'vue';
+import { CatalogItem } from '@/modules/catalog/models';
 
 const { item } = defineProps({
   item: {
