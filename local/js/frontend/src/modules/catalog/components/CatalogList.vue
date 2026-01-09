@@ -1,4 +1,9 @@
 <template>
+  <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 5px">
+    <div>{{ count }}</div>
+    <el-button @click="increment">Increment</el-button>
+    <el-button @click="decrement">Decrement</el-button>
+  </div>
   <div :class="$style['b-catalogList']">
     <CatalogCard
       v-for="item in items"
@@ -9,9 +14,13 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
+import { ElButton } from 'element-plus';
 import { BodyTypes } from '@/core';
 import { CatalogItem } from '@/modules/catalog/models';
+import { useCounterHook } from '@/modules/catalog';
 import CatalogCard from '@/modules/catalog/components/CatalogCard.vue';
+
+const { count, increment, decrement } = useCounterHook();
 
 const items = ref<CatalogItem[]>([
   {
