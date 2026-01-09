@@ -27,10 +27,11 @@ import {
   ElSkeleton,
   ElButton,
   ElCarousel,
-  ElCarouselItem
+  ElCarouselItem,
+  ElPagination
 } from 'element-plus';
 
-const ElPlus = {
+export {
   ElForm,
   ElDrawer,
   ElFormItem,
@@ -59,8 +60,7 @@ const ElPlus = {
   ElSkeleton,
   ElButton,
   ElCarousel,
-  ElCarouselItem
+  ElCarouselItem,
+  ElPagination
 };
-
-export default ElPlus;
 

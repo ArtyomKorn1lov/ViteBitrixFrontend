@@ -6,21 +6,32 @@ import ElementPlus from 'unplugin-element-plus/vite';
 export default defineConfig(({mode}) => {
   const isDev = mode === 'development';
   return {
+    define: {
+      'process.env.NODE_ENV': JSON.stringify(mode),
+    },
     optimizeDeps: {
-      include: ['vue', 'element-plus'],
+      include: ['element-plus', 'vue', 'axios', 'vue-i18n', 'pinia'],
     },
     build: {
       rollupOptions: {
         output: {
+          exports: 'named',
           esModule: true,
         },
         cache: true,
       },
       lib: {
-        entry: resolve(__dirname, 'src/main.js'),
+        entry: {
+          'element-plus': resolve(__dirname, 'src/element-plus.js'),
+          'vue': resolve(__dirname, 'src/vue.js'),
+          'axios': resolve(__dirname, 'src/axios.js'),
+          'vue-i18n': resolve(__dirname, 'src/vue-i18n.js'),
+          'pinia': resolve(__dirname, 'src/pinia.js'),
+        },
         name: 'frontend-ui',
         formats: ['es'],
-        fileName: 'frontend-ui.bundle',
+        fileName: '[name].bundle',
+        cssFileName: 'styles.bundle',
       },
       minify: isDev ? false : 'terser',
       cssMinify: !isDev,

@@ -1,15 +1,11 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import ElementPlus from 'unplugin-element-plus/vite';
 import { resolve } from 'path';
 import Entrypoint from './entrypoint.config.ts';
 
 export default defineConfig(({ mode }) => {
   const isDev: boolean = mode === 'development';
   return {
-    optimizeDeps: {
-      include: ['vue', 'element-plus'],
-    },
     define: {
       __VUE_PROD_DEVTOOLS__: isDev,
     },
@@ -17,6 +13,7 @@ export default defineConfig(({ mode }) => {
       watch: isDev ? { include: 'src/**' } : null,
       rollupOptions: {
         input: Entrypoint,
+        external: ['element-plus', 'vue', 'axios'],
         output: {
           entryFileNames: 'js/entry-[name].[hash].js',
           chunkFileNames: 'js/chunk-[name].[hash].js',
@@ -25,6 +22,13 @@ export default defineConfig(({ mode }) => {
             if (id.includes('node_modules')) {
               return 'node-modules';
             }
+          },
+          paths: {
+            'element-plus': '/local/js/ui/dist/element-plus.bundle.js',
+            axios: '/local/js/ui/dist/axios.bundle.js',
+            vue: '/local/js/ui/dist/vue.bundle.js',
+            'vue-i18n': '/local/js/ui/dist/vue-i18n.bundle.js',
+            pinia: '/local/js/ui/dist/pinia.bundle.js',
           },
           esModule: true,
         },
@@ -43,12 +47,6 @@ export default defineConfig(({ mode }) => {
       },
     },
     envPrefix: 'APP_',
-    plugins: [
-      vue(),
-      ElementPlus({
-        useSource: true,
-        format: 'esm',
-      }),
-    ],
+    plugins: [vue()],
   };
 });

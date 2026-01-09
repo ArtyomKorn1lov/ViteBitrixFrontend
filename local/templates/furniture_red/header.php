@@ -26,6 +26,7 @@ IncludeTemplateLangFile(__FILE__);
 	</style>
 	<![endif]-->
 
+    <link rel="stylesheet" crossorigin href="/local/js/ui/dist/styles.bundle.css">
     <?php $APPLICATION->ShowViewContent("custom_dependencies"); ?>
 	<title><?$APPLICATION->ShowTitle()?></title>
 </head>
