@@ -44,7 +44,10 @@ class ExtensionProvider
         }
 
         if (empty($GLOBALS["customDependencies"])) {
-            $GLOBALS["customDependencies"] = [];
+            // TODO доработать функционал подключения скриптов и стилей из 'ui'
+            $GLOBALS["customDependencies"] = [
+                '<link rel="stylesheet" crossorigin href="/local/js/ui/dist/styles.bundle.css">',
+            ];
         }
 
         $htmlList = explode("\n", file_get_contents(static::getAbsolutePath() . "/$namespace/$filename.html"));
