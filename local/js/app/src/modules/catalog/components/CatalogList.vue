@@ -1,4 +1,12 @@
 <template>
+  <div style="margin-bottom: 20px">
+    <el-button
+      type="primary"
+      @click="navigateFeedback"
+    >
+      Feedback
+    </el-button>
+  </div>
   <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 5px">
     <div>{{ count }}</div>
     <el-button @click="increment">Increment</el-button>
@@ -15,7 +23,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { ElButton } from 'element-plus';
-import { BodyTypes } from '@/core';
 import { CatalogItem } from '@/modules/catalog/models';
 import { useCounterHook } from '@/modules/catalog';
 import CatalogCard from '@/modules/catalog/components/CatalogCard.vue';
@@ -55,7 +62,9 @@ const items = ref<CatalogItem[]>([
   },
 ]);
 
-console.log('Body type ', BodyTypes.formData);
+const navigateFeedback = () => {
+  window.location.href = '/test-catalog/feedback/';
+};
 </script>
 <style scoped module lang="scss">
 .b-catalogList {
