@@ -10,7 +10,7 @@ export default defineConfig(({mode}) => {
       'process.env.NODE_ENV': JSON.stringify(mode),
     },
     optimizeDeps: {
-      include: ['element-plus', 'vue', 'axios', 'vue-i18n', 'pinia'],
+      include: ['element-plus', 'vue', 'axios', 'vue-i18n', 'pinia', 'vue-the-mask'],
     },
     build: {
       rollupOptions: {
@@ -27,6 +27,7 @@ export default defineConfig(({mode}) => {
           'axios': resolve(__dirname, 'src/axios.js'),
           'vue-i18n': resolve(__dirname, 'src/vue-i18n.js'),
           'pinia': resolve(__dirname, 'src/pinia.js'),
+          'vue-the-mask': resolve(__dirname, 'src/vue-the-mask.js'),
         },
         name: 'frontend-ui',
         formats: ['es'],

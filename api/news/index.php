@@ -19,7 +19,7 @@ $data = [
             "detailPageUrl" => "/test-news/detail/",
             "section" => "Новости",
             "picture" => [
-                "src" => "/local/js/frontend/dist/img/img_1.jpg"
+                "src" => "/local/js/app/dist/img/img_1.jpg"
             ],
             "tag" => "Новинка",
             "date" => "27.05.2010"
@@ -31,7 +31,7 @@ $data = [
             "detailPageUrl" => "/test-news/detail/",
             "section" => "Статьи",
             "picture" => [
-                "src" => "/local/js/frontend/dist/img/img_2.jpg"
+                "src" => "/local/js/app/dist/img/img_2.jpg"
             ],
             "tag" => "Хит",
             "date" => "26.05.2010"
@@ -43,7 +43,7 @@ $data = [
             "detailPageUrl" => "/test-news/detail/",
             "section" => "Новости",
             "picture" => [
-                "src" => "/local/js/frontend/dist/img/img_2.jpg"
+                "src" => "/local/js/app/dist/img/img_2.jpg"
             ],
             "tag" => "Новинка",
             "date" => "25.05.2010"
@@ -55,7 +55,7 @@ $data = [
             "detailPageUrl" => "/test-news/detail/",
             "section" => "Статьи",
             "picture" => [
-                "src" => "/local/js/frontend/dist/img/img_2.jpg"
+                "src" => "/local/js/app/dist/img/img_2.jpg"
             ],
             "tag" => "Хит",
             "date" => "26.05.2010"
@@ -67,7 +67,7 @@ $data = [
             "detailPageUrl" => "/test-news/detail/",
             "section" => "Новости",
             "picture" => [
-                "src" => "/local/js/frontend/dist/img/img_2.jpg"
+                "src" => "/local/js/app/dist/img/img_2.jpg"
             ],
             "tag" => "Новинка",
             "date" => "25.05.2010"
@@ -79,7 +79,7 @@ $data = [
             "detailPageUrl" => "/test-news/detail/",
             "section" => "Новости",
             "picture" => [
-                "src" => "/local/js/frontend/dist/img/img_1.jpg"
+                "src" => "/local/js/app/dist/img/img_1.jpg"
             ],
             "tag" => "Новинка",
             "date" => "27.05.2010"
@@ -93,7 +93,7 @@ $data = [
             "detailPageUrl" => "/test-news/detail/",
             "section" => "Новости",
             "picture" => [
-                "src" => "/local/js/frontend/dist/img/img_2.jpg"
+                "src" => "/local/js/app/dist/img/img_2.jpg"
             ],
             "tag" => "Новинка",
             "date" => "25.05.2010"
@@ -105,7 +105,7 @@ $data = [
             "detailPageUrl" => "/test-news/detail/",
             "section" => "Новости",
             "picture" => [
-                "src" => "/local/js/frontend/dist/img/img_1.jpg"
+                "src" => "/local/js/app/dist/img/img_1.jpg"
             ],
             "tag" => "Новинка",
             "date" => "27.05.2010"
@@ -117,7 +117,7 @@ $data = [
             "detailPageUrl" => "/test-news/detail/",
             "section" => "Новости",
             "picture" => [
-                "src" => "/local/js/frontend/dist/img/img_1.jpg"
+                "src" => "/local/js/app/dist/img/img_1.jpg"
             ],
             "tag" => "Новинка",
             "date" => "27.05.2010"
@@ -129,7 +129,7 @@ $data = [
             "detailPageUrl" => "/test-news/detail/",
             "section" => "Статьи",
             "picture" => [
-                "src" => "/local/js/frontend/dist/img/img_2.jpg"
+                "src" => "/local/js/app/dist/img/img_2.jpg"
             ],
             "tag" => "Хит",
             "date" => "26.05.2010"
@@ -141,7 +141,7 @@ $data = [
             "detailPageUrl" => "/test-news/detail/",
             "section" => "Новости",
             "picture" => [
-                "src" => "/local/js/frontend/dist/img/img_2.jpg"
+                "src" => "/local/js/app/dist/img/img_2.jpg"
             ],
             "tag" => "Новинка",
             "date" => "25.05.2010"
@@ -153,7 +153,7 @@ $data = [
             "detailPageUrl" => "/test-news/detail/",
             "section" => "Статьи",
             "picture" => [
-                "src" => "/local/js/frontend/dist/img/img_2.jpg"
+                "src" => "/local/js/app/dist/img/img_2.jpg"
             ],
             "tag" => "Хит",
             "date" => "26.05.2010"
@@ -167,7 +167,7 @@ $data = [
             "detailPageUrl" => "/test-news/detail/",
             "section" => "Новости",
             "picture" => [
-                "src" => "/local/js/frontend/dist/img/img_1.jpg"
+                "src" => "/local/js/app/dist/img/img_1.jpg"
             ],
             "tag" => "Новинка",
             "date" => "27.05.2010"
@@ -179,7 +179,7 @@ $data = [
             "detailPageUrl" => "/test-news/detail/",
             "section" => "Статьи",
             "picture" => [
-                "src" => "/local/js/frontend/dist/img/img_2.jpg"
+                "src" => "/local/js/app/dist/img/img_2.jpg"
             ],
             "tag" => "Хит",
             "date" => "26.05.2010"
@@ -191,7 +191,7 @@ $data = [
             "detailPageUrl" => "/test-news/detail/",
             "section" => "Новости",
             "picture" => [
-                "src" => "/local/js/frontend/dist/img/img_1.jpg"
+                "src" => "/local/js/app/dist/img/img_1.jpg"
             ],
             "tag" => "Новинка",
             "date" => "27.05.2010"

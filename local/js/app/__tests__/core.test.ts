@@ -3,7 +3,6 @@
  * @description Unit-тесты для ядра приложения
  */
 
-//import 'jest';
 import {
   TestObject,
   TestModel,

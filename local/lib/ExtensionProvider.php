@@ -7,24 +7,41 @@ use Exception;
 class ExtensionProvider
 {
     /** @var string */
-    protected const string PATH_PREFIX = "local/js/frontend/dist";
+    protected const string APP_PATH_PREFIX = "dist";
     /** @var string */
-    protected const string FOLDER_PATH = self::PATH_PREFIX . "/outputs/";
+    protected const string OUTPUTS_FOLDER_PATH = self::APP_PATH_PREFIX . "/outputs/";
 
     /**
      * @return string
      */
-    protected static function getPathPrefix(): string
+    protected static function getAppPathPrefix(): string
     {
-        return SITE_DIR . static::PATH_PREFIX;
+        return SITE_DIR . $_ENV['APP_FRONTEND_PATH'] . static::APP_PATH_PREFIX;
     }
 
     /**
      * @return string
      */
-    protected static function getAbsolutePath(): string
+    protected static function getAppAbsolutePath(): string
     {
-        return $_SERVER["DOCUMENT_ROOT"] . SITE_DIR . static::FOLDER_PATH;
+        return $_SERVER["DOCUMENT_ROOT"] . SITE_DIR . $_ENV['APP_FRONTEND_PATH'] . static::OUTPUTS_FOLDER_PATH;
+    }
+
+    /**
+     * @return array
+     */
+    protected static function getPluginDependencies(): array
+    {
+        $pluginPath = SITE_DIR . $_ENV['APP_PLUGINS_PATH'];
+        return [
+            '<link rel="stylesheet" crossorigin href="' . $pluginPath . 'dist/styles.bundle.css">',
+            '<link rel="modulepreload" crossorigin href="' . $pluginPath . 'dist/vue.bundle.js">',
+            '<link rel="modulepreload" crossorigin href="' . $pluginPath . 'dist/element-plus.bundle.js">',
+            '<link rel="modulepreload" crossorigin href="' . $pluginPath . 'dist/axios.bundle.js">',
+            '<link rel="modulepreload" crossorigin href="' . $pluginPath . 'dist/vue-i18n.bundle.js">',
+            '<link rel="modulepreload" crossorigin href="' . $pluginPath . 'dist/pinia.bundle.js">',
+            '<link rel="modulepreload" crossorigin href="' . $pluginPath . 'dist/vue-the-mask.bundle.js">',
+        ];
     }
 
     /**
@@ -44,15 +61,12 @@ class ExtensionProvider
         }
 
         if (empty($GLOBALS["customDependencies"])) {
-            // TODO доработать функционал подключения скриптов и стилей из 'ui'
-            $GLOBALS["customDependencies"] = [
-                '<link rel="stylesheet" crossorigin href="/local/js/ui/dist/styles.bundle.css">',
-            ];
+            $GLOBALS["customDependencies"] = static::getPluginDependencies();
         }
 
-        $htmlList = explode("\n", file_get_contents(static::getAbsolutePath() . "/$namespace/$filename.html"));
+        $htmlList = explode("\n", file_get_contents(static::getAppAbsolutePath() . "/$namespace/$filename.html"));
 
-        $prefix = static::getPathPrefix();
+        $prefix = static::getAppPathPrefix();
         $pattern = '/(src|href)="\/([^"]+)"/i';
         $replacement = '$1="' . $prefix . '/$2"';
         foreach ($htmlList as &$item) {
@@ -60,7 +74,7 @@ class ExtensionProvider
         }
 
         $pattern = '/id="([^"]*)"/i';
-        $replacement = 'id="$1-'.$hash.'"';
+        $replacement = 'id="$1-' . $hash . '"';
         $dependencies = [];
         $mountedElement = "";
         foreach ($htmlList as $element) {
