@@ -3,17 +3,17 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("News");
 
 use Bitrix\Main\Web\Json;
-use Site\ExtensionProvider;
+use Site\ViteFrontendHelper;
 
 ?>
 
 <?php
 $arNewsData = [
-    "templateId" => "news-list"
+    "templateId" => "news-list" . "efs4464df"
 ];
-$arNewsData["templateId"] = ExtensionProvider::add($arNewsData["templateId"], "efs4464df");
 $arNewsJSData = Json::encode($arNewsData);
 ?>
+<div id="<?=$arNewsData['templateId']?>"></div>
 <script>
     BX.ready(function () {
         BX.Components.NewList(<?= $arNewsJSData ?>);
@@ -22,11 +22,11 @@ $arNewsJSData = Json::encode($arNewsData);
 
 <?php
 $arCatalogData = [
-    "templateId" => "catalog-list"
+    "templateId" => "catalog-list" . "afdt5e435"
 ];
-$arCatalogData["templateId"] = ExtensionProvider::add($arCatalogData["templateId"], "afdt5e435");
 $arCatalogJSData = Json::encode($arCatalogData);
 ?>
+<div id="<?=$arCatalogData['templateId']?>"></div>
 <script>
     BX.ready(function () {
         BX.Components.CatalogList(<?= $arCatalogJSData ?>);
@@ -34,4 +34,6 @@ $arCatalogJSData = Json::encode($arCatalogData);
 </script>
 
 <?php
+ViteFrontendHelper::registerEntry('src/entrypoint/news/list.ts');
+ViteFrontendHelper::registerEntry('src/entrypoint/catalog/list.ts');
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

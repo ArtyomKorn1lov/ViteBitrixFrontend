@@ -3,17 +3,17 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Catalog");
 
 use Bitrix\Main\Web\Json;
-use Site\ExtensionProvider;
+use Site\ViteFrontendHelper;
 
 ?>
 
 <?php
 $arCatalogData = [
-    "templateId" => "catalog-list"
+    "templateId" => "catalog-list" . "afdt5e435"
 ];
-$arCatalogData["templateId"] = ExtensionProvider::add($arCatalogData["templateId"], "afdt5e435");
 $arCatalogJSData = Json::encode($arCatalogData);
 ?>
+    <div id="<?=$arCatalogData['templateId']?>"></div>
     <script>
         BX.ready(function () {
             BX.Components.CatalogList(<?= $arCatalogJSData ?>);
@@ -21,4 +21,5 @@ $arCatalogJSData = Json::encode($arCatalogData);
     </script>
 
 <?php
+ViteFrontendHelper::registerEntry('src/entrypoint/catalog/list.ts');
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

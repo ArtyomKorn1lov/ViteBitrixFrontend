@@ -3,17 +3,17 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("News Detail");
 
 use Bitrix\Main\Web\Json;
-use Site\ExtensionProvider;
+use Site\ViteFrontendHelper;
 
 ?>
 
 <?php
 $arNewsData = [
-    "templateId" => "news-detail"
+    "templateId" => "news-detail" . "fdgre435erg"
 ];
-$arNewsData["templateId"] = ExtensionProvider::add($arNewsData["templateId"], "fdgre435erg");
 $arNewsJSData = Json::encode($arNewsData);
 ?>
+<div id="<?=$arNewsData['templateId']?>"></div>
 <script>
     BX.ready(function () {
         BX.Components.NewsDetail(<?= $arNewsJSData ?>);
@@ -21,4 +21,5 @@ $arNewsJSData = Json::encode($arNewsData);
 </script>
 
 <?php
+ViteFrontendHelper::registerEntry('src/entrypoint/news/detail.ts');
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");

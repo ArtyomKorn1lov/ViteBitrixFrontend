@@ -1,8 +1,8 @@
 import { resolve } from 'path';
 
 export default {
-  'catalog-list': resolve(__dirname, './outputs/catalog/list.html'),
-  'news-list': resolve(__dirname, './outputs/news/list.html'),
-  'news-detail': resolve(__dirname, './outputs/news/detail.html'),
-  'feedback-form': resolve(__dirname, './outputs/feedback/form.html'),
+  'catalog-list': resolve(__dirname, './src/entrypoint/catalog/list.ts'),
+  'news-list': resolve(__dirname, './src/entrypoint/news/list.ts'),
+  'news-detail': resolve(__dirname, './src/entrypoint/news/detail.ts'),
+  'feedback-form': resolve(__dirname, './src/entrypoint/feedback/form.ts'),
 };
