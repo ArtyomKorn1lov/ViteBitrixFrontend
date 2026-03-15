@@ -4,6 +4,10 @@ namespace Site;
 
 class ViteFrontendHelper
 {
+    /** @var string */
+    protected const string ASSETS_PATH = 'dist';
+
+    /** @var array */
     public static array $entries = [];
 
     /**
@@ -23,11 +27,15 @@ class ViteFrontendHelper
      */
     public static function createHtmlTags(): string
     {
-        $htmlString = '';
+        $result = [];
         foreach (self::$entries as $entry) {
-            $htmlString .= static::jsTag($entry) . static::jsPreloadImports($entry) . static::cssTag($entry);
+            $tagList = [static::jsTag($entry)];
+            $tagList = array_merge($tagList, static::jsPreloadImports($entry));
+            $tagList = array_merge($tagList, static::cssTags($entry));
+            $result = array_merge($result, $tagList);
         }
-        return $htmlString;
+        $result = array_unique($result);
+        return implode(' ', $result);
     }
 
     /**
@@ -60,8 +68,13 @@ class ViteFrontendHelper
      */
     protected static function getViteWatchUrl(): string|bool
     {
-        $filePath = $_SERVER["DOCUMENT_ROOT"] . '/' . $_ENV['APP_FRONTEND_PATH'] . '/vite.hot';
-        return file_exists($filePath) ? file_get_contents($filePath) : false;
+        static $watchUrl = null;
+        if ($watchUrl !== null) {
+            return $watchUrl;
+        }
+        $filePath = $_SERVER["DOCUMENT_ROOT"] . '/' . $_ENV['APP_FRONTEND_PATH'] . '/' . $_ENV['APP_HOTFILE_NAME'];
+        $watchUrl = file_exists($filePath) ? file_get_contents($filePath) : false;
+        return $watchUrl;
     }
 
     /**
@@ -80,32 +93,34 @@ class ViteFrontendHelper
 
     /**
      * @param string $entry
-     * @return string
+     * @return array
      */
-    protected static function jsPreloadImports(string $entry): string
+    protected static function jsPreloadImports(string $entry): array
     {
         if (static::isDevServer($entry)) {
-            return '';
+            return [];
         }
-        $res = '';
-        foreach (static::importsUrls($entry) as $url) {
-            $res .= '<link rel="modulepreload" href="' . $url . '">';
+        $res = [];
+        $importsUrlList = static::importsUrls($entry);
+        foreach ($importsUrlList as $url) {
+            $res[] = '<link rel="modulepreload" href="' . $url . '">';
         }
         return $res;
     }
 
     /**
      * @param string $entry
-     * @return string
+     * @return array
      */
-    protected static function cssTag(string $entry): string
+    protected static function cssTags(string $entry): array
     {
         if (static::isDevServer($entry)) {
-            return '';
+            return [];
         }
-        $tags = '';
-        foreach (static::cssUrls($entry) as $url) {
-            $tags .= '<link rel="stylesheet" href="' . $url . '">';
+        $tags = [];
+        $cssUrlList = static::cssUrls($entry);
+        foreach ($cssUrlList as $url) {
+            $tags[] = '<link rel="stylesheet" href="' . $url . '">';
         }
         return $tags;
     }
@@ -115,12 +130,17 @@ class ViteFrontendHelper
      */
     protected static function getManifest(): array
     {
+        static $arManifest = null;
+        if ($arManifest !== null) {
+            return $arManifest;
+        }
         $manifestPath = $_SERVER["DOCUMENT_ROOT"] . '/' . $_ENV['APP_FRONTEND_PATH'] . '/dist/.vite/manifest.json';
         if (!file_exists($manifestPath)) {
             return [];
         }
         $content = file_get_contents($manifestPath);
-        return json_decode($content, true);
+        $arManifest = json_decode($content, true);
+        return $arManifest;
     }
 
     /**
@@ -131,7 +151,7 @@ class ViteFrontendHelper
     {
         $manifest = static::getManifest();
         return isset($manifest[$entry])
-            ? SITE_DIR . $_ENV['APP_FRONTEND_PATH'] . '/dist/' . $manifest[$entry]['file']
+            ? SITE_DIR . $_ENV['APP_FRONTEND_PATH'] . '/'. static::ASSETS_PATH .'/' . $manifest[$entry]['file']
             : '';
     }
 
@@ -147,7 +167,7 @@ class ViteFrontendHelper
             return [];
         }
         foreach ($manifest[$entry]['imports'] as $imports) {
-            $urls[] = SITE_DIR . $_ENV['APP_FRONTEND_PATH'] . '/dist/' . $manifest[$imports]['file'];
+            $urls[] = SITE_DIR . $_ENV['APP_FRONTEND_PATH'] . '/' . static::ASSETS_PATH . '/' . $manifest[$imports]['file'];
         }
         return $urls;
     }
@@ -162,9 +182,37 @@ class ViteFrontendHelper
         $manifest = static::getManifest();
         if (!empty($manifest[$entry]['css'])) {
             foreach ($manifest[$entry]['css'] as $file) {
-                $urls[] = SITE_DIR . $_ENV['APP_FRONTEND_PATH'] . '/dist/' . $file;
+                $nodeCssList = static::findRecursiveCss($entry);
+                foreach ($nodeCssList as $nodeCssFile) {
+                    $urls[] = SITE_DIR . $_ENV['APP_FRONTEND_PATH'] . '/' . static::ASSETS_PATH . '/' . $nodeCssFile;
+                }
+                $urls[] = SITE_DIR . $_ENV['APP_FRONTEND_PATH'] . '/' . static::ASSETS_PATH . '/' . $file;
             }
         }
         return $urls;
+    }
+
+    /**
+     * @param string $entry
+     * @return array
+     */
+    protected static function findRecursiveCss(string $entry): array
+    {
+        $manifest = static::getManifest();
+        if (empty($manifest[$entry]['imports'])) {
+            return [];
+        }
+        $nodeEntriesList = [];
+        foreach ($manifest[$entry]['imports'] as $string) {
+            $nodeEntriesList[] = $string;
+        }
+        $nodeCssList = [];
+        foreach ($nodeEntriesList as $nodeEntry) {
+            if (empty($manifest[$nodeEntry]['css'])) {
+                continue;
+            }
+            $nodeCssList = array_merge($nodeCssList, $manifest[$nodeEntry]['css']);
+        }
+        return $nodeCssList;
     }
 }
