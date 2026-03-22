@@ -1,8 +1,15 @@
 import { resolve } from 'path';
 
-export default {
-  'catalog-list': resolve(__dirname, './src/entrypoint/catalog/list.ts'),
-  'news-list': resolve(__dirname, './src/entrypoint/news/list.ts'),
-  'news-detail': resolve(__dirname, './src/entrypoint/news/detail.ts'),
-  'feedback-form': resolve(__dirname, './src/entrypoint/feedback/form.ts'),
-};
+const entries: string[] = [
+  'src/entrypoint/catalog/list.ts',
+  'src/entrypoint/news/list.ts',
+  'src/entrypoint/news/detail.ts',
+  'src/entrypoint/feedback/form.ts',
+];
+
+const output: { [key: string]: string } = {};
+entries.forEach((entry: string) => {
+  output[entry] = resolve(__dirname, `./${entry}`);
+});
+
+export default output;

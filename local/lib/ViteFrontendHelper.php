@@ -27,6 +27,21 @@ class ViteFrontendHelper
      */
     public static function createHtmlTags(): string
     {
+        $result = static::createAssets();
+        $isDev = static::isDevServer('');
+        $viteConfig = [
+            'isDev' => $isDev,
+            'path' => $isDev ? static::getViteWatchUrl() : SITE_DIR . $_ENV['APP_FRONTEND_PATH'] . '/'. static::ASSETS_PATH,
+        ];
+        $result[] = "<script>BX.ready(function () { addGlobalViteConfig( " . json_encode($viteConfig) . " ); });</script>";
+        return implode('', $result);
+    }
+
+    /**
+     * @return array<string>
+     */
+    public static function createAssets(): array
+    {
         $result = [];
         foreach (self::$entries as $entry) {
             $tagList = [static::jsTag($entry)];
@@ -34,8 +49,7 @@ class ViteFrontendHelper
             $tagList = array_merge($tagList, static::cssTags($entry));
             $result = array_merge($result, $tagList);
         }
-        $result = array_unique($result);
-        return implode(' ', $result);
+        return array_unique($result);
     }
 
     /**
@@ -179,13 +193,13 @@ class ViteFrontendHelper
     protected static function cssUrls(string $entry): array
     {
         $urls = [];
+        $nodeCssList = static::findRecursiveCss($entry);
+        foreach ($nodeCssList as $nodeCssFile) {
+            $urls[] = SITE_DIR . $_ENV['APP_FRONTEND_PATH'] . '/' . static::ASSETS_PATH . '/' . $nodeCssFile;
+        }
         $manifest = static::getManifest();
         if (!empty($manifest[$entry]['css'])) {
             foreach ($manifest[$entry]['css'] as $file) {
-                $nodeCssList = static::findRecursiveCss($entry);
-                foreach ($nodeCssList as $nodeCssFile) {
-                    $urls[] = SITE_DIR . $_ENV['APP_FRONTEND_PATH'] . '/' . static::ASSETS_PATH . '/' . $nodeCssFile;
-                }
                 $urls[] = SITE_DIR . $_ENV['APP_FRONTEND_PATH'] . '/' . static::ASSETS_PATH . '/' . $file;
             }
         }

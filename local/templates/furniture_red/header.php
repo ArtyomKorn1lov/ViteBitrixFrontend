@@ -2,6 +2,8 @@
 <?
 IncludeTemplateLangFile(__FILE__);
 
+use Bitrix\Main\Page\Asset;
+
 Bitrix\Main\UI\Extension::load("main.core");
 
 ?>
@@ -29,7 +31,10 @@ Bitrix\Main\UI\Extension::load("main.core");
 	</style>
 	<![endif]-->
 
-    <?php $APPLICATION->ShowViewContent("custom_dependencies"); ?>
+    <?php
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . '/main.js');
+    $APPLICATION->ShowViewContent("custom_dependencies");
+    ?>
 	<title><?$APPLICATION->ShowTitle()?></title>
 </head>
 <body>
