@@ -45,8 +45,23 @@ class ViteFrontendHelper
         $result = [];
         foreach (self::$entries as $entry) {
             $tagList = [static::jsTag($entry)];
-            $tagList = array_merge($tagList, static::jsPreloadImports($entry));
+            $tagList = array_merge($tagList, static::jsPreloadImportsTags($entry));
             $tagList = array_merge($tagList, static::cssTags($entry));
+            $result = array_merge($result, $tagList);
+        }
+        return array_unique($result);
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function createPaths(): array
+    {
+        $result = [];
+        foreach (self::$entries as $entry) {
+            $tagList = static::jsPaths($entry);
+            $tagList = array_merge($tagList, static::jsPreloadImports($entry));
+            $tagList = array_merge($tagList, static::cssPaths($entry));
             $result = array_merge($result, $tagList);
         }
         return array_unique($result);
@@ -107,9 +122,26 @@ class ViteFrontendHelper
 
     /**
      * @param string $entry
+     * @return string[]
+     */
+    protected static function jsPaths(string $entry): array
+    {
+        if (static::isDevServer($entry)) {
+            $viteWatchUrl = static::getViteWatchUrl();
+            $url = $viteWatchUrl . '/' . $entry;
+            return [
+                $viteWatchUrl . '/@vite/client',
+                $url,
+            ];
+        }
+        return [static::assetUrl($entry)];
+    }
+
+    /**
+     * @param string $entry
      * @return array
      */
-    protected static function jsPreloadImports(string $entry): array
+    protected static function jsPreloadImportsTags(string $entry): array
     {
         if (static::isDevServer($entry)) {
             return [];
@@ -122,9 +154,22 @@ class ViteFrontendHelper
         return $res;
     }
 
+
     /**
      * @param string $entry
-     * @return array
+     * @return string[]
+     */
+    protected static function jsPreloadImports(string $entry): array
+    {
+        if (static::isDevServer($entry)) {
+            return [];
+        }
+        return static::importsUrls($entry);
+    }
+
+    /**
+     * @param string $entry
+     * @return string[]
      */
     protected static function cssTags(string $entry): array
     {
@@ -137,6 +182,18 @@ class ViteFrontendHelper
             $tags[] = '<link rel="stylesheet" href="' . $url . '">';
         }
         return $tags;
+    }
+
+    /**
+     * @param string $entry
+     * @return string[]
+     */
+    protected static function cssPaths(string $entry): array
+    {
+        if (static::isDevServer($entry)) {
+            return [];
+        }
+        return static::cssUrls($entry);
     }
 
     /**
@@ -171,7 +228,7 @@ class ViteFrontendHelper
 
     /**
      * @param string $entry
-     * @return array
+     * @return string[]
      */
     protected static function importsUrls(string $entry): array
     {
@@ -188,7 +245,7 @@ class ViteFrontendHelper
 
     /**
      * @param string $entry
-     * @return array
+     * @return string[]
      */
     protected static function cssUrls(string $entry): array
     {
@@ -208,7 +265,7 @@ class ViteFrontendHelper
 
     /**
      * @param string $entry
-     * @return array
+     * @return string[]
      */
     protected static function findRecursiveCss(string $entry): array
     {

@@ -9,6 +9,4 @@ $entrypoint = $_GET['entry'] ?? '';
 
 ViteFrontendHelper::registerEntry($entrypoint);
 
-$assets = ViteFrontendHelper::createAssets();
-
-echo json_encode(ViteFrontendHelper::createAssets());
+echo json_encode(ViteFrontendHelper::createPaths());

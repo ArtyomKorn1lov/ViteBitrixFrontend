@@ -36,8 +36,8 @@ BX.Globals.AsyncViteLoader = {
                     },
                 })
                     .then((response) => response.json())
-                    .then((data) => {
-                        this.injectAssets(data);
+                    .then(async (data) => {
+                        await this.injectAssets(data);
                         resolve();
                     })
                     .catch(reject);
@@ -65,28 +65,37 @@ BX.Globals.AsyncViteLoader = {
     /**
      * @param {string[]} assetList
      */
-    injectAssets: function(assetList) {
+    injectAssets: async function(assetList) {
         if (!assetList || assetList.length <= 0) {
             return;
         }
-        const missingAssets = assetList.filter((asset) => !this.isAssetLoaded(asset));
-        missingAssets.forEach(async (asset) => {
-            const fragment = document.createRange().createContextualFragment(asset);
-            const element = fragment.firstChild;
-            document.head.appendChild(element);
-        });
-    },
-    isAssetLoaded: function(tagString) {
-        const match = tagString.match(/(?:src|href)=["']([^"']+)["']/);
-        if (!match) {
-            if (tagString.includes('<script>')) {
-                const content = tagString.replace(/<\/?script>/g, '').trim();
-                return document.body.innerHTML.includes(content);
-            }
-            return false;
+        assetList = assetList.filter((url) => !this.isAssetLoaded(url));
+        const cssUrls = assetList.filter((url) => url.endsWith('.css'));
+        const jsUrls = assetList.filter((url) => url.endsWith('.js'));
+        await Promise.all(cssUrls.map((url) => this.injectCss(url)));
+        for (const url of jsUrls) {
+            await import(url);
         }
-        const path = match[1];
-        const selector = `[src*="${path}"], [href*="${path}"]`;
-        return document.querySelector(selector) !== null;
     },
+    /**
+     * @param {string} url
+     * @return {boolean}
+     */
+    isAssetLoaded: function(url) {
+        return !!document.querySelector(`[src*="${url}"], [href*="${url}"]`);
+    },
+    /**
+     * @param url
+     * @return {Promise<void>}
+     */
+    injectCss: async function (url) {
+        return new Promise((resolve) => {
+            if (document.querySelector(`link[href="${url}"]`)) return resolve();
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = url;
+            link.onload = resolve;
+            document.head.appendChild(link);
+        });
+    }
 };
