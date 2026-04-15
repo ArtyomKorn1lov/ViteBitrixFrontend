@@ -1,8 +1,8 @@
 <?php
 
-namespace Site;
+namespace Rest\Site\Core\Providers;
 
-class ViteFrontendHelper
+class ViteFrontendBridge
 {
     /** @var string */
     protected const string ASSETS_PATH = 'dist';

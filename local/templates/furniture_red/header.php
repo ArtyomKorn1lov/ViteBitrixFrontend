@@ -5,6 +5,7 @@ IncludeTemplateLangFile(__FILE__);
 use Bitrix\Main\Page\Asset;
 
 Bitrix\Main\UI\Extension::load("main.core");
+Bitrix\Main\Loader::includeModule('main.site');
 
 ?>
 <!DOCTYPE html>

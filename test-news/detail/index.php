@@ -3,7 +3,7 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("News Detail");
 
 use Bitrix\Main\Web\Json;
-use Site\ViteFrontendHelper;
+use Rest\Site\Core\Providers\ViteFrontendBridge;
 
 ?>
 
@@ -21,5 +21,5 @@ $arNewsJSData = Json::encode($arNewsData);
 </script>
 
 <?php
-ViteFrontendHelper::registerEntry('src/entrypoint/news/detail.ts');
+ViteFrontendBridge::registerEntry('src/entrypoint/news/detail.ts');
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");

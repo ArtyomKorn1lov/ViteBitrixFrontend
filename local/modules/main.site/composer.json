@@ -1,0 +1,17 @@
+{
+    "name": "rest/site",
+    "description": "",
+    "type": "project",
+    "author": "",
+    "license": "MIT",
+    "require": {
+        "php": "^8.4",
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Rest\\Site\\": "lib/"
+        }
+    },
+    "minimum-stability": "stable"
+}
