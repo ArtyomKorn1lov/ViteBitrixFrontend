@@ -39,3 +39,9 @@ $APPLICATION->IncludeComponent("bitrix:menu", "bottom", array(
 	</div>
 </body>
 </html>
+<?php
+ob_start();
+$html = Site\ViteFrontendHelper::createHtmlTags();
+echo $html;
+$APPLICATION->AddViewContent("custom_dependencies", ob_get_clean());
+?>

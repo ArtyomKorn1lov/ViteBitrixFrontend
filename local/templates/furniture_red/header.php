@@ -1,6 +1,11 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 <?
 IncludeTemplateLangFile(__FILE__);
+
+use Bitrix\Main\Page\Asset;
+
+Bitrix\Main\UI\Extension::load("main.core");
+
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
@@ -26,6 +31,10 @@ IncludeTemplateLangFile(__FILE__);
 	</style>
 	<![endif]-->
 
+    <?php
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . '/main.js');
+    $APPLICATION->ShowViewContent("custom_dependencies");
+    ?>
 	<title><?$APPLICATION->ShowTitle()?></title>
 </head>
 <body>
