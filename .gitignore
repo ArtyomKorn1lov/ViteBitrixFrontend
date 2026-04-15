@@ -3,6 +3,7 @@
 /bitrix
 /upload
 /local/php_interface/constants.php
+/local/js/node_modules/
 /*.txt
 /*.html
 ~*.php
@@ -12,3 +13,5 @@
 Thumbs.db
 .DS_Store
 ._.DS_Store
+/vendor/
+.env

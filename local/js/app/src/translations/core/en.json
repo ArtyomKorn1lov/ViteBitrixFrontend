@@ -1,0 +1,39 @@
+{
+  "messages": {
+    "successTitle": "Success",
+    "errorTitle": "Error",
+    "closeButtonText": "Close",
+    "cancelButtonText": "Cancel",
+    "cancelDefaultMessage": "Canceled",
+    "confirmButtonText": "Confirm"
+  },
+  "injection": {
+    "notFound": "{name} not registered in DI"
+  },
+  "api": {
+    "serverError": "An internal error occurred"
+  },
+  "composable": {
+    "emptyRequestMethod": "The request execution method cannot be empty"
+  },
+  "services": {
+    "undefinedValueErrorMessage": "Property {code} is undefined",
+    "emptyValueErrorMessage": "Property {code} is empty",
+    "invalidEmailErrorMessage": "Email invalid of property {code}",
+    "invalidPhoneErrorMessage": "Phone invalid of property {code}",
+    "invalidClassInstance": "Property {code} is not instance of {className}"
+  },
+  "utils": {
+    "env": {
+      "initErrorMessage": "Error! Environment variables not found",
+      "emptyArgErrorMessage": "Environment variable code cannot be empty"
+    },
+    "file": {
+      "emptyFileErrorMessage": "File can not been empty"
+    },
+    "template": {
+      "emptyIconErrorMessage": "Icon code can not be empty",
+      "emptyCodeErrorMessage": "Page element code can not be empty"
+    }
+  }
+}
