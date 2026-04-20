@@ -1,5 +1,7 @@
 export type * from '@/core/types';
+export * from '@/core/interfaces';
 export * from '@/core/dependency-injection';
+export * from '@/core/service-ids';
 export * from '@/core/enums';
 export * from '@/core/exceptions';
 export * from '@/core/models';

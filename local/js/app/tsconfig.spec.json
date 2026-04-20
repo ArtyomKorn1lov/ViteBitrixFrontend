@@ -8,6 +8,8 @@
     "allowSyntheticDefaultImports": true,
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "types": ["jest", "node", "vite/client"],
     "paths": {
       "@/*": ["./src/*"]

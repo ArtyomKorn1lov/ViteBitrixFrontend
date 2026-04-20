@@ -48,12 +48,12 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 import { ElButton, ElForm, ElFormItem, ElInput, FormInstance, FormRules } from 'element-plus';
-import { CommonResponse, DependencyInjection, EmailRegex, MessageHelper, MessageTypes, ResponseStatus, useFetch } from '@/core';
+import { CommonResponse, DependencyContainer, EmailRegex, MessageHelper, MessageTypes, ResponseStatus, useFetch } from '@/core';
 import { FeedbackModel } from '@/modules/feedback/models';
 import { SendFeedback } from '@/modules/feedback';
 
 const fetchFeedback = useFetch<SendFeedback, CommonResponse>({
-  useCase: DependencyInjection.resolve('SendFeedback') as SendFeedback,
+  useCase: DependencyContainer.get(SendFeedback),
   messageType: MessageTypes.messageBox,
 });
 
@@ -75,12 +75,28 @@ const formData = reactive<FeedbackModel>({
 
 const rules = reactive<FormRules<FeedbackModel>>({
   name: [
-    { required: true, message: 'Field is required', trigger: 'blur' },
-    { required: true, message: 'Field is required', trigger: 'change' },
+    {
+      required: true,
+      message: 'Field is required',
+      trigger: 'blur',
+    },
+    {
+      required: true,
+      message: 'Field is required',
+      trigger: 'change',
+    },
   ],
   email: [
-    { required: true, message: 'Field is required', trigger: 'blur' },
-    { required: true, message: 'Field is required', trigger: 'change' },
+    {
+      required: true,
+      message: 'Field is required',
+      trigger: 'blur',
+    },
+    {
+      required: true,
+      message: 'Field is required',
+      trigger: 'change',
+    },
     {
       validator: emailValidator,
       trigger: 'blur',

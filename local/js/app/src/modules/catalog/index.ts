@@ -1,4 +1,6 @@
 export * from '@/modules/catalog/models';
+export * from '@/modules/catalog/interfaces';
+export * from '@/modules/catalog/service-ids';
 export * from '@/modules/catalog/repositories';
 export * from '@/modules/catalog/use-case';
 export * from '@/modules/catalog/store';

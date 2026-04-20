@@ -1,34 +1,37 @@
+import { injectable } from 'inversify';
 import Translations from '@/translations';
 import { EmailRegex, PhoneRegex } from '@/core/constants.ts';
 import { ValidationException } from '@/core/exceptions/index.ts';
 import { ArrayHelper, ObjectHelper, FormatHelper } from '@/core/utils';
+import { ValidationProviderInterface } from '@/core/interfaces';
 
 const t = Translations.global.t;
 
-export default class ValidationProvider {
+@injectable()
+export default class ValidationProvider implements ValidationProviderInterface {
   protected checkUndefined(value: any, code: string): void {
     if (value === undefined) {
       throw new ValidationException(t('core.services.undefinedValueError', { code: code }));
     }
   }
 
-  protected isArray(value: any) {
+  protected isArray(value: any): boolean {
     return ArrayHelper.isArray(value);
   }
 
-  protected isObject(value: any) {
+  protected isObject(value: any): boolean {
     return ObjectHelper.isObject(value);
   }
 
-  protected isEmptyObject(value: any) {
+  protected isEmptyObject(value: any): boolean {
     return ObjectHelper.isEmpty(value);
   }
 
-  protected normalizePhone(value: string) {
+  protected normalizePhone(value: string): string {
     return FormatHelper.normalizePhone(value);
   }
 
-  public checkRequired(value: any, code: string = '') {
+  public checkRequired(value: any, code: string = ''): void {
     this.checkUndefined(value, code);
     if (!value) {
       throw new ValidationException(t('core.services.emptyValueErrorMessage', { code: code }));
@@ -41,7 +44,7 @@ export default class ValidationProvider {
     }
   }
 
-  public checkEmail(value: any, code: string = '') {
+  public checkEmail(value: any, code: string = ''): void {
     if (!value) {
       return;
     }
@@ -50,7 +53,7 @@ export default class ValidationProvider {
     }
   }
 
-  public checkPhone(value: any, code: string = '') {
+  public checkPhone(value: any, code: string = ''): void {
     if (!value) {
       return;
     }
@@ -59,7 +62,7 @@ export default class ValidationProvider {
     }
   }
 
-  public checkInstanceOf(value: any, className: any, code: string) {
+  public checkInstanceOf(value: any, className: any, code: string): void {
     if (!value || !className) {
       return;
     }

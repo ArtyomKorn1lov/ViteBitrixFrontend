@@ -1,15 +1,18 @@
-import { ResponseException, BaseUseCase, CommonResponse, ValidationProvider } from '@/core';
+import { injectable, inject } from 'inversify';
+import { ResponseException, BaseUseCase, CommonResponse, ValidationProviderInterface, ValidationProviderServiceId } from '@/core';
+import { FeedbackRepositoryInterface } from '@/modules/feedback/interfaces';
+import { FeedbackRepositoryServiceId } from '@/modules/feedback/service-ids';
 import { FeedbackModel } from '@/modules/feedback/models';
-import { FeedbackRepositoryInterface } from '@/modules/feedback/repositories';
 
+@injectable()
 export default class SendFeedback extends BaseUseCase {
-  private repository: FeedbackRepositoryInterface;
-  private validationService: ValidationProvider;
-
-  constructor(repository: FeedbackRepositoryInterface, validationService: ValidationProvider) {
+  public constructor(
+    @inject(FeedbackRepositoryServiceId)
+    private repository: FeedbackRepositoryInterface,
+    @inject(ValidationProviderServiceId)
+    private validationService: ValidationProviderInterface,
+  ) {
     super();
-    this.repository = repository;
-    this.validationService = validationService;
   }
 
   public async execute(object: FeedbackModel): Promise<CommonResponse> {

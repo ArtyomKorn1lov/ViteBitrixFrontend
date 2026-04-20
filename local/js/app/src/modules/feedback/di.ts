@@ -1,6 +1,5 @@
-import { DependencyInjection } from '@/core';
+import { DependencyContainer } from '@/core';
+import { FeedbackRepositoryServiceId } from '@/modules/feedback/service-ids';
 import { FeedbackRepository } from '@/modules/feedback/repositories';
-import { SendFeedback } from '@/modules/feedback/use-case';
 
-DependencyInjection.register('FeedbackRepositoryInterface', FeedbackRepository, ['ApiClient']);
-DependencyInjection.register('SendFeedback', SendFeedback, ['FeedbackRepositoryInterface', 'ValidationProvider']);
+DependencyContainer.bind(FeedbackRepositoryServiceId).to(FeedbackRepository);

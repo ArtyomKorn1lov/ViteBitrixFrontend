@@ -1,3 +1,3 @@
-import DependencyInjection from '@/core/dependency-injection/DependencyInjection';
+import DependencyContainer from '@/core/dependency-injection/DependencyContainer';
 
-export { DependencyInjection };
+export { DependencyContainer };
