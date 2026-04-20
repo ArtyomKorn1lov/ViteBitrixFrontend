@@ -21,5 +21,5 @@ $arNewsJSData = Json::encode($arNewsData);
 </script>
 
 <?php
-ViteFrontendBridge::registerEntry('src/entrypoint/news/detail.ts');
+ViteFrontendBridge::registerEntry('news.detail');
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");

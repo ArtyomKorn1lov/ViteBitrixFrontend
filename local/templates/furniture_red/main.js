@@ -1,7 +1,7 @@
 BX.namespace("BX.Globals");
 
 /**
- * @param {{ isDev: string, path: string }} config
+ * @param {{ isDev: string, path: string, entryPathTemplate: string }} config
  */
 function addGlobalViteConfig(config) {
     if (!BX) {
@@ -17,11 +17,18 @@ BX.Globals.AsyncViteLoader = {
      */
     load: function (entrypoint) {
         return new Promise((resolve, reject) => {
+            /** @type {{isDev: string, path: string, entryPathTemplate: string}} */
             const config = BX.Globals.ViteConfig;
             if (!config || !entrypoint) {
                 return reject();
             }
             if (config.isDev) {
+                const [moduleName, entryName] = entrypoint.split('.');
+                const replacements = {
+                    '#module_name#': moduleName,
+                    '#entry_name#': entryName
+                };
+                entrypoint = config.entryPathTemplate.replace(/#module_name#|#entry_name#/g, matched => replacements[matched]);
                 this.injectAssetInDev(`${config.path}/@vite/client`, true)
                     .then(() => {
                         return this.injectAssetInDev(`${config.path}/${entrypoint}`, true);
@@ -49,7 +56,7 @@ BX.Globals.AsyncViteLoader = {
      * @param {boolean} isModule
      * @return {Promise<any>}
      */
-    injectAssetInDev: function(path, isModule = false) {
+    injectAssetInDev: function (path, isModule = false) {
         return new Promise((resolve, reject) => {
             if (document.querySelector(`script[src="${path}"]`)) {
                 return resolve();
@@ -65,7 +72,7 @@ BX.Globals.AsyncViteLoader = {
     /**
      * @param {string[]} assetList
      */
-    injectAssets: async function(assetList) {
+    injectAssets: async function (assetList) {
         if (!assetList || assetList.length <= 0) {
             return;
         }
@@ -81,7 +88,7 @@ BX.Globals.AsyncViteLoader = {
      * @param {string} url
      * @return {boolean}
      */
-    isAssetLoaded: function(url) {
+    isAssetLoaded: function (url) {
         return !!document.querySelector(`[src*="${url}"], [href*="${url}"]`);
     },
     /**

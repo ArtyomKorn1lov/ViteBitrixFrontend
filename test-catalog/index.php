@@ -40,7 +40,7 @@ $arCatalogJSData = Json::encode($arCatalogData);
             const button = document.getElementById('form-async-load');
 
             button.addEventListener('click', function () {
-                BX.Globals.AsyncViteLoader.load('src/entrypoint/feedback/form.ts')
+                BX.Globals.AsyncViteLoader.load('feedback.form')
                     .then(function () {
                         button.remove();
                         BX.Components.FeedbackForm(<?= $arFormJSData ?>);
@@ -50,5 +50,5 @@ $arCatalogJSData = Json::encode($arCatalogData);
     </script>
 
 <?php
-ViteFrontendBridge::registerEntry('src/entrypoint/catalog/list.ts');
+ViteFrontendBridge::registerEntry('catalog.list');
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

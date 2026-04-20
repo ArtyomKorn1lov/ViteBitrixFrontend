@@ -6,6 +6,8 @@ class ViteFrontendBridge
 {
     /** @var string */
     protected const string ASSETS_PATH = 'dist';
+    /** @var string */
+    protected const string ENTRY_PATH_TEMPLATE = 'src/modules/#module_name#/entrypoint/#entry_name#.ts';
 
     /** @var array */
     public static array $entries = [];
@@ -19,7 +21,7 @@ class ViteFrontendBridge
         if (empty($entry) || in_array($entry, static::$entries)) {
             return;
         }
-        self::$entries[] = $entry;
+        self::$entries[] = static::createEntryPath($entry);
     }
 
     /**
@@ -32,6 +34,7 @@ class ViteFrontendBridge
         $viteConfig = [
             'isDev' => $isDev,
             'path' => $isDev ? static::getViteWatchUrl() : SITE_DIR . $_ENV['APP_FRONTEND_PATH'] . '/'. static::ASSETS_PATH,
+            'entryPathTemplate' => self::ENTRY_PATH_TEMPLATE,
         ];
         $result[] = "<script>BX.ready(function () { addGlobalViteConfig( " . json_encode($viteConfig) . " ); });</script>";
         return implode('', $result);
@@ -65,6 +68,16 @@ class ViteFrontendBridge
             $result = array_merge($result, $tagList);
         }
         return array_unique($result);
+    }
+
+    /**
+     * @param string $entry
+     * @return string
+     */
+    protected static function createEntryPath(string $entry): string
+    {
+        list($moduleName, $entryName) = explode('.', $entry);
+        return str_replace(['#module_name#', '#entry_name#'], [$moduleName, $entryName], self::ENTRY_PATH_TEMPLATE);
     }
 
     /**

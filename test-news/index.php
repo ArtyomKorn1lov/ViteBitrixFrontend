@@ -34,6 +34,6 @@ $arCatalogJSData = Json::encode($arCatalogData);
 </script>
 
 <?php
-ViteFrontendBridge::registerEntry('src/entrypoint/news/list.ts');
-ViteFrontendBridge::registerEntry('src/entrypoint/catalog/list.ts');
+ViteFrontendBridge::registerEntry('news.list');
+ViteFrontendBridge::registerEntry('catalog.list');
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

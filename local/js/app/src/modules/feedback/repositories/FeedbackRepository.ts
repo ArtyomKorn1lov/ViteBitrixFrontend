@@ -1,13 +1,12 @@
 import { inject, injectable } from 'inversify';
-import { ApiClientInterface, CommonResponse } from '@/core';
+import { ApiClientInterface, ApiClientServiceId, CommonResponse } from '@/core';
 import { FeedbackRepositoryInterface } from '@/modules/feedback/interfaces';
-import { FeedbackRepositoryServiceId } from '@/modules/feedback/service-ids';
 import { FeedbackModel } from '@/modules/feedback/models';
 
 @injectable()
 export default class FeedbackRepository implements FeedbackRepositoryInterface {
   public constructor(
-    @inject(FeedbackRepositoryServiceId)
+    @inject(ApiClientServiceId)
     private readonly apiClient: ApiClientInterface,
   ) {}
 

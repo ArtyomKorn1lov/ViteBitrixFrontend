@@ -50,7 +50,7 @@ import { reactive, ref } from 'vue';
 import { ElButton, ElForm, ElFormItem, ElInput, FormInstance, FormRules } from 'element-plus';
 import { CommonResponse, DependencyContainer, EmailRegex, MessageHelper, MessageTypes, ResponseStatus, useFetch } from '@/core';
 import { FeedbackModel } from '@/modules/feedback/models';
-import { SendFeedback } from '@/modules/feedback';
+import { SendFeedback } from '@/modules/feedback/use-case';
 
 const fetchFeedback = useFetch<SendFeedback, CommonResponse>({
   useCase: DependencyContainer.get(SendFeedback),

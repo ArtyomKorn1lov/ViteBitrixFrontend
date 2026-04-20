@@ -21,5 +21,5 @@ $arJSData = Json::encode($arData);
 </script>
 
 <?php
-ViteFrontendBridge::registerEntry('src/entrypoint/feedback/form.ts');
+ViteFrontendBridge::registerEntry('feedback.form');
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
