@@ -1,10 +1,10 @@
 import { ref } from 'vue';
-import Translations from '@/translations';
+import Localisation from '@/core/translations/Localisation';
 import { ArgumentException } from '@/core/exceptions';
 import { MessageHelper } from '@/core/utils';
 import { BaseUseCase } from '@/core/use-case';
 
-const t = Translations.global.t;
+const t = Localisation.global.t;
 
 /**
  * @description Примесь с общей логикой обработки запросов, получение информации об ошибке, флаг isLoading и получение данных как реактивного значения

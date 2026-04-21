@@ -1,11 +1,11 @@
 import { injectable } from 'inversify';
-import Translations from '@/translations';
+import Localisation from '@/core/translations/Localisation';
 import { EmailRegex, PhoneRegex } from '@/core/constants.ts';
 import { ValidationException } from '@/core/exceptions/index.ts';
 import { ArrayHelper, ObjectHelper, FormatHelper } from '@/core/utils';
 import { ValidationProviderInterface } from '@/core/interfaces';
 
-const t = Translations.global.t;
+const t = Localisation.global.t;
 
 @injectable()
 export default class ValidationProvider implements ValidationProviderInterface {

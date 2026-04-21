@@ -1,0 +1,39 @@
+{
+  "messages": {
+    "successTitle": "Успешно!",
+    "errorTitle": "Ошибка!",
+    "closeButtonText": "Закрыть",
+    "cancelButtonText": "Отмена",
+    "cancelDefaultMessage": "Отменено",
+    "confirmButtonText": "Подтвердить"
+  },
+  "injection": {
+    "notFound": "{name} не зарегистрирован в DI"
+  },
+  "api": {
+    "serverError": "Произошла внутренняя ошибка"
+  },
+  "composable": {
+    "emptyRequestMethod": "Метод выполнения запроса не может быть пустым"
+  },
+  "services": {
+    "undefinedValueErrorMessage": "Свойство {code} не определено",
+    "emptyValueErrorMessage": "Свойство {code} пустое",
+    "invalidEmailErrorMessage": "Email невалиден для свойства {code}",
+    "invalidPhoneErrorMessage": "Phone невалиден для свойства {code}",
+    "invalidClassInstance": "Свойство {code} не является экземпляром {className}"
+  },
+  "utils": {
+    "env": {
+      "initErrorMessage": "Ошибка! Переменные среды не найдены",
+      "emptyArgErrorMessage": "Код переменной окружения не может быть пустым"
+    },
+    "file": {
+      "emptyFileErrorMessage": "Файл не может быть пустым"
+    },
+    "template": {
+      "emptyIconErrorMessage": "Код иконки не может быть пустым",
+      "emptyCodeErrorMessage": "Код элемента страницы не может быть пустым"
+    }
+  }
+}

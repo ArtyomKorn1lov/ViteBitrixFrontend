@@ -1,6 +1,6 @@
 <?php
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetTitle("Catalog");
+$APPLICATION->SetTitle("Каталог");
 
 use Bitrix\Main\Web\Json;
 use Rest\Site\Core\Providers\ViteFrontendBridge;

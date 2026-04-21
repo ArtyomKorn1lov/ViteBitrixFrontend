@@ -2,5 +2,5 @@
 header('Content-Type: application/json; charset=utf-8');
 
 echo json_encode([
-    "message" => "Feedback send successfully",
+    "message" => "Форма обратной связи была отправлена успешно",
 ]);

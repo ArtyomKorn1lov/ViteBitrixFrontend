@@ -1,6 +1,6 @@
 <?php
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetTitle("News");
+$APPLICATION->SetTitle("Новости");
 
 use Bitrix\Main\Web\Json;
 use Rest\Site\Core\Providers\ViteFrontendBridge;

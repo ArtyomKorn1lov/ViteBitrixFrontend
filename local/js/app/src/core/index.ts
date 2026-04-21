@@ -1,3 +1,8 @@
+import { LocalisationHelper } from '@/core/utils';
+import * as Messages from '@/core/translations';
+
+LocalisationHelper.addMessages('core', Messages);
+
 export type * from '@/core/types';
 export * from '@/core/interfaces';
 export * from '@/core/dependency-injection';
@@ -11,5 +16,6 @@ export * from '@/core/services';
 export * from '@/core/utils';
 export * from '@/core/constants';
 export * from '@/core/composable';
+export * from '@/core/translations';
 
 import '@/core/di';

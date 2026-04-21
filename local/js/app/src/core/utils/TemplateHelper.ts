@@ -1,7 +1,7 @@
-import Translations from '@/translations';
-import { ArgumentException } from '@/core/exceptions/index.ts';
+import Localisation from '@/core/translations/Localisation';
+import { ArgumentException } from '@/core/exceptions';
 
-const t = Translations.global.t;
+const t = Localisation.global.t;
 
 /**
  * @fileOverview

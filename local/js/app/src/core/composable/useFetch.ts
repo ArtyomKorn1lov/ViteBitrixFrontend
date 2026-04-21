@@ -1,10 +1,10 @@
-import Translations from '@/translations';
+import Localisation from '@/core/translations/Localisation';
 import { ArgumentException } from '@/core/exceptions';
 import { MessageTypes } from '@/core/enums';
 import { MessageHelper } from '@/core/utils';
 import { BaseUseCase } from '@/core/use-case';
 
-const t = Translations.global.t;
+const t = Localisation.global.t;
 
 /**
  * @description Примесь с общей логикой обработки запросов, вывод всплывающего окна сообщения об ошибке

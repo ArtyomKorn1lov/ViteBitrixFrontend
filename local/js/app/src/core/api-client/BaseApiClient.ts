@@ -1,12 +1,12 @@
 import axios from 'axios';
-import Translations from '@/translations';
+import Localisation from '@/core/translations/Localisation';
 import { SimpleObject } from '@/core/types';
 import { BodyTypes, RequestTypes } from '@/core/enums';
 import { ResponseException } from '@/core/exceptions';
 import { RequestConfig, RequestResponse } from '@/core/models';
 import { ObjectHelper } from '@/core/utils';
 
-const t = Translations.global.t;
+const t = Localisation.global.t;
 
 /**
  * @description абстрактный класс REST API-клиента, доступные типы запросов: GET, PUT, POST, DELETE

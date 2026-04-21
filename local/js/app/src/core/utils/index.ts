@@ -4,5 +4,6 @@ import * as ArrayHelper from '@/core/utils/ArrayHelper';
 import * as ObjectHelper from '@/core/utils/ObjectHelper';
 import * as FileHelper from '@/core/utils/FileHelper';
 import * as FormatHelper from '@/core/utils/FormatHelper';
+import * as LocalisationHelper from '@/core/utils/LocalisationHelper';
 
-export { MessageHelper, TemplateHelper, ArrayHelper, ObjectHelper, FileHelper, FormatHelper };
+export { MessageHelper, TemplateHelper, ArrayHelper, ObjectHelper, FileHelper, FormatHelper, LocalisationHelper };
