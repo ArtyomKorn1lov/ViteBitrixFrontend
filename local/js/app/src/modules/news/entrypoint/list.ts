@@ -1,3 +1,4 @@
+import '@/ui';
 import { SimpleObject } from '@/core';
 import { catalogPiniaInstance } from '@/modules/catalog';
 import { NewList } from '@/modules/news';

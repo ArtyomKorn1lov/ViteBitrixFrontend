@@ -1,0 +1,16 @@
+.b-section {
+
+  &_pt {
+    padding-top: $m35;
+  }
+
+  &_pb {
+    padding-bottom: $m35;
+  }
+
+  &__top {
+    @include flex(column);
+    gap: $m10;
+    margin-bottom: $m20;
+  }
+}

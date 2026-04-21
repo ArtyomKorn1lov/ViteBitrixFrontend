@@ -1,3 +1,4 @@
+import '@/ui';
 import { SimpleObject } from '@/core';
 import { CatalogList, ElPlus, catalogPiniaInstance } from '@/modules/catalog';
 import Localisation from '@/core/translations/Localisation';

@@ -1,0 +1,26 @@
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 0;
+}
+
+span {
+  @extend %textDefaultOptions;
+  line-height: $leadingSmall;
+}
+
+p {
+  @extend %textDefaultOptions;
+  margin-top: $m10;
+  margin-bottom: $m10;
+  line-height: $leadingTited;
+}
+
+a {
+  @extend %textDefaultOptions;
+  line-height: $leadingSmall;
+  text-decoration: none;
+
+  &:hover,
+  &:active {
+    color: $colorPrimaryHover;
+  }
+}

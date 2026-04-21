@@ -1,0 +1,79 @@
+.b-btn.el-button + .el-button {
+  margin-left: 0;
+}
+
+.el-button.b-btn {
+  &_primary {
+    @extend %buttonDefaultOptions;
+    padding: $m5 $m10;
+
+    &.is-disabled {
+      @extend %buttonDisabledOptions;
+    }
+  }
+
+  &_secondary {
+    @extend %buttonDefaultOptions;
+    padding: $m5 $m10;
+    background-color: $colorWhite;
+    border: 1px solid $colorLightGrey;
+
+    span,
+    p {
+      color: $colorWhite;
+      stroke: $colorWhite;
+    }
+
+    &.is-disabled {
+      @extend %buttonDisabledOptions;
+    }
+
+    &:hover,
+    &:active {
+      background-color: $colorGrey;
+      border-color: $colorLightGrey;
+
+      span,
+      p {
+        color: $colorWhite;
+        stroke: $colorWhite;
+      }
+    }
+  }
+
+  &_medium {
+    padding: $m5;
+    height: $m25;
+  }
+
+  &_large {
+    padding: $m10;
+    height: $m40;
+
+    span,
+    p {
+      font-size: $textRegular;
+    }
+  }
+
+  &_full {
+    width: $full;
+  }
+
+  &_icon {
+    span,
+    p {
+      @include flex(false, center);
+      gap: $m5;
+
+      svg {
+        width: $m15;
+        height: $m15;
+      }
+    }
+  }
+
+  &_tag {
+    @extend %tagDefaultOptions;
+  }
+}

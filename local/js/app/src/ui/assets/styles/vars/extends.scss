@@ -1,0 +1,77 @@
+// Наследуемые стили
+%textDefaultOptions {
+  font-weight: $textMedium;
+  line-height: $leadingTited;
+  color: $colorText;
+}
+
+%buttonDefaultOptions {
+  background-color: $colorPrimary;
+  color: $colorWhite;
+  border-color: transparent;
+  height: $m40;
+  border-radius: $rounded4;
+
+  span,
+  p {
+    font-family: 'Inter', sans-serif;
+    color: $colorWhite;
+    line-height: normal;
+    stroke: $colorWhite;
+  }
+
+  &:hover,
+  &:active {
+    background-color: $colorPrimaryHover;
+    border-color: transparent;
+  }
+}
+
+%buttonDisabledOptions {
+  background-color: $colorGrey;
+  color: $colorWhite;
+  border-color: transparent;
+
+  span,
+  p {
+    color: $colorWhite;
+  }
+
+  &:hover,
+  &:active {
+    background-color: $colorGrey;
+
+    span,
+    p {
+      color: $colorWhite;
+    }
+  }
+}
+
+%inputDefaultOptions {
+  border: 1px solid $colorLightGrey;
+  box-shadow: none;
+  box-sizing: border-box;
+  padding-left: 12px;
+  padding-right: 12px;
+  height: $m40;
+}
+
+%tagDefaultOptions {
+  @include tagPalette();
+  border-color: transparent;
+  height: $m25;
+  border-radius: $rounded4;
+
+  span,
+  p {
+    font-family: 'Inter', sans-serif;
+    font-weight: $textMedium;
+    line-height: normal;
+  }
+
+  &:hover,
+  &:active {
+    border-color: transparent;
+  }
+}

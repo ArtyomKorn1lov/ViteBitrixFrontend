@@ -1,0 +1,100 @@
+// Миксины, c логикой
+@use 'sass:map';
+
+@mixin flex($direction: false, $items: false, $justify: false) {
+  display: flex;
+
+  @if $direction {
+    flex-direction: $direction;
+  }
+
+  @if $items {
+    align-items: $items;
+  }
+
+  @if $justify {
+    justify-content: $justify;
+  }
+}
+
+@mixin grid($cols: false, $rows: false, $gap: false) {
+  display: grid;
+
+  @if $cols {
+    grid-template-columns: repeat($cols, minmax(0, 1fr));
+  }
+
+  @if $rows {
+    grid-template-rows: repeat($rows, minmax(0, 1fr));
+  }
+
+  @if $gap {
+    gap: $gap;
+  }
+}
+
+@mixin tagPalette($code: default) {
+  background-color: map.get($colorTags, $code);
+
+  span {
+    color: map.get($colorTags, $code + -text);
+  }
+
+  &:hover,
+  &:active {
+    background-color: map.get($colorTags, $code + -hover);
+
+    span {
+      color: map.get($colorTags, $code + -text-hover);
+    }
+  }
+}
+
+@mixin selectTagsPalette($code: default) {
+  &.el-select {
+    &-dropdown {
+      &__item {
+        span {
+          color: map.get($colorTags, $code + -text);
+        }
+
+        &.is-selected {
+          color: map.get($colorTags, $code + -text-hover);
+        }
+
+        &.is-hovering {
+          background-color: map.get($colorTags, $code);
+
+          span {
+            color: map.get($colorTags, $code + -text-hover);
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin selectInputTagsPalette($code: default) {
+  .el-select {
+    &__selected-item {
+      span {
+        color: map.get($colorTags, $code + -text);
+        font-weight: $textSemibold;
+      }
+    }
+  }
+}
+
+@mixin containerListHeight($breakpoint: default) {
+  @if $breakpoint ==$sml {
+    max-height: calc(100vh - 317px);
+  } @else if $breakpoint ==$xs {
+    max-height: calc(100vh - 350px);
+  } @else if $breakpoint ==$md {
+    max-height: calc(100vh - 267px);
+  } @else if $breakpoint ==$sm {
+    max-height: calc(100vh - 307px);
+  } @else {
+    max-height: calc(100vh - 257px);
+  }
+}

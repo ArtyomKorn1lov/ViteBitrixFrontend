@@ -1,0 +1,4 @@
+.b-forum {
+  @include flex(column);
+  gap: $m15;
+}

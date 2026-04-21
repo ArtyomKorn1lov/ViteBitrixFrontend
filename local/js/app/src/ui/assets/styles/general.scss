@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.b-body {
+  font-family: 'Inter', sans-serif;
+  font-size: $textSmall2;
+  font-weight: $textMedium;
+  background-color: $colorWhite;
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+.custom-scroll {
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: $rounded4;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: $rounded4;
+    background: $colorLightGrey;
+  }
+}
+
+.overflow-y {
+  overflow-y: auto;
+  margin-right: -10px;
+}
+
+@media (max-width: $md) {
+  .overflow-y {
+    margin-right: -7px;
+    padding-right: 3px;
+  }
+}

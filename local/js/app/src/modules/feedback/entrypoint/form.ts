@@ -1,3 +1,4 @@
+import '@/ui';
 import { SimpleObject } from '@/core';
 import { FeedbackForm } from '@/modules/feedback';
 import Localisation from '@/core/translations/Localisation';
