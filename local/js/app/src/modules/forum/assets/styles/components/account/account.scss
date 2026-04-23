@@ -1,0 +1,10 @@
+@use "@/ui/assets/styles" as ui;
+
+.b-account {
+  @include ui.flex(column);
+  gap: ui.$m5;
+
+  &_row {
+    @include ui.flex(row, center);
+  }
+}

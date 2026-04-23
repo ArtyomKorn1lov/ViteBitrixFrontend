@@ -2,5 +2,10 @@
   "main": {
     "title": "Новостной портал",
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam error eveniet nisi omnis perspiciatis, quia ratione reiciendis? Debitis dicta ducimus et quae quaerat quisquam rem reprehenderit saepe tempore vitae. Cumque, distinctio eaque expedita inventore nobis possimus quaerat sapiente vitae voluptatem voluptatibus. Aliquid deserunt eaque exercitationem natus quidem ratione vitae voluptatibus?"
+  },
+  "topic": {
+    "datePublishTitle": "Дата публикации: ",
+    "showMoreTitle": "Подробнее",
+    "detailText": "Перейти"
   }
 }

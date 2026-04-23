@@ -1,16 +1,18 @@
+@use '@/ui/assets/styles/vars' as ui;
+
 .b-section {
 
   &_pt {
-    padding-top: $m35;
+    padding-top: ui.$m35;
   }
 
   &_pb {
-    padding-bottom: $m35;
+    padding-bottom: ui.$m35;
   }
 
   &__top {
-    @include flex(column);
-    gap: $m10;
-    margin-bottom: $m20;
+    @include ui.flex(column);
+    gap: ui.$m10;
+    margin-bottom: ui.$m20;
   }
 }

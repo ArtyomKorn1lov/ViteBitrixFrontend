@@ -38,10 +38,12 @@
     "vite": "^7.2.4",
     "vite-hotfile-plugin": "^1.0.2",
     "vite-plugin-live-reload": "^3.0.5",
+    "vite-svg-loader": "^5.1.1",
     "vue-eslint-parser": "^10.2.0",
     "vue-tsc": "^3.1.4"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
     "axios": "^1.13.2",
     "element-plus": "^2.13.0",
     "inversify": "^8.1.0",

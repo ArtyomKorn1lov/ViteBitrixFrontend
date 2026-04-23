@@ -1,0 +1,19 @@
+@use "@/ui/assets/styles/vars" as ui;
+
+.b-tag {
+  @extend %tagDefaultOptions;
+  padding-left: ui.$m5;
+  padding-right: ui.$m5;
+
+  &_catalog {
+    @include ui.tagPalette(catalog);
+  }
+
+  &_news {
+    @include ui.tagPalette(news);
+  }
+
+  &_offers {
+    @include ui.tagPalette(offers);
+  }
+}

@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import svgLoader from 'vite-svg-loader';
 import { resolve } from 'path';
 // @ts-ignore
 import hotFilePlugin from 'vite-hotfile-plugin';
@@ -43,6 +44,7 @@ export default defineConfig(({ mode }) => {
     envPrefix: 'APP_',
     plugins: [
       vue(),
+      svgLoader(),
       ElementPlus({
         format: 'esm',
       }),

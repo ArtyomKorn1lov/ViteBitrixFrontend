@@ -1,6 +1,6 @@
-@import 'breakpoints';
-@import 'colors';
-@import 'fonts';
-@import 'blocks';
-@import 'mixins';
-@import 'extends';
+@forward 'breakpoints';
+@forward 'colors';
+@forward 'fonts';
+@forward 'blocks';
+@forward 'mixins';
+@forward 'extends';

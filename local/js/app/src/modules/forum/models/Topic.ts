@@ -1,5 +1,4 @@
-import { Picture } from '@/core';
-import Tag from '@/modules/forum/models/Tag.ts';
+import { Picture, Tag } from '@/core';
 import Author from '@/modules/forum/models/Author';
 
 interface Topic {
@@ -8,6 +7,7 @@ interface Topic {
   date: string | Date;
   author: Author;
   views: number;
+  detailUrl: string;
   tags?: Tag[];
   description?: string;
   pictures?: Picture[];

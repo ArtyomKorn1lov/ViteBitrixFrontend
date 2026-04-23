@@ -1,5 +1,8 @@
 // Миксины, c логикой
 @use 'sass:map';
+@use 'fonts' as *;
+@use 'colors' as *;
+@use 'blocks' as *;
 
 @mixin flex($direction: false, $items: false, $justify: false) {
   display: flex;
@@ -35,60 +38,13 @@
 
 @mixin tagPalette($code: default) {
   background-color: map.get($colorTags, $code);
-
-  span {
-    color: map.get($colorTags, $code + -text);
-  }
-
-  &:hover,
-  &:active {
-    background-color: map.get($colorTags, $code + -hover);
-
-    span {
-      color: map.get($colorTags, $code + -text-hover);
-    }
-  }
-}
-
-@mixin selectTagsPalette($code: default) {
-  &.el-select {
-    &-dropdown {
-      &__item {
-        span {
-          color: map.get($colorTags, $code + -text);
-        }
-
-        &.is-selected {
-          color: map.get($colorTags, $code + -text-hover);
-        }
-
-        &.is-hovering {
-          background-color: map.get($colorTags, $code);
-
-          span {
-            color: map.get($colorTags, $code + -text-hover);
-          }
-        }
-      }
-    }
-  }
-}
-
-@mixin selectInputTagsPalette($code: default) {
-  .el-select {
-    &__selected-item {
-      span {
-        color: map.get($colorTags, $code + -text);
-        font-weight: $textSemibold;
-      }
-    }
-  }
+  color: map.get($colorTags, $code + -text);
 }
 
 @mixin containerListHeight($breakpoint: default) {
   @if $breakpoint ==$sml {
     max-height: calc(100vh - 317px);
-  } @else if $breakpoint ==$xs {
+  } @else if $breakpoint == $xs {
     max-height: calc(100vh - 350px);
   } @else if $breakpoint ==$md {
     max-height: calc(100vh - 267px);

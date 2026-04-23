@@ -1,2 +1,2 @@
-@import 'ui/index';
-@import 'section/index';
+@forward 'ui';
+@forward 'section';

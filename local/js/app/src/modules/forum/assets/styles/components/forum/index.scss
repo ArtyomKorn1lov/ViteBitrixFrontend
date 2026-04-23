@@ -1,2 +1,3 @@
-@import "forum";
-@import "forum-group";
+@forward 'forum';
+@forward 'forum-group';
+@forward 'forum-topic';

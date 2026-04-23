@@ -1,6 +1,6 @@
-@import 'vars/index';
-@import 'fonts';
-@import 'general';
-@import 'typography';
-@import 'animation';
-@import 'components/index';
+@forward 'vars';
+@forward 'fonts';
+@forward 'general';
+@forward 'typography';
+@forward 'animation';
+@forward 'components';

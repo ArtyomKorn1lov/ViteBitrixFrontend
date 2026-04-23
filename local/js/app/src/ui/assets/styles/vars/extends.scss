@@ -1,4 +1,9 @@
 // Наследуемые стили
+@use 'fonts' as *;
+@use 'colors' as *;
+@use 'blocks' as *;
+@use 'mixins' as *;
+
 %textDefaultOptions {
   font-weight: $textMedium;
   line-height: $leadingTited;
@@ -6,30 +11,31 @@
 }
 
 %buttonDefaultOptions {
-  background-color: $colorPrimary;
-  color: $colorWhite;
+  background-color: $colorPrimary !important;
+  color: $colorWhite !important;
   border-color: transparent;
   height: $m40;
   border-radius: $rounded4;
+  box-sizing: border-box;
 
   span,
   p {
     font-family: 'Inter', sans-serif;
-    color: $colorWhite;
     line-height: normal;
-    stroke: $colorWhite;
+    stroke: $colorPrimary;
   }
 
   &:hover,
   &:active {
-    background-color: $colorPrimaryHover;
+    background-color: $colorPrimaryHover !important;
+    color: $colorText !important;
     border-color: transparent;
   }
 }
 
 %buttonDisabledOptions {
-  background-color: $colorGrey;
-  color: $colorWhite;
+  background-color: $colorGrey !important;
+  color: $colorWhite !important;
   border-color: transparent;
 
   span,
@@ -39,7 +45,7 @@
 
   &:hover,
   &:active {
-    background-color: $colorGrey;
+    background-color: $colorGrey !important;
 
     span,
     p {
@@ -62,16 +68,4 @@
   border-color: transparent;
   height: $m25;
   border-radius: $rounded4;
-
-  span,
-  p {
-    font-family: 'Inter', sans-serif;
-    font-weight: $textMedium;
-    line-height: normal;
-  }
-
-  &:hover,
-  &:active {
-    border-color: transparent;
-  }
 }

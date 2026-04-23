@@ -1,0 +1,37 @@
+@use '@/ui/assets/styles/vars' as ui;
+
+.b-gallery,
+.el-carousel.b-gallery {
+  width: ui.$full;
+  height: ui.$full;
+
+  &__item {
+    @include ui.flex(false, center, center);
+  }
+
+  &_small {
+    max-width: 300px;
+
+    .el-carousel {
+
+      &__container {
+        height: 250px;
+      }
+    }
+
+    .b-gallery {
+
+      &__item {
+        max-width: 300px;
+        max-height: 250px;
+      }
+
+      &__img {
+
+        &-wrap {
+          max-width: 200px;
+        }
+      }
+    }
+  }
+}

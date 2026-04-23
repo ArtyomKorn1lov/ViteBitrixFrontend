@@ -1,0 +1,88 @@
+@use "@/ui/assets/styles" as ui;
+
+.b-forum-topic,
+.el-card.b-forum-topic {
+  background-color: transparent;
+  color: ui.$colorWhite;
+  border-radius: ui.$rounded10;
+  box-shadow: 2px 2px ui.$m15 0 ui.$colorShadow;
+
+  .el-card {
+
+    &__header,
+    &__footer {
+      padding: ui.$m10;
+    }
+
+    &__body {
+      padding: ui.$m10;
+    }
+  }
+
+  &__header {
+    @include ui.flex(false, center, space-between);
+    gap: ui.$m10;
+
+    &-left {
+      @include ui.flex(false, center);
+      gap: ui.$m10;
+    }
+  }
+
+  &__footer {
+    @include ui.flex(false, center, space-between);
+    gap: ui.$m10;
+  }
+
+  &__tags {
+    @include ui.flex(false, center);
+    gap: ui.$m5;
+    flex-wrap: wrap;
+  }
+
+  &__watch {
+    @include ui.flex(false, center);
+    gap: ui.$m5;
+  }
+
+  .el-collapse {
+    border-top: 0;
+    border-bottom: 0;
+  }
+
+  &__container {
+
+    .el-collapse-item {
+
+      &__header {
+        background: none;
+        border-bottom: 0;
+        color: ui.$colorWhite;
+      }
+
+      &__wrap {
+        background: none;
+        border-bottom: 0;
+      }
+
+      &__content {
+        @include ui.flex(column, start);
+        gap: ui.$m15;
+        color: ui.$colorWhite;
+      }
+
+      &__arrow {
+        fill: ui.$colorWhite;
+        color: ui.$colorWhite;
+      }
+    }
+  }
+
+  &__slider {
+    @include ui.flex(false, center, center);
+    box-sizing: border-box;
+    padding-left: ui.$m15;
+    padding-right: ui.$m15;
+    width: ui.$full;
+  }
+}

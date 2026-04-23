@@ -1,4 +1,44 @@
-.b-forum-group {
-  @include flex(column);
-  gap: $m15;
+@use "@/ui/assets/styles" as ui;
+
+.b-forum-group,
+.el-collapse-item.b-forum-group {
+  background-color: ui.$colorBgBlock;
+  padding: ui.$m15;
+  border-radius: ui.$rounded10;
+  border: ui.$border1 solid ui.$colorGrey;
+  box-shadow: 8px 8px ui.$m15 0 ui.$colorShadow;
+
+  .el-collapse-item {
+
+    &__header {
+      background: none;
+      border-bottom: 0;
+      margin-bottom: ui.$m15;
+    }
+
+    &__wrap {
+      background: none;
+      border-bottom: 0;
+    }
+
+    &__arrow {
+      fill: ui.$colorWhite;
+      color: ui.$colorWhite;
+    }
+  }
+
+  &__top {
+    @include ui.flex(column);
+    gap: ui.$m5;
+  }
+
+  &__title,
+  &__desc {
+    color: ui.$colorWhite;
+  }
+
+  &__topics {
+    @include ui.flex(column);
+    gap: ui.$m5;
+  }
 }

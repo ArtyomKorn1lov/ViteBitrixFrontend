@@ -1,11 +1,14 @@
+@use '@/ui/assets/styles/vars' as ui;
+
 .b-btn.el-button + .el-button {
   margin-left: 0;
 }
 
+.b-btn,
 .el-button.b-btn {
   &_primary {
     @extend %buttonDefaultOptions;
-    padding: $m5 $m10;
+    padding: ui.$m5 ui.$m10;
 
     &.is-disabled {
       @extend %buttonDisabledOptions;
@@ -14,14 +17,14 @@
 
   &_secondary {
     @extend %buttonDefaultOptions;
-    padding: $m5 $m10;
-    background-color: $colorWhite;
-    border: 1px solid $colorLightGrey;
+    padding: ui.$m5 ui.$m10;
+    background-color: ui.$colorWhite !important;
+    border: 1px solid ui.$colorLightGrey;
+    color: ui.$colorText !important;
 
     span,
     p {
-      color: $colorWhite;
-      stroke: $colorWhite;
+      stroke: ui.$colorText;
     }
 
     &.is-disabled {
@@ -30,50 +33,49 @@
 
     &:hover,
     &:active {
-      background-color: $colorGrey;
-      border-color: $colorLightGrey;
+      background-color: ui.$colorGrey !important;
+      border-color: ui.$colorLightGrey;
+      color: ui.$colorWhite !important;
 
       span,
       p {
-        color: $colorWhite;
-        stroke: $colorWhite;
+        stroke: ui.$colorWhite;
       }
     }
   }
 
   &_medium {
-    padding: $m5;
-    height: $m25;
+    padding: ui.$m10;
+    height: ui.$m35;
   }
 
   &_large {
-    padding: $m10;
-    height: $m40;
-
-    span,
-    p {
-      font-size: $textRegular;
-    }
+    padding: ui.$m15;
+    height: ui.$m45;
   }
 
   &_full {
-    width: $full;
+    width: ui.$full;
   }
 
   &_icon {
     span,
     p {
-      @include flex(false, center);
-      gap: $m5;
+      @include ui.flex(false, center);
+      gap: ui.$m5;
 
       svg {
-        width: $m15;
-        height: $m15;
+        width: ui.$m15;
+        height: ui.$m15;
       }
     }
   }
 
   &_tag {
     @extend %tagDefaultOptions;
+  }
+
+  &__arrow {
+    transform: rotate(270deg);
   }
 }

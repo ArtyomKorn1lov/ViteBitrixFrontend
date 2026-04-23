@@ -1,4 +1,9 @@
-.b-forum {
-  @include flex(column);
-  gap: $m15;
+@use "@/ui/assets/styles" as ui;
+
+.b-forum,
+.el-collapse.b-forum {
+  @include ui.flex(column);
+  gap: ui.$m15;
+  border-top: 0;
+  border-bottom: 0;
 }
