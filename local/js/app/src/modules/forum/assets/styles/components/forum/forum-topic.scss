@@ -1,4 +1,4 @@
-@use "@/ui/assets/styles" as ui;
+@use '@/ui/assets/styles' as ui;
 
 .b-forum-topic,
 .el-card.b-forum-topic {
@@ -8,7 +8,6 @@
   box-shadow: 2px 2px ui.$m15 0 ui.$colorShadow;
 
   .el-card {
-
     &__header,
     &__footer {
       padding: ui.$m10;
@@ -51,9 +50,7 @@
   }
 
   &__container {
-
     .el-collapse-item {
-
       &__header {
         background: none;
         border-bottom: 0;
