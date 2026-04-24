@@ -49,13 +49,13 @@
 import { reactive, ref } from 'vue';
 import { ElButton, ElForm, ElFormItem, ElInput, FormInstance, FormRules } from 'element-plus';
 import { useI18n } from 'vue-i18n';
-import { CommonResponse, DependencyContainer, EmailRegex, MessageHelper, MessageTypes, ResponseStatus, useFetch } from '@/core';
+import { CommonResponse, DependencyContainer, EmailRegex, MessageHelper, MessageTypes, ResponseStatus, useFetchOld } from '@/core';
 import { FeedbackModel } from '@/modules/feedback/models';
 import { SendFeedback } from '@/modules/feedback/use-case';
 
 const { t } = useI18n();
 
-const fetchFeedback = useFetch<SendFeedback, CommonResponse>({
+const fetchFeedback = useFetchOld<SendFeedback, CommonResponse>({
   useCase: DependencyContainer.get(SendFeedback),
   messageType: MessageTypes.messageBox,
 });

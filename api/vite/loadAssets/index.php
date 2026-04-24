@@ -5,7 +5,7 @@ header('Content-Type: application/json; charset=utf-8');
 
 Bitrix\Main\Loader::includeModule('main.site');
 
-use Rest\Site\Core\Providers\ViteFrontendBridge;
+use Main\Site\Core\Providers\ViteFrontendBridge;
 
 $entrypoint = $_GET['entry'] ?? '';
 

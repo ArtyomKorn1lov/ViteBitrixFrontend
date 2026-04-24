@@ -12,11 +12,13 @@ if (
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-$controllerNamespaces = [];
+$controllerNamespaces = [
+    'Forum' => 'Topic'
+];
 
 foreach ($controllerNamespaces as $module => $entity) {
     $controller = '\\Main\\Site\\' . $module . '\\Controllers\\' . $entity . 'Controller';
     if (class_exists($controller)) {
-        @class_alias($controller, '\\Site\\RestControllers\\' . $module . $entity);
+        @class_alias($controller, '\\Site\\RestControllers\\' . $entity);
     }
 }

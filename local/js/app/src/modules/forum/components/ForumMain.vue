@@ -15,6 +15,17 @@
           :group="group"
         />
       </el-collapse>
+      <div class="b-section__bottom">
+        <button
+          v-if="showNextBtn"
+          class="b-btn b-btn_medium b-btn_primary"
+          type="button"
+          @click="nextPage"
+          v-loading="isLoading"
+        >
+          {{ t('forum.topic.nextPageTitle') }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -22,26 +33,54 @@
 import { ref } from 'vue';
 import { ElCollapse } from 'element-plus';
 import { useI18n } from 'vue-i18n';
+import { DependencyContainer, useFetch } from '@/core';
+import { GROUPS_LIST_LENGTH } from '@/modules/forum/constants';
 import { Group } from '@/modules/forum/models';
+import { TopicRepositoryInterface } from '@/modules/forum/interfaces';
+import { TopicRepositoryServiceId } from '@/modules/forum/service-ids';
 import GroupComponent from '@/modules/forum/components/Group.vue';
+
+const topicRepository: TopicRepositoryInterface = DependencyContainer.get(TopicRepositoryServiceId);
 
 const { t } = useI18n();
 
 const activeGroupIds = ref<number[]>([]);
+const groups = ref<Group[]>([]);
+const page = ref<number>(1);
+const showNextBtn = ref<boolean>(true);
 
-const groups: Group[] = [
-  {
-    id: 1,
-    title: 'Обсуждение модулей для Magisk',
-    code: 'code-1',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et explicabo facilis id laborum, nemo soluta.',
-  },
-  {
-    id: 2,
-    title: 'Заявки на русификацию приложений',
-    code: 'code-2',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et explicabo facilis id laborum, nemo soluta. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et explicabo facilis id laborum, nemo soluta.',
-  },
-];
+const { fetch: fetchGroups, isLoading } = useFetch<Group[]>({
+  callback: async (page?: number) => await topicRepository.getGroups(page),
+});
+
+const nextPage = async (): Promise<void> => {
+  page.value++;
+  const response: Group[] = await refresh();
+  groups.value = [...groups.value, ...(response ?? [])];
+};
+
+const refresh = async (): Promise<Group[]> => {
+  try {
+    const response: Group[] = await fetchGroups(page.value);
+    checkLength(response.length);
+    return response;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_) {
+    return [];
+  }
+};
+
+const checkLength = (length: number): void => {
+  const result: boolean = length < GROUPS_LIST_LENGTH;
+  if (result) {
+    showNextBtn.value = false;
+  }
+};
+
+const onInit = async (): Promise<void> => {
+  groups.value = await refresh();
+  isLoading.value = true;
+};
+
+onInit();
 </script>

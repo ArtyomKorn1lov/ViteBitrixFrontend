@@ -21,14 +21,31 @@
         :key="item.id"
         :item="item"
       />
+      <button
+        v-if="showNextBtn"
+        class="b-btn b-btn_medium b-btn_primary"
+        type="button"
+        @click="nextPage"
+        v-loading="isLoading"
+      >
+        {{ t('forum.topic.nextPageTitle') }}
+      </button>
     </div>
   </el-collapse-item>
 </template>
 <script setup lang="ts">
 import type { PropType } from 'vue';
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { ElCollapseItem } from 'element-plus';
+import { DependencyContainer, useFetch } from '@/core';
+import { ITEMS_LIST_LENGTH } from '@/modules/forum/constants';
 import { Group, Topic } from '@/modules/forum/models';
+import { TopicRepositoryServiceId } from '@/modules/forum/service-ids';
+import { TopicRepositoryInterface } from '@/modules/forum/interfaces';
 import TopicComponent from '@/modules/forum/components/Topic.vue';
+
+const topicRepository: TopicRepositoryInterface = DependencyContainer.get(TopicRepositoryServiceId);
 
 const { group } = defineProps({
   group: {
@@ -37,60 +54,37 @@ const { group } = defineProps({
   },
 });
 
-const topics: Topic[] = [
-  {
-    id: 1,
-    name: 'Каталог программ для Mocor5 OS',
-    date: new Date('2026-04-22'),
-    author: {
-      id: 1,
-      name: 'Админ',
-      picture: {
-        src: '/local/js/app/dist/img/img_2.jpg',
-      },
-    },
-    views: 23,
-    detailUrl: '#',
-    tags: [
-      {
-        title: 'Каталог программ',
-        code: 'catalog',
-      },
-      {
-        title: 'MocorDroid OS',
-        code: 'mocor-droid',
-      },
-    ],
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur, sapiente.',
-    pictures: [
-      {
-        src: '/local/js/app/dist/img/img_1.jpg',
-      },
-      {
-        src: '/local/js/app/dist/img/img_2.jpg',
-      },
-      {
-        src: '/local/js/app/dist/img/img_3.jpg',
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: 'Помощь в поиске программ для Android OS',
-    date: new Date('2026-04-21'),
-    author: {
-      id: 1,
-      name: 'Модератор',
-    },
-    views: 23,
-    detailUrl: '#',
-    tags: [
-      {
-        title: 'Редирект',
-        code: 'redirect',
-      },
-    ],
-    description: 'Lorem ipsum dolor sit amet.',
-  },
-];
+const { t } = useI18n();
+
+const topics = ref<Topic[]>(group.topics ?? []);
+const page = ref<number>(1);
+const showNextBtn = ref<boolean>(true);
+
+const { fetch: fetchTopics, isLoading } = useFetch<Topic[]>({
+  callback: async (groupId?: number, page?: number) => await topicRepository.getTopics(groupId, page),
+});
+
+const nextPage = async (): Promise<void> => {
+  page.value++;
+  const response: Topic[] = await refresh();
+  topics.value = [...topics.value, ...(response ?? [])];
+};
+
+const refresh = async (): Promise<Topic[]> => {
+  try {
+    const response: Topic[] = await fetchTopics(group.id, page.value);
+    checkLength(response.length);
+    return response;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_) {
+    return [];
+  }
+};
+
+const checkLength = (length: number): void => {
+  const result: boolean = length < ITEMS_LIST_LENGTH;
+  if (result) {
+    showNextBtn.value = false;
+  }
+};
 </script>

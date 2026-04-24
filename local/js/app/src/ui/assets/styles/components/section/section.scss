@@ -14,4 +14,9 @@
     gap: ui.$m10;
     margin-bottom: ui.$m20;
   }
+
+  &__bottom {
+    @include ui.flex(column, center);
+    margin-top: ui.$m20;
+  }
 }

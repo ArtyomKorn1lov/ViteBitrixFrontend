@@ -21,7 +21,7 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { ElCarousel, ElCarouselItem } from 'element-plus';
-import { DependencyContainer, useFetching } from '@/core';
+import { DependencyContainer, useFetchingOld } from '@/core';
 import { CatalogItem } from '@/modules/catalog/models';
 import { GetRelated } from '@/modules/catalog/use-case';
 import CatalogCard from '@/modules/catalog/components/CatalogCard.vue';
@@ -34,7 +34,7 @@ const {
   data: items,
   isLoading,
   error,
-} = useFetching<GetRelated, CatalogItem[]>({
+} = useFetchingOld<GetRelated, CatalogItem[]>({
   useCase: getRelated,
 });
 

@@ -1,23 +1,11 @@
-import Localisation from '@/core/translations/Localisation';
-import { ArgumentException } from '@/core/exceptions';
+import { ref } from 'vue';
+import { UseFetchType } from '@/core/types';
 import { MessageTypes } from '@/core/enums';
 import { MessageHelper } from '@/core/utils';
-import { BaseUseCase } from '@/core/use-case';
 
-const t = Localisation.global.t;
+export default function useFetch<T>({ callback, messageType = MessageTypes.notification, showMessage = true }: UseFetchType<T>) {
+  const isLoading = ref<boolean>(false);
 
-/**
- * @description Примесь с общей логикой обработки запросов, вывод всплывающего окна сообщения об ошибке
- */
-export default function useFetch<T extends BaseUseCase, K>({
-  useCase = null,
-  showMessage = true,
-  messageType = MessageTypes.notification,
-}: {
-  useCase?: T | null;
-  showMessage?: boolean;
-  messageType?: MessageTypes;
-}) {
   const displayMessage = async (message: string): Promise<void> => {
     switch (messageType) {
       case MessageTypes.messageBox:
@@ -33,17 +21,22 @@ export default function useFetch<T extends BaseUseCase, K>({
     }
   };
 
-  return async (...args: any[]): Promise<K> => {
+  const fetch = async (...args: any[]): Promise<T> => {
     try {
-      if (!useCase) {
-        throw new ArgumentException(t('core.composable.emptyRequestMethod'));
-      }
-      return await useCase.execute(...args);
-    } catch (exception: any) {
+      isLoading.value = true;
+      const response: T = await callback(...args);
+      isLoading.value = false;
+      return response;
+    } catch (exception: Error | any) {
       if (showMessage) {
         await displayMessage(exception?.message);
       }
       throw exception;
     }
+  };
+
+  return {
+    isLoading,
+    fetch,
   };
 }

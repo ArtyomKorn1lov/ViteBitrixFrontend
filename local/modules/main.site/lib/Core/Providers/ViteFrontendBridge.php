@@ -1,6 +1,6 @@
 <?php
 
-namespace Rest\Site\Core\Providers;
+namespace Main\Site\Core\Providers;
 
 class ViteFrontendBridge
 {

@@ -1,5 +1,5 @@
 {
-    "name": "rest/site",
+    "name": "main/site",
     "description": "",
     "type": "project",
     "author": "",
@@ -10,7 +10,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Rest\\Site\\": "lib/"
+            "Main\\Site\\": "lib/"
         }
     },
     "minimum-stability": "stable"

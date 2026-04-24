@@ -3,7 +3,7 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Каталог");
 
 use Bitrix\Main\Web\Json;
-use Rest\Site\Core\Providers\ViteFrontendBridge;
+use Main\Site\Core\Providers\ViteFrontendBridge;
 
 ?>
 
