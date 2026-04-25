@@ -60,6 +60,15 @@ class TopicController extends BxController
                     new HttpMethod([HttpMethod::METHOD_POST])
                 ],
             ],
+            'detail' => [
+                '-prefilters' => [
+                    Csrf::class,
+                    Authentication::class,
+                ],
+                '+prefilters' => [
+                    new HttpMethod([HttpMethod::METHOD_GET])
+                ],
+            ]
         ];
     }
 
@@ -93,6 +102,22 @@ class TopicController extends BxController
             $page = (int)$data['page'] ?? null;
             $groupId = (int)$data['groupId'] ?? null;
             return AjaxJson::createSuccess($this->topicRepository->getItems($groupId, $page));
+        } catch (Exception $exception) {
+            $errorCollection = new ErrorCollection();
+            $errorCollection->setError(new Error($exception->getMessage()));
+            return AjaxJson::createError($errorCollection);
+        }
+    }
+
+    /**
+     * @param int $id
+     * @return AjaxJson
+     * @throws \Throwable
+     */
+    public function detailAction(int $id): AjaxJson
+    {
+        try {
+            return AjaxJson::createSuccess($this->topicRepository->getById($id));
         } catch (Exception $exception) {
             $errorCollection = new ErrorCollection();
             $errorCollection->setError(new Error($exception->getMessage()));

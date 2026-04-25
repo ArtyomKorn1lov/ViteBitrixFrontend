@@ -1,4 +1,7 @@
-import { Group, Topic } from '@/modules/forum/models';
+import Localisation from '@/core/translations/Localisation';
+import { Group, Topic, TopicDetail } from '@/modules/forum/models';
+
+const t = Localisation.global.t;
 
 export const mapTopicGroupResponseToList = (response: Group[] | null | undefined): Group[] => {
   if (!response || response.length <= 0) {
@@ -22,4 +25,14 @@ export const mapTopicResponseToList = (response: Topic[] | null | undefined): To
       date: new Date(item.date),
     };
   });
+};
+
+export const mapTopicResponseToDetail = (response: TopicDetail | null | undefined): TopicDetail => {
+  if (!response) {
+    throw new Error(t('forum.topic.notFoundErrorMessage'));
+  }
+  return {
+    ...response,
+    date: new Date(response.date),
+  };
 };

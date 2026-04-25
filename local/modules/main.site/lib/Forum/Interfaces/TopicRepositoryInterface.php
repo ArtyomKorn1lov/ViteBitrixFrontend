@@ -4,6 +4,7 @@ namespace Main\Site\Forum\Interfaces;
 
 use Main\Site\Forum\Models\Group;
 use Main\Site\Forum\Models\Topic;
+use Main\Site\Forum\Models\TopicDetail;
 
 interface TopicRepositoryInterface
 {
@@ -21,4 +22,11 @@ interface TopicRepositoryInterface
      * @throws \Throwable
      */
     public function getItems(int $groupId = 0, int $page = 1): array;
+
+    /**
+     * @param int $topicId
+     * @return TopicDetail
+     * @throws \Throwable
+     */
+    public function getById(int $topicId): TopicDetail;
 }

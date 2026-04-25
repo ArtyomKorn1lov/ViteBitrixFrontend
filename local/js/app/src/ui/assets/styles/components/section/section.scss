@@ -10,7 +10,7 @@
   }
 
   &__top {
-    @include ui.flex(column);
+    @include ui.flex(column, start);
     gap: ui.$m10;
     margin-bottom: ui.$m20;
   }

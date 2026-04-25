@@ -2,6 +2,7 @@
 
 namespace Main\Site\Forum\Repositories;
 
+use Bitrix\Main\LoaderException;
 use CIBlockElement;
 use CIBlockSection;
 use CFile;
@@ -20,6 +21,7 @@ use Main\Site\Forum\Interfaces\TagsRepositoryInterface;
 use Main\Site\Forum\Interfaces\TopicRepositoryInterface;
 use Main\Site\Forum\Models\Group;
 use Main\Site\Forum\Models\Topic;
+use Main\Site\Forum\Models\TopicDetail;
 
 class TopicRepository implements TopicRepositoryInterface
 {
@@ -61,9 +63,9 @@ class TopicRepository implements TopicRepositoryInterface
             ],
             arSelect: ['ID', 'CODE', 'NAME', 'DESCRIPTION'],
             arNavStartParams: [
-                "nPageSize" => self::GROUPS_PAGE_SIZE,
-                "iNumPage"  => $page,
-                "checkOutOfRange" => true,
+                'nPageSize' => self::GROUPS_PAGE_SIZE,
+                'iNumPage'  => $page,
+                'checkOutOfRange' => true,
             ],
         );
         /** @var Group[] $groups */
@@ -106,9 +108,9 @@ class TopicRepository implements TopicRepositoryInterface
                 'SECTION_ID' => $groupId,
             ],
             arNavStartParams: [
-                "nPageSize" => self::ITEMS_PAGE_SIZE,
-                "iNumPage"  => $page,
-                "checkOutOfRange" => true,
+                'nPageSize' => self::ITEMS_PAGE_SIZE,
+                'iNumPage'  => $page,
+                'checkOutOfRange' => true,
             ],
             arSelectFields: ['ID', 'NAME', 'DATE_ACTIVE_FROM', 'SHOW_COUNTER', 'DETAIL_PAGE_URL', 'PREVIEW_TEXT'],
         );
@@ -138,6 +140,58 @@ class TopicRepository implements TopicRepositoryInterface
         }
 
         return $topics;
+    }
+
+    /**
+     * @param int $topicId
+     * @return TopicDetail
+     * @throws LoaderException
+     * @throws Exception
+     */
+    public function getById(int $topicId): TopicDetail
+    {
+        if (!Loader::includeModule('iblock')) {
+            throw new Exception('Модуль iblock не подключен');
+        }
+
+        $rsObject = CIBlockElement::GetList(
+            arOrder: [
+                'SORT' => 'ASC',
+                'DATE_ACTIVE_FROM' => 'ASC',
+            ],
+            arFilter: [
+                'ACTIVE' => 'Y',
+                'IBLOCK_ID' => Helper::getIBlock('topics'),
+                'ID' => $topicId,
+            ],
+            arSelectFields: ['ID', 'NAME', 'DATE_ACTIVE_FROM', 'SHOW_COUNTER', 'DETAIL_PAGE_URL', 'PREVIEW_TEXT', 'DETAIL_TEXT'],
+        );
+
+        $obElement = $rsObject->GetNextElement();
+        if (empty($obElement)) {
+            throw new Exception('Тема для обсуждения не найдена');
+        }
+        $fields = $obElement->getFields();
+        $author = $this->authorRepository->getById((int)$obElement->getProperty('AUTHOR')['VALUE']);
+        $pictures = $this->getPictures($obElement->getProperty('PICTURES')['VALUE']);
+        $tagsUids = $obElement->getProperty('TAGS')['VALUE'];
+        if ($tagsUids === false) {
+            $tagsUids = [];
+        }
+        $tags = $this->tagsRepository->getByUids(array_unique($tagsUids));
+
+        return new TopicDetail(
+            id: (int)$fields['ID'],
+            name: $fields['NAME'],
+            date: $fields['ACTIVE_FROM_X'],
+            author: $author,
+            views: (int)$fields['SHOW_COUNTER'],
+            detailUrl: $fields['DETAIL_PAGE_URL'],
+            tags: $tags,
+            previewText: $fields['PREVIEW_TEXT'] ?? '',
+            detailText: $fields['DETAIL_TEXT'] ?? '',
+            pictures: $pictures,
+        );
     }
 
     /**

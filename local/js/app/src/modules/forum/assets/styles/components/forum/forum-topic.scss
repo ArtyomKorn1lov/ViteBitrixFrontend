@@ -82,4 +82,11 @@
     padding-right: ui.$m15;
     width: ui.$full;
   }
+
+  &__desc {
+    &-wrap {
+      @include ui.flex(column);
+      gap: ui.$m15;
+    }
+  }
 }

@@ -44,10 +44,27 @@
           />
         </div>
         <div
+          v-if="'description' in item"
           class="b-forum-topic__desc"
           v-html="item.description"
         />
+        <div
+          v-else
+          class="b-forum-topic__desc-wrap"
+        >
+          <div
+            v-if="'previewText' in item && item.previewText"
+            class="b-forum-topic__desc"
+            v-html="item.previewText"
+          />
+          <div
+            v-if="'detailText' in item && item.detailText"
+            class="b-forum-topic__desc"
+            v-html="item.detailText"
+          />
+        </div>
         <a
+          v-if="!('detailText' in item)"
           class="b-btn b-btn_secondary b-btn_medium b-btn_icon"
           :href="item.detailUrl"
         >
@@ -79,12 +96,12 @@ import { View } from '@element-plus/icons-vue';
 import { useI18n } from 'vue-i18n';
 import { DateHelper } from '@/core';
 import { Tag, Gallery, ArrowIcon } from '@/ui';
-import { Topic } from '@/modules/forum/models';
+import { Topic, TopicDetail } from '@/modules/forum/models';
 import Account from '@/modules/forum/components/Account.vue';
 
 const { item } = defineProps({
   item: {
-    type: Object as PropType<Topic>,
+    type: Object as PropType<Topic | TopicDetail>,
     required: true,
   },
 });
@@ -99,4 +116,12 @@ const dateCreated = computed<string>(() => {
   }
   return DateHelper.formatToDDMMYYYY(item.date);
 });
+
+const onInit = () => {
+  if ('detailText' in item) {
+    activeGroupIds.value.push(item.id);
+  }
+};
+
+onInit();
 </script>

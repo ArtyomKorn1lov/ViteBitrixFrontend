@@ -19,9 +19,6 @@ $this->setFrameMode(true);
 use Bitrix\Main\Web\Json;
 use Main\Site\Core\Providers\ViteFrontendBridge;
 
-use Bitrix\Main\DI\ServiceLocator;
-use Main\Site\Forum\Interfaces\TopicRepositoryInterface;
-
 $arData = [
     'templateId' => 'forumMain' . $this->randString(),
 ];

@@ -63,7 +63,7 @@ export default abstract class BaseApiClient {
   ): Promise<RequestResponse<K>> {
     const requestUrl: string = this.prepareUrl(url, params);
 
-    const payload = data ? this.setPayload(data, dataType) : {};
+    const payload = data ? this.setPayload<T>(data, dataType) : {};
     const config: SimpleObject = {};
     if (headers) {
       config['headers'] = { ...headers };

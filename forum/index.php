@@ -57,7 +57,7 @@ $APPLICATION->SetPageProperty("SHOW_SIDEBAR", false);
         "PREVIEW_TRUNCATE_LEN" => "",
         "SEF_FOLDER" => "/forum/",
         "SEF_MODE" => "Y",
-        "SEF_URL_TEMPLATES" => array("detail" => "/forum/#ELEMENT_CODE#", "news" => "/forum/", "section" => "/forum/#SECTION_CODE#"),
+        "SEF_URL_TEMPLATES" => array("detail" => "#SECTION_CODE#/#ELEMENT_CODE#", "news" => "", "section" => "#SECTION_CODE#/"),
         "SET_LAST_MODIFIED" => "N",
         "SET_STATUS_404" => "N",
         "SET_TITLE" => "Y",

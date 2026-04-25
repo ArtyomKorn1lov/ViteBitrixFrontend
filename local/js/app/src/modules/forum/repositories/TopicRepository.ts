@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { SimpleObject, ApiClientInterface, ApiClientServiceId } from '@/core';
 import { TopicRepositoryInterface } from '@/modules/forum/interfaces';
-import { Group, Topic } from '@/modules/forum/models';
+import { Group, Topic, TopicDetail } from '@/modules/forum/models';
 import { TopicMapper } from '@/modules/forum/mappers';
 
 @injectable()
@@ -30,5 +30,10 @@ export default class TopicRepository implements TopicRepositoryInterface {
       data: object,
     });
     return TopicMapper.mapTopicResponseToList(response);
+  }
+
+  public async getTopicById(id: number): Promise<TopicDetail> {
+    const response: TopicDetail | null | undefined = await this.apiClient.get<void, TopicDetail>(`api/topic/${id}`);
+    return TopicMapper.mapTopicResponseToDetail(response);
   }
 }

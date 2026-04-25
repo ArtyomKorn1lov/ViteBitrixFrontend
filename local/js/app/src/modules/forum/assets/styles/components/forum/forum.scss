@@ -6,4 +6,12 @@
   gap: ui.$m15;
   border-top: 0;
   border-bottom: 0;
+
+  &__detail {
+    background-color: ui.$colorBgBlock;
+    padding: ui.$m15;
+    border-radius: ui.$rounded10;
+    border: ui.$border1 solid ui.$colorGrey;
+    box-shadow: 8px 8px ui.$m15 0 ui.$colorShadow;
+  }
 }

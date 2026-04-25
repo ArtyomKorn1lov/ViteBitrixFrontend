@@ -20,5 +20,7 @@ return function (RoutingConfigurator $routes) {
         $routes->post('topic/groups', [TopicController::class, 'groupsAction']);
 
         $routes->post('topic/items', [TopicController::class, 'itemsAction']);
+
+        $routes->get('topic/{id}', [TopicController::class, 'detailAction']);
     });
 };
