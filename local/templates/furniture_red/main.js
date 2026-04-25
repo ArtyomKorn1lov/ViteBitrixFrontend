@@ -44,6 +44,13 @@ BX.Globals.AsyncViteLoader = {
                 })
                     .then((response) => response.json())
                     .then(async (data) => {
+                        if (typeof data === 'object' && 'data' in data) {
+                            if (data?.status === 'success') {
+                                data = data?.data;
+                            } else {
+                                throw new Error(data?.errors?.[0]?.message ?? 'Произошла внутренняя ошибка');
+                            }
+                        }
                         await this.injectAssets(data);
                         resolve();
                     })

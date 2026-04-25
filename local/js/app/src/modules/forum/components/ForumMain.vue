@@ -16,22 +16,21 @@
         />
       </el-collapse>
       <div class="b-section__bottom">
-        <button
+        <el-button
           v-if="showNextBtn"
           class="b-btn b-btn_medium b-btn_primary"
-          type="button"
+          :loading="isLoading"
           @click="nextPage"
-          v-loading="isLoading"
         >
           {{ t('forum.topic.nextPageTitle') }}
-        </button>
+        </el-button>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
-import { ElCollapse } from 'element-plus';
+import { ElCollapse, ElButton } from 'element-plus';
 import { useI18n } from 'vue-i18n';
 import { DependencyContainer, useFetch } from '@/core';
 import { GROUPS_LIST_LENGTH } from '@/modules/forum/constants';
@@ -79,7 +78,6 @@ const checkLength = (length: number): void => {
 
 const onInit = async (): Promise<void> => {
   groups.value = await refresh();
-  isLoading.value = true;
 };
 
 onInit();

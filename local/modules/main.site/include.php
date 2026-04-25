@@ -13,7 +13,9 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 $controllerNamespaces = [
-    'Forum' => 'Topic'
+    'Core' => 'Vite',
+    'Forum' => 'Topic',
+    'App' => 'Mock',
 ];
 
 foreach ($controllerNamespaces as $module => $entity) {

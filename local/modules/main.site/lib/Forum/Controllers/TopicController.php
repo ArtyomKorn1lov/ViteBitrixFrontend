@@ -11,11 +11,12 @@ use Bitrix\Main\ObjectNotFoundException;
 use Bitrix\Main\Request;
 use Bitrix\Main\Engine\ActionFilter\Csrf;
 use Bitrix\Main\Engine\ActionFilter\HttpMethod;
+use Bitrix\Main\Engine\ActionFilter\Authentication;
 use Bitrix\Main\Error;
 use Bitrix\Main\ErrorCollection;
 use Bitrix\Main\Engine\JsonPayload;
-
 use Psr\Container\NotFoundExceptionInterface;
+
 use Main\Site\Forum\Interfaces\TopicRepositoryInterface;
 
 class TopicController extends BxController
@@ -35,12 +36,16 @@ class TopicController extends BxController
         $this->topicRepository = $serviceLocator->get(TopicRepositoryInterface::class);
     }
 
+    /**
+     * @return array[]
+     */
     public function configureActions(): array
     {
         return [
             'groups' => [
                 '-prefilters' => [
                     Csrf::class,
+                    Authentication::class,
                 ],
                 '+prefilters' => [
                     new HttpMethod([HttpMethod::METHOD_POST])
@@ -49,6 +54,7 @@ class TopicController extends BxController
             'items' => [
                 '-prefilters' => [
                     Csrf::class,
+                    Authentication::class,
                 ],
                 '+prefilters' => [
                     new HttpMethod([HttpMethod::METHOD_POST])

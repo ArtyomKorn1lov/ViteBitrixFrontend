@@ -21,15 +21,14 @@
         :key="item.id"
         :item="item"
       />
-      <button
+      <el-button
         v-if="showNextBtn"
         class="b-btn b-btn_medium b-btn_primary"
-        type="button"
+        :loading="isLoading"
         @click="nextPage"
-        v-loading="isLoading"
       >
         {{ t('forum.topic.nextPageTitle') }}
-      </button>
+      </el-button>
     </div>
   </el-collapse-item>
 </template>
@@ -37,7 +36,7 @@
 import type { PropType } from 'vue';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { ElCollapseItem } from 'element-plus';
+import { ElCollapseItem, ElButton } from 'element-plus';
 import { DependencyContainer, useFetch } from '@/core';
 import { ITEMS_LIST_LENGTH } from '@/modules/forum/constants';
 import { Group, Topic } from '@/modules/forum/models';
@@ -87,4 +86,10 @@ const checkLength = (length: number): void => {
     showNextBtn.value = false;
   }
 };
+
+const onInit = () => {
+  checkLength(topics.value.length);
+};
+
+onInit();
 </script>
