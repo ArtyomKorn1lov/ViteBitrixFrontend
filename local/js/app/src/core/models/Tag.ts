@@ -1,4 +1,5 @@
 interface Tag {
+  id: number;
   title: string;
   code: string;
 }

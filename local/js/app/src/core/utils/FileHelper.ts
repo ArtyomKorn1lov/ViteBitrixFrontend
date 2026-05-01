@@ -36,3 +36,10 @@ export const createFileUrl = (file: Blob): string => {
 export const checkMaxFileSize = (file: Blob, maxFileSize: number) => {
   return file.size <= maxFileSize;
 };
+
+export const formatSizeMB = (size: number): string => {
+  if (!size) {
+    return '0';
+  }
+  return `${(size / 1024 / 1024).toFixed(2)} Мб`;
+};

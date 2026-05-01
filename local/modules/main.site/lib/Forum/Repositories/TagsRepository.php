@@ -4,6 +4,7 @@ namespace Main\Site\Forum\Repositories;
 
 use Exception;
 
+use Bitrix\Main\Entity\DataManager;
 use Bitrix\Main\ArgumentException;
 use Bitrix\Main\LoaderException;
 use Bitrix\Main\ObjectPropertyException;
@@ -27,12 +28,69 @@ class TagsRepository implements TagsRepositoryInterface
      */
     public function getByUids(array $uids): array
     {
-        if (!Loader::includeModule('highloadblock')) {
-            throw new Exception('Модуль highloadblock не подключен');
-        }
-
         if (empty($uids)) {
             return [];
+        }
+
+        $entityDataClass = $this->getEntityClass();
+        $rsData = $entityDataClass::getList([
+            'select' => ['ID', 'UF_CODE', 'UF_NAME'],
+            'filter' => ['UF_XML_ID' => $uids],
+        ]);
+
+        /** @var Tag[] $tags */
+        $tags = [];
+        while ($arData = $rsData->fetch()) {
+            $tags[] = new Tag(
+                id: $arData['ID'],
+                title: $arData['UF_NAME'],
+                code: $arData['UF_CODE'],
+            );
+        }
+
+        return $tags;
+    }
+
+    /**
+     * @return Tag[]
+     * @throws ArgumentException
+     * @throws LoaderException
+     * @throws ObjectPropertyException
+     * @throws SystemException
+     */
+    public function getAll(): array
+    {
+        /** @var DataManager $entityDataClass */
+        $entityDataClass = $this->getEntityClass();
+        $rsData = $entityDataClass::getList([
+            'select' => ['ID', 'UF_CODE', 'UF_NAME'],
+        ]);
+
+        /** @var Tag[] $tags */
+        $tags = [];
+        while ($arData = $rsData->fetch()) {
+            $tags[] = new Tag(
+                id: $arData['ID'],
+                title: $arData['UF_NAME'],
+                code: $arData['UF_CODE'],
+            );
+        }
+
+        return $tags;
+    }
+
+    /**
+     * @return string
+     * @throws ArgumentException
+     * @throws LoaderException
+     * @throws ObjectPropertyException
+     * @throws SystemException
+     * @throws Exception
+     */
+    protected function getEntityClass(): string
+    {
+        if (!Loader::includeModule('highloadblock')) {
+            throw new Exception('Модуль highloadblock не подключен');
         }
 
         $data = HighloadBlockTable::getList([
@@ -47,21 +105,12 @@ class TagsRepository implements TagsRepositoryInterface
 
         $hlblock = HighloadBlockTable::getById($hlblockId)->fetch();
         $entity = HighloadBlockTable::compileEntity($hlblock);
-        $entityDataClass = $entity->getDataClass();
-        $rsData = $entityDataClass::getList([
-            'select' => ['UF_CODE', 'UF_NAME'],
-            'filter' => ['UF_XML_ID' => $uids]
-        ]);
 
-        /** @var Tag[] $tags */
-        $tags = [];
-        while ($arData = $rsData->fetch()) {
-            $tags[] = new Tag(
-                title: $arData['UF_NAME'],
-                code: $arData['UF_CODE'],
-            );
+        $entityDataClass = $entity->getDataClass();
+        if (empty($entityDataClass)) {
+            throw new Exception('Ошибка получения справочника ForumTags');
         }
 
-        return $tags;
+        return $entityDataClass;
     }
 }

@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { SimpleObject, ApiClientInterface, ApiClientServiceId } from '@/core';
 import { TopicRepositoryInterface } from '@/modules/forum/interfaces';
-import { Group, Topic, TopicDetail } from '@/modules/forum/models';
+import { Group, ShortGroup, Topic, TopicDetail } from '@/modules/forum/models';
 import { TopicMapper } from '@/modules/forum/mappers';
 
 @injectable()
@@ -18,7 +18,12 @@ export default class TopicRepository implements TopicRepositoryInterface {
     const response: Group[] | null | undefined = await this.apiClient.post<SimpleObject, Group[]>('api/topic/groups', {
       data: object,
     });
-    return TopicMapper.mapTopicGroupResponseToList(response);
+    return TopicMapper.fromGroupResponseToList(response);
+  }
+
+  public async getAllGroups(): Promise<ShortGroup[]> {
+    const response: Group[] | null | undefined = await this.apiClient.get<void, Group[]>('api/topic/groups/all');
+    return TopicMapper.fromShortGroupResponseToList(response);
   }
 
   public async getTopics(groupId?: number, page?: number): Promise<Topic[]> {
@@ -29,11 +34,11 @@ export default class TopicRepository implements TopicRepositoryInterface {
     const response: Topic[] | null | undefined = await this.apiClient.post<SimpleObject, Topic[]>('api/topic/items', {
       data: object,
     });
-    return TopicMapper.mapTopicResponseToList(response);
+    return TopicMapper.fromResponseToList(response);
   }
 
   public async getTopicById(id: number): Promise<TopicDetail> {
     const response: TopicDetail | null | undefined = await this.apiClient.get<void, TopicDetail>(`api/topic/${id}`);
-    return TopicMapper.mapTopicResponseToDetail(response);
+    return TopicMapper.fromResponseToDetail(response);
   }
 }

@@ -3,14 +3,15 @@
 namespace Main\Site\Forum\Repositories;
 
 use Bitrix\Main\LoaderException;
+use Bitrix\Main\Type\DateTime;
 use CIBlockElement;
 use CIBlockSection;
 use CFile;
-use DateTime;
 use Exception;
 
 use Bitrix\Main\DI\ServiceLocator;
 use Bitrix\Main\ObjectNotFoundException;
+use Bitrix\UI\FileUploader\FileInfo;
 use Psr\Container\NotFoundExceptionInterface;
 use Bitrix\Main\Loader;
 
@@ -20,7 +21,10 @@ use Main\Site\Forum\Interfaces\AuthorRepositoryInterface;
 use Main\Site\Forum\Interfaces\TagsRepositoryInterface;
 use Main\Site\Forum\Interfaces\TopicRepositoryInterface;
 use Main\Site\Forum\Models\Group;
+use Main\Site\Forum\Models\ShortGroup;
 use Main\Site\Forum\Models\Topic;
+use Main\Site\Forum\Models\TopicCreate;
+use Main\Site\Forum\Models\TopicUpdate;
 use Main\Site\Forum\Models\TopicDetail;
 
 class TopicRepository implements TopicRepositoryInterface
@@ -52,9 +56,7 @@ class TopicRepository implements TopicRepositoryInterface
      */
     public function getGroups(int $page = 1): array
     {
-        if (!Loader::includeModule('iblock')) {
-            throw new Exception('Модуль iblock не подключен');
-        }
+        $this->includeModule();
 
         $rsObject = CIBlockSection::getList(
             arFilter: [
@@ -64,7 +66,7 @@ class TopicRepository implements TopicRepositoryInterface
             arSelect: ['ID', 'CODE', 'NAME', 'DESCRIPTION'],
             arNavStartParams: [
                 'nPageSize' => self::GROUPS_PAGE_SIZE,
-                'iNumPage'  => $page,
+                'iNumPage' => $page,
                 'checkOutOfRange' => true,
             ],
         );
@@ -86,6 +88,32 @@ class TopicRepository implements TopicRepositoryInterface
     }
 
     /**
+     * @return ShortGroup[]
+     * @throws LoaderException
+     */
+    public function getAllGroups(): array
+    {
+        $this->includeModule();
+        $rsObject = CIBlockSection::getList(
+            arFilter: [
+                'ACTIVE' => 'Y',
+                'IBLOCK_ID' => Helper::getIBlock('topics'),
+            ],
+            arSelect: ['ID', 'CODE', 'NAME', 'DESCRIPTION'],
+        );
+        /** @var ShortGroup[] $groups */
+        $groups = [];
+        while ($arSection = $rsObject->fetch()) {
+            $groups[] = new ShortGroup(
+                id: (int)$arSection['ID'],
+                title: $arSection['NAME'],
+                code: $arSection['CODE'],
+            );
+        }
+        return $groups;
+    }
+
+    /**
      * @param int $groupId
      * @param int $page
      * @return Topic[]
@@ -93,9 +121,7 @@ class TopicRepository implements TopicRepositoryInterface
      */
     public function getItems(int $groupId = 0, int $page = 1): array
     {
-        if (!Loader::includeModule('iblock')) {
-            throw new Exception('Модуль iblock не подключен');
-        }
+        $this->includeModule();
 
         $rsObject = CIBlockElement::GetList(
             arOrder: [
@@ -109,12 +135,12 @@ class TopicRepository implements TopicRepositoryInterface
             ],
             arNavStartParams: [
                 'nPageSize' => self::ITEMS_PAGE_SIZE,
-                'iNumPage'  => $page,
+                'iNumPage' => $page,
                 'checkOutOfRange' => true,
             ],
             arSelectFields: ['ID', 'NAME', 'DATE_ACTIVE_FROM', 'SHOW_COUNTER', 'DETAIL_PAGE_URL', 'PREVIEW_TEXT'],
         );
-        
+
         /** @var Topic[] $topics */
         $topics = [];
         while ($obElement = $rsObject->GetNextElement()) {
@@ -150,9 +176,7 @@ class TopicRepository implements TopicRepositoryInterface
      */
     public function getById(int $topicId): TopicDetail
     {
-        if (!Loader::includeModule('iblock')) {
-            throw new Exception('Модуль iblock не подключен');
-        }
+        $this->includeModule();
 
         $rsObject = CIBlockElement::GetList(
             arOrder: [
@@ -195,6 +219,78 @@ class TopicRepository implements TopicRepositoryInterface
     }
 
     /**
+     * @param TopicCreate $topic
+     * @return int
+     * @throws LoaderException
+     */
+    public function create(TopicCreate $topic): int
+    {
+        $this->includeModule();
+        global $USER;
+        $pictures = $this->getUploadedPictures($topic->pictureIds);
+        $entity = new CIBlockElement();
+        $itemId = $entity->Add([
+            'IBLOCK_ID' => Helper::getIBlock('topics'),
+            'IBLOCK_TYPE' => 'forum',
+            'ACTIVE' => 'N',
+            'NAME' => $topic->name,
+            'IBLOCK_SECTION_ID' => $topic->sectionId,
+            'DATE_ACTIVE_FROM' => new DateTime()->format('d.m.Y'),
+            'PREVIEW_TEXT' => $topic->previewText ?? '',
+            'DETAIL_TEXT' => $topic->detailText ?? '',
+            'PROPERTY_VALUES' => [
+                'AUTHOR' => $USER->getId(),
+                'TAGS' => $topic->tags ?? [],
+                'PICTURES' => $pictures,
+            ]
+        ]);
+        if (!$itemId) {
+            throw new Exception($entity->LAST_ERROR);
+        }
+        return $itemId;
+    }
+
+    /**
+     * @param TopicUpdate $topicUpdate
+     * @return int
+     * @throws LoaderException
+     */
+    public function update(TopicUpdate $topicUpdate): int
+    {
+        $this->includeModule();
+        global $USER;
+        $pictures = $this->getUploadedPictures($topicUpdate->pictureIds);
+        $entity = new CIBlockElement();
+        $itemId = $entity->update($topicUpdate->id, [
+            'ACTIVE' => 'N',
+            'NAME' => $topicUpdate->name,
+            'IBLOCK_SECTION_ID' => $topicUpdate->sectionId,
+            'PREVIEW_TEXT' => $topic->previewText ?? '',
+            'DETAIL_TEXT' => $topic->detailText ?? '',
+            'PROPERTY_VALUES' => [
+                'AUTHOR' => $USER->getId(),
+                'TAGS' => $topic->tags ?? [],
+                'PICTURES' => $pictures,
+            ]
+        ]);
+        if (!$itemId) {
+            throw new Exception($entity->LAST_ERROR);
+        }
+        return $itemId;
+    }
+
+    /**
+     * @return void
+     * @throws LoaderException
+     */
+    protected function includeModule(): void
+    {
+        if (!Loader::includeModule('iblock')) {
+            throw new Exception('Модуль iblock не подключен');
+        }
+    }
+
+    /**
      * @param string[]|int[]|bool $pictureIds
      * @return Picture[]
      */
@@ -210,6 +306,30 @@ class TopicRepository implements TopicRepositoryInterface
                 src: CFile::getPath((int)$pictureId),
             );
         }
+        return $pictures;
+    }
+
+    /**
+     * @param array|bool $pictureIds
+     * @return array
+     */
+    private function getUploadedPictures(array|bool $pictureIds): array
+    {
+        if (empty($pictureIds)) {
+            return [];
+        }
+        $pictures = [];
+
+        foreach ($pictureIds as $pictureId) {
+            $tmpFile = FileInfo::createFromTempFile($pictureId);
+            if (empty($tmpFile)) {
+                continue;
+            }
+            $pictures[] = [
+                'VALUE' => $tmpFile->getFileId(),
+            ];
+        }
+
         return $pictures;
     }
 }

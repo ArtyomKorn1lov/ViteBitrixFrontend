@@ -1,4 +1,5 @@
-import type ApiClientInterface from '@/core/interfaces/ApiClientInterface.ts';
-import type ValidationProviderInterface from '@/core/interfaces/ValidationProviderInterface.ts';
+import type ApiClientInterface from '@/core/interfaces/ApiClientInterface';
+import type ValidationProviderInterface from '@/core/interfaces/ValidationProviderInterface';
+import type FileRepositoryInterface from './FileRepositoryInterface';
 
-export { ApiClientInterface, ValidationProviderInterface };
+export { ApiClientInterface, ValidationProviderInterface, FileRepositoryInterface };

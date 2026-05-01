@@ -19,11 +19,40 @@ $this->setFrameMode(true);
 use Bitrix\Main\Web\Json;
 use Main\Site\Core\Providers\ViteFrontendBridge;
 
+global $USER;
+
 $arData = [
     'templateId' => 'forumMain' . $this->randString(),
 ];
 $arJsData = Json::encode($arData);
 ?>
+    <?php if ($USER->IsAuthorized()) {
+        $arCreateData = [
+            'templateId' => 'forumCreate' . $this->randString(),
+        ];
+        $arJsCreateData = Json::encode($arCreateData);
+    ?>
+        <button
+            class="b-btn b-btn_large b-btn_primary"
+            id="forum-create-btn"
+        >
+            Создать
+        </button>
+        <div id="<?=$arCreateData['templateId']?>"></div>
+        <script>
+            BX.ready(function () {
+                const button = document.getElementById('forum-create-btn');
+                button.addEventListener('click', function () {
+                    BX.Globals.AsyncViteLoader.load('forum.form')
+                        .then(function () {
+                            button.remove();
+                            BX.Components.TopicForm(<?= $arJsCreateData ?>);
+                        });
+                });
+            });
+        </script>
+    <?php } ?>
+    <div></div>
     <div id="<?=$arData['templateId']?>"></div>
     <script>
         BX.ready(function () {

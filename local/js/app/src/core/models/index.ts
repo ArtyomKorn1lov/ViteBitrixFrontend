@@ -5,5 +5,6 @@ import type Picture from '@/core/models/Picture';
 import type Tag from '@/core/models/Tag';
 import type ResponseError from '@/core/models/ResponseError';
 import type BxRequestResponse from '@/core/models/BxRequestResponse';
+import type FileUpload from '@/core/models/FileUpload';
 
-export { Picture, RequestConfig, CommonResponse, RequestResponse, Tag, ResponseError, BxRequestResponse };
+export { Picture, RequestConfig, CommonResponse, RequestResponse, Tag, ResponseError, BxRequestResponse, FileUpload };

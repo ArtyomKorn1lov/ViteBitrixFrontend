@@ -35,5 +35,14 @@
       "emptyIconErrorMessage": "Код иконки не может быть пустым",
       "emptyCodeErrorMessage": "Код элемента страницы не может быть пустым"
     }
+  },
+  "file": {
+    "error": {
+      "fileErrorUploadMessage": "Ошибка загрузки файла",
+      "invalidFormatMessage": "Некорректный формат файла"
+    },
+    "success": {
+      "message": "Успешная загрузка файла"
+    }
   }
 }

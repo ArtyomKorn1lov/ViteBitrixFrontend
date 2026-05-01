@@ -51,6 +51,15 @@ class TopicController extends BxController
                     new HttpMethod([HttpMethod::METHOD_POST])
                 ],
             ],
+            'groupsAll' => [
+                '-prefilters' => [
+                    Csrf::class,
+                    Authentication::class,
+                ],
+                '+prefilters' => [
+                    new HttpMethod([HttpMethod::METHOD_GET])
+                ],
+            ],
             'items' => [
                 '-prefilters' => [
                     Csrf::class,
@@ -83,6 +92,21 @@ class TopicController extends BxController
             $data = $payload->getData();
             $page = (int)$data['page'] ?? null;
             return AjaxJson::createSuccess($this->topicRepository->getGroups($page));
+        } catch (Exception $exception) {
+            $errorCollection = new ErrorCollection();
+            $errorCollection->setError(new Error($exception->getMessage()));
+            return AjaxJson::createError($errorCollection);
+        }
+    }
+
+    /**
+     * @return AjaxJson
+     * @throws \Throwable
+     */
+    public function groupsAllAction(): AjaxJson
+    {
+        try {
+            return AjaxJson::createSuccess($this->topicRepository->getAllGroups());
         } catch (Exception $exception) {
             $errorCollection = new ErrorCollection();
             $errorCollection->setError(new Error($exception->getMessage()));

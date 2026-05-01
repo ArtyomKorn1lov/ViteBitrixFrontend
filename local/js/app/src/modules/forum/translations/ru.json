@@ -10,5 +10,36 @@
     "nextPageTitle": "Показать ещё",
     "notFoundErrorMessage": "Элемент не найден",
     "backTitle": "Назад"
+  },
+  "form": {
+    "validators": {
+      "isRequired": "Обязательно для заполнения"
+    },
+    "fields": {
+      "name": {
+        "title": "Название",
+        "placeholder": "Введите название"
+      },
+      "section": {
+        "title": "Раздел",
+        "placeholder": "Выберите раздел обсуждения"
+      },
+      "tags": {
+        "title": "Теги",
+        "placeholder": "Выберите теги"
+      },
+      "previewText": {
+        "title": "Текст для анонса",
+        "placeholder": "Введите текст для анонса"
+      },
+      "detailText": {
+        "title": "Детальное описание",
+        "placeholder": "Введите детальное описание"
+      },
+      "pictures": {
+        "title": "Изображения"
+      }
+    },
+    "submitText": "Отправить!"
   }
 }

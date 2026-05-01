@@ -9,6 +9,13 @@ interface TagsRepositoryInterface
     /**
      * @param string[] $uids
      * @return Tag[]
+     * @throws \Throwable
      */
     public function getByUids(array $uids): array;
+
+    /**
+     * @return Tag[]
+     * @throws \Throwable
+     */
+    public function getAll(): array;
 }
