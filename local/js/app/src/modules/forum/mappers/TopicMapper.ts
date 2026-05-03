@@ -1,5 +1,5 @@
 import Localisation from '@/core/translations/Localisation';
-import { Group, ShortGroup, Topic, TopicDetail } from '@/modules/forum/models';
+import { Group, ShortGroup, Topic, TopicDetail, TopicFormData, TopicCreate, TopicUpdate } from '@/modules/forum/models';
 
 const t = Localisation.global.t;
 
@@ -41,5 +41,28 @@ export const fromResponseToDetail = (response: TopicDetail | null | undefined): 
   return {
     ...response,
     date: new Date(response.date),
+  };
+};
+
+export const fromFormDataToCreate = (formData: TopicFormData): TopicCreate => {
+  return {
+    name: formData.name,
+    sectionId: formData.sectionId as number,
+    tagIds: formData.tagIds ?? [],
+    pictureIds: formData.pictureIds ?? [],
+    previewText: formData.previewText ?? '',
+    detailText: formData.detailText ?? '',
+  };
+};
+
+export const fromFormDataToUpdate = (formData: TopicFormData, id: number) => {
+  return {
+    id: id,
+    name: formData.name,
+    sectionId: formData.sectionId as number,
+    tagIds: formData.tagIds ?? [],
+    pictureIds: formData.pictureIds ?? [],
+    previewText: formData.previewText ?? '',
+    detailText: formData.detailText ?? '',
   };
 };

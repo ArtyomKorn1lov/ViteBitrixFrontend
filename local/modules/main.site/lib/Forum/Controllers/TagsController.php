@@ -40,7 +40,6 @@ class TagsController extends BxController
         return [
             'items' => [
                 '-prefilters' => [
-                    Csrf::class,
                     Authentication::class,
                 ],
                 '+prefilters' => [

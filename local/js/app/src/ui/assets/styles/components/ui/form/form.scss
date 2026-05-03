@@ -1,0 +1,12 @@
+@use '@/ui/assets/styles/vars' as ui;
+
+.b-form {
+  @include ui.flex(column);
+  gap: ui.$m10;
+  border-radius: ui.$rounded10;
+  background-color: ui.$colorShadow;
+  border: ui.$border1 solid ui.$colorGrey;
+  box-shadow: 8px 8px ui.$m15 0 ui.$colorShadow;
+  padding: ui.$m15;
+  margin-top: ui.$m15;
+}

@@ -9,6 +9,7 @@ export * from '@/modules/forum/interfaces';
 export * from '@/modules/forum/constants';
 export * from '@/modules/forum/mappers';
 export * from '@/modules/forum/repositories';
+export * from '@/modules/forum/services';
 export * from '@/modules/forum/service-ids';
 export * from '@/modules/forum/use-cases';
 export * from '@/modules/forum/components';

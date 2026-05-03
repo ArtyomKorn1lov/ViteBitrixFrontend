@@ -18,7 +18,6 @@ class MockController extends BxController
         return [
             'getOffers' => [
                 '-prefilters' => [
-                    Csrf::class,
                     Authentication::class,
                 ],
                 '+prefilters' => [
@@ -27,7 +26,6 @@ class MockController extends BxController
             ],
             'getNews' => [
                 '-prefilters' => [
-                    Csrf::class,
                     Authentication::class,
                 ],
                 '+prefilters' => [
@@ -36,7 +34,6 @@ class MockController extends BxController
             ],
             'createFeedback' => [
                 '-prefilters' => [
-                    Csrf::class,
                     Authentication::class,
                 ],
                 '+prefilters' => [

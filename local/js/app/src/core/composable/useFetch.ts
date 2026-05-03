@@ -28,6 +28,7 @@ export default function useFetch<T>({ callback, messageType = MessageTypes.notif
       isLoading.value = false;
       return response;
     } catch (exception: Error | any) {
+      isLoading.value = false;
       if (showMessage) {
         await displayMessage(exception?.message);
       }

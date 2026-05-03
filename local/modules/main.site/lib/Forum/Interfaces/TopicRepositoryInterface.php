@@ -41,15 +41,13 @@ interface TopicRepositoryInterface
 
     /**
      * @param TopicCreate $topic
-     * @return int
      * @throws \Throwable
      */
-    public function create(TopicCreate $topic): int;
+    public function create(TopicCreate $topic): void;
 
     /**
      * @param TopicUpdate $topicUpdate
-     * @return int
      * @throws \Throwable
      */
-    public function update(TopicUpdate $topicUpdate): int;
+    public function update(TopicUpdate $topicUpdate): void;
 }

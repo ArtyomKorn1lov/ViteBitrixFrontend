@@ -6,5 +6,6 @@ import type TopicDetail from '@/modules/forum/models/TopicDetail';
 import type TopicCreate from '@/modules/forum/models/TopicCreate';
 import type TopicUpdate from '@/modules/forum/models/TopicUpdate';
 import type TopicCreateData from '@/modules/forum/models/TopicCreateData';
+import type TopicFormData from '@/modules/forum/models/TopicFormData';
 
-export { Author, Topic, Group, ShortGroup, TopicDetail, TopicCreate, TopicUpdate, TopicCreateData };
+export { Author, Topic, Group, ShortGroup, TopicDetail, TopicCreate, TopicUpdate, TopicCreateData, TopicFormData };

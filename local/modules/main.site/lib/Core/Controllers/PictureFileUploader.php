@@ -7,8 +7,16 @@ use Bitrix\UI\FileUploader\Configuration;
 use Bitrix\UI\FileUploader\FileOwnershipCollection;
 use Bitrix\UI\FileUploader\UploaderController;
 
-class FileUploader extends UploaderController
+class PictureFileUploader extends UploaderController
 {
+    /**
+     * @param array $options
+     */
+    public function __construct(array $options)
+    {
+        parent::__construct($options);
+    }
+
     /**
      * @return bool
      */
@@ -72,7 +80,7 @@ class FileUploader extends UploaderController
     {
         return new CommitOptions([
             'moduleId' => 'main.site',
-            'savePath' => 'main.site.uploads',
+            'savePath' => 'main.site.files',
             'forceRandom' => true,
             'skipExtension' => false,
         ]);

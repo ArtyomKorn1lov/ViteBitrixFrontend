@@ -27,5 +27,9 @@ return function (RoutingConfigurator $routes) {
         $routes->get('topic/{id}', [TopicController::class, 'detailAction']);
 
         $routes->get('tags/items', [TagsController::class, 'itemsAction']);
+
+        $routes->post('topic/create', [TopicController::class, 'createAction']);
+
+        $routes->put('topic/update', [TopicController::class, 'updateAction']);
     });
 };

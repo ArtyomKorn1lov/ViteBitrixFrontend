@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
-import { SimpleObject, ApiClientInterface, ApiClientServiceId } from '@/core';
+import { SimpleObject, ApiClientInterface, ApiClientServiceId, CommonResponse } from '@/core';
 import { TopicRepositoryInterface } from '@/modules/forum/interfaces';
-import { Group, ShortGroup, Topic, TopicDetail } from '@/modules/forum/models';
+import { Group, ShortGroup, Topic, TopicCreate, TopicDetail, TopicUpdate } from '@/modules/forum/models';
 import { TopicMapper } from '@/modules/forum/mappers';
 
 @injectable()
@@ -40,5 +40,19 @@ export default class TopicRepository implements TopicRepositoryInterface {
   public async getTopicById(id: number): Promise<TopicDetail> {
     const response: TopicDetail | null | undefined = await this.apiClient.get<void, TopicDetail>(`api/topic/${id}`);
     return TopicMapper.fromResponseToDetail(response);
+  }
+
+  public async create(object: TopicCreate): Promise<CommonResponse> {
+    const response: CommonResponse | null | undefined = await this.apiClient.post<TopicCreate, CommonResponse>('api/topic/create', {
+      data: object,
+    });
+    return response as CommonResponse;
+  }
+
+  public async update(object: TopicUpdate): Promise<CommonResponse> {
+    const response: CommonResponse | null | undefined = await this.apiClient.put<TopicUpdate, CommonResponse>('api/topic/update', {
+      data: object,
+    });
+    return response as CommonResponse;
   }
 }

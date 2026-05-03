@@ -12,6 +12,12 @@ return [
         ],
         'readonly' => true,
     ],
+    'ui.uploader' => [
+        'value' => [
+            'allowUseControllers' => true,
+        ],
+        'readonly' => false,
+    ],
     'services' => [
         'value' => [
             Main\Site\Forum\Interfaces\AuthorRepositoryInterface::class => ['className' => Main\Site\Forum\Repositories\AuthorRepository::class],

@@ -33,10 +33,11 @@ $arJsData = Json::encode($arData);
         $arJsCreateData = Json::encode($arCreateData);
     ?>
         <button
-            class="b-btn b-btn_large b-btn_primary"
+            class="b-btn b-btn_medium b-btn_primary"
+            style="margin-top: 15px;"
             id="forum-create-btn"
         >
-            Создать
+            Создать тему
         </button>
         <div id="<?=$arCreateData['templateId']?>"></div>
         <script>

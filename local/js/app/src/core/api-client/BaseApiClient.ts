@@ -57,6 +57,10 @@ export default abstract class BaseApiClient {
     return data;
   }
 
+  protected prepareHeaders(additionHeaders: SimpleObject = {}): SimpleObject {
+    return { ...additionHeaders };
+  }
+
   protected async buildRequest<T, K>(
     url: string,
     { data, dataType = BodyTypes.json, params = null, headers = {}, requestType = RequestTypes.post }: RequestConfig<T>,
@@ -66,7 +70,7 @@ export default abstract class BaseApiClient {
     const payload = data ? this.setPayload<T>(data, dataType) : {};
     const config: SimpleObject = {};
     if (headers) {
-      config['headers'] = { ...headers };
+      config['headers'] = this.prepareHeaders(headers);
     }
 
     switch (requestType) {
@@ -91,7 +95,7 @@ export default abstract class BaseApiClient {
     return response?.data;
   }
 
-  async createError(exception: any): Promise<void> {
+  async createError(exception: Error | any): Promise<void> {
     throw new ResponseException({
       message: exception?.message,
       status: exception?.status,

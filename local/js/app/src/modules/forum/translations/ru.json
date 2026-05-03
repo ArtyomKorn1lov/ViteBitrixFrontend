@@ -12,10 +12,17 @@
     "backTitle": "Назад"
   },
   "form": {
+    "title": {
+      "create": "Создание темы",
+      "edit": "Редактирование темы"
+    },
     "validators": {
       "isRequired": "Обязательно для заполнения"
     },
     "fields": {
+      "id": {
+        "title": "Идентификатор"
+      },
       "name": {
         "title": "Название",
         "placeholder": "Введите название"
@@ -40,6 +47,16 @@
         "title": "Изображения"
       }
     },
-    "submitText": "Отправить!"
+    "submitText": "Сохранить",
+    "messages": {
+      "successCreate": "Тема для обсуждения успешно создана",
+      "successUpdate": "Тема для обсуждения успешно обновлена"
+    }
+  },
+  "validationService": {
+    "errors": {
+      "nullOrUndefined": "Объект для валидации не может быть null или undefined",
+      "rulesEmpty": "Объект с правилами валидации не может быть null или undefined"
+    }
   }
 }

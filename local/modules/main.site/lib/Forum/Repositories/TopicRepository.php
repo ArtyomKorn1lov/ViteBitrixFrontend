@@ -220,10 +220,10 @@ class TopicRepository implements TopicRepositoryInterface
 
     /**
      * @param TopicCreate $topic
-     * @return int
      * @throws LoaderException
+     * @throws Exception
      */
-    public function create(TopicCreate $topic): int
+    public function create(TopicCreate $topic): void
     {
         $this->includeModule();
         global $USER;
@@ -247,15 +247,14 @@ class TopicRepository implements TopicRepositoryInterface
         if (!$itemId) {
             throw new Exception($entity->LAST_ERROR);
         }
-        return $itemId;
     }
 
     /**
      * @param TopicUpdate $topicUpdate
-     * @return int
      * @throws LoaderException
+     * @throws Exception
      */
-    public function update(TopicUpdate $topicUpdate): int
+    public function update(TopicUpdate $topicUpdate): void
     {
         $this->includeModule();
         global $USER;
@@ -276,12 +275,12 @@ class TopicRepository implements TopicRepositoryInterface
         if (!$itemId) {
             throw new Exception($entity->LAST_ERROR);
         }
-        return $itemId;
     }
 
     /**
      * @return void
      * @throws LoaderException
+     * @throws Exception
      */
     protected function includeModule(): void
     {

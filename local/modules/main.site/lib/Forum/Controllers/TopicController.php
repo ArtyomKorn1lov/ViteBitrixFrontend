@@ -18,6 +18,8 @@ use Bitrix\Main\Engine\JsonPayload;
 use Psr\Container\NotFoundExceptionInterface;
 
 use Main\Site\Forum\Interfaces\TopicRepositoryInterface;
+use Main\Site\Forum\Models\TopicCreate;
+use Main\Site\Forum\Models\TopicUpdate;
 
 class TopicController extends BxController
 {
@@ -44,7 +46,6 @@ class TopicController extends BxController
         return [
             'groups' => [
                 '-prefilters' => [
-                    Csrf::class,
                     Authentication::class,
                 ],
                 '+prefilters' => [
@@ -53,7 +54,6 @@ class TopicController extends BxController
             ],
             'groupsAll' => [
                 '-prefilters' => [
-                    Csrf::class,
                     Authentication::class,
                 ],
                 '+prefilters' => [
@@ -62,7 +62,6 @@ class TopicController extends BxController
             ],
             'items' => [
                 '-prefilters' => [
-                    Csrf::class,
                     Authentication::class,
                 ],
                 '+prefilters' => [
@@ -71,11 +70,20 @@ class TopicController extends BxController
             ],
             'detail' => [
                 '-prefilters' => [
-                    Csrf::class,
                     Authentication::class,
                 ],
                 '+prefilters' => [
                     new HttpMethod([HttpMethod::METHOD_GET])
+                ],
+            ],
+            'create' => [
+                '+prefilters' => [
+                    new HttpMethod([HttpMethod::METHOD_POST])
+                ],
+            ],
+            'update' => [
+                '+prefilters' => [
+                    new HttpMethod([HttpMethod::METHOD_PUT])
                 ],
             ]
         ];
@@ -142,6 +150,63 @@ class TopicController extends BxController
     {
         try {
             return AjaxJson::createSuccess($this->topicRepository->getById($id));
+        } catch (Exception $exception) {
+            $errorCollection = new ErrorCollection();
+            $errorCollection->setError(new Error($exception->getMessage()));
+            return AjaxJson::createError($errorCollection);
+        }
+    }
+
+    /**
+     * @param JsonPayload $payload
+     * @return AjaxJson
+     * @throws \Throwable
+     */
+    public function createAction(JsonPayload $payload): AjaxJson
+    {
+        try {
+            $data = $payload->getData();
+            $createData = new TopicCreate(
+                name: $data['name'],
+                sectionId: $data['sectionId'],
+                tagIds: $data['tagIds'] ?? [],
+                previewText: $data['previewText'] ?? '',
+                detailText: $data['detailText'] ?? '',
+                pictureIds: $data['pictureIds'] ?? [],
+            );
+            $this->topicRepository->create($createData);
+            return AjaxJson::createSuccess([
+                'message' => 'Тема успешно создана и отправлена на модерацию'
+            ]);
+        } catch (Exception $exception) {
+            $errorCollection = new ErrorCollection();
+            $errorCollection->setError(new Error($exception->getMessage()));
+            return AjaxJson::createError($errorCollection);
+        }
+    }
+
+    /**
+     * @param JsonPayload $payload
+     * @return AjaxJson
+     * @throws \Throwable
+     */
+    public function updateAction(JsonPayload $payload): AjaxJson
+    {
+        try {
+            $data = $payload->getData();
+            $updateData = new TopicUpdate(
+                id: (int)$data['id'],
+                name: $data['name'],
+                sectionId: $data['sectionId'],
+                tagIds: $data['tagIds'] ?? [],
+                previewText: $data['previewText'] ?? '',
+                detailText: $data['detailText'] ?? '',
+                pictureIds: $data['pictureIds'] ?? [],
+            );
+            $this->topicRepository->update($updateData);
+            return AjaxJson::createSuccess([
+                'message' => 'Тема успешно обновлена и отправлена на модерацию'
+            ]);
         } catch (Exception $exception) {
             $errorCollection = new ErrorCollection();
             $errorCollection->setError(new Error($exception->getMessage()));

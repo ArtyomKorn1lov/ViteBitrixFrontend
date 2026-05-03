@@ -20,11 +20,6 @@ export default defineConfig(({ mode }) => {
         output: {
           entryFileNames: 'js/entry-[name].[hash].js',
           chunkFileNames: 'js/chunk-[name].[hash].js',
-          manualChunks: (id: string) => {
-            if (id.includes('node_modules')) {
-              return 'node-modules';
-            }
-          },
           esModule: true,
         },
         cache: true,

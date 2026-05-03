@@ -15,7 +15,7 @@ export default class FileBxRepository implements FileRepositoryInterface {
 
   public async upload(file: FileUpload): Promise<string> {
     const response: SimpleObject | null | undefined = await this.apiClient.post<File, SimpleObject>(
-      'bitrix/services/main/ajax.php?controller=main.site%3Acore.controllers.fileuploader&controllerOptions=%7B%7D&token=&action=ui.fileuploader.upload',
+      'bitrix/services/main/ajax.php?controller=main.site:core.controllers.pictureFileUploader&controllerOptions=%7B%7D&token=&action=ui.fileuploader.upload',
       {
         data: file.file,
         dataType: BodyTypes.upload,
