@@ -40,18 +40,18 @@
     <el-form-item
       class="b-form-item"
       :label="t('forum.form.fields.tags.title')"
-      prop="tagIds"
+      prop="tagUIds"
     >
       <el-select
-        v-model="formData.tagIds"
+        v-model="formData.tagUIds"
         :placeholder="t('forum.form.fields.tags.placeholder')"
         multiple
       >
         <el-option
           v-for="item in topicCreateData?.tags"
-          :key="item.id"
+          :key="item.uId"
           :label="item.title"
-          :value="item.id"
+          :value="item.uId"
         />
       </el-select>
     </el-form-item>
@@ -89,9 +89,12 @@
         multiple
         drag
         :before-upload="beforeFileUpload"
-        :on-success="(response) => handleFileUpload(formData, 'pictureIds', response)"
+        :on-success="(response: any) => handleFileUpload(formData, 'pictures', response)"
+        :on-remove="(response: any) => removeFile(formData, 'pictures', response?.response)"
         :http-request="sendUploadRequest"
         :disabled="isLoadingUpload"
+        :limit="5"
+        list-type="picture"
       >
         <el-icon>
           <Plus />
@@ -110,18 +113,7 @@
 </template>
 <script setup lang="ts">
 import { computed, PropType, reactive, ref } from 'vue';
-import {
-  ElButton,
-  ElForm,
-  ElFormItem,
-  ElIcon,
-  ElInput,
-  ElOption,
-  ElSelect,
-  ElUpload,
-  FormInstance,
-  FormRules
-} from 'element-plus';
+import { ElButton, ElForm, ElFormItem, ElIcon, ElInput, ElOption, ElSelect, ElUpload, FormInstance, FormRules } from 'element-plus';
 import { Plus } from '@element-plus/icons-vue';
 import { useI18n } from 'vue-i18n';
 import {
@@ -130,9 +122,10 @@ import {
   MessageHelper,
   MessageTypes,
   ResponseStatus,
+  UrlHelper,
   useFetch,
   useFetching,
-  useFileUpload
+  useFileUpload,
 } from '@/core';
 import { FormTypes } from '@/modules/forum/enums';
 import { TopicCreate, TopicCreateData, TopicFormData, TopicUpdate } from '@/modules/forum/models';
@@ -172,7 +165,7 @@ const { fetch: fetchUpdate, isLoading: isLoadingUpdate } = useFetch<CommonRespon
   messageType: MessageTypes.messageBox,
 });
 
-const { isLoading: isLoadingUpload, beforeFileUpload, sendRequest: sendUploadRequest, handleFileUpload } = useFileUpload();
+const { isLoading: isLoadingUpload, beforeFileUpload, sendRequest: sendUploadRequest, handleFileUpload, removeFile } = useFileUpload();
 
 const rules = reactive<FormRules<TopicFormData>>({
   name: [
@@ -203,10 +196,10 @@ const rules = reactive<FormRules<TopicFormData>>({
 const formData = reactive<TopicFormData>({
   name: '',
   sectionId: undefined,
-  tagIds: [],
+  tagUIds: [],
   previewText: '',
   detailText: '',
-  pictureIds: [],
+  pictures: [],
 });
 const formRef = ref<FormInstance>();
 
@@ -244,6 +237,7 @@ const sendRequest = async (formRef: FormInstance | undefined): Promise<void> => 
       type: ResponseStatus.success,
       callback: () => {
         formRef?.resetFields();
+        UrlHelper.reloadPage();
       },
     });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

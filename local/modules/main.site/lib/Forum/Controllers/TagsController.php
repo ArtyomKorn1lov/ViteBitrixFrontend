@@ -51,6 +51,7 @@ class TagsController extends BxController
 
     /**
      * @return AjaxJson
+     * @throws \Throwable
      */
     public function itemsAction(): AjaxJson
     {

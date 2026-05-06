@@ -9,7 +9,6 @@ use Bitrix\Main\Engine\Response\AjaxJson;
 use Bitrix\Main\DI\ServiceLocator;
 use Bitrix\Main\ObjectNotFoundException;
 use Bitrix\Main\Request;
-use Bitrix\Main\Engine\ActionFilter\Csrf;
 use Bitrix\Main\Engine\ActionFilter\HttpMethod;
 use Bitrix\Main\Engine\ActionFilter\Authentication;
 use Bitrix\Main\Error;
@@ -169,7 +168,7 @@ class TopicController extends BxController
             $createData = new TopicCreate(
                 name: $data['name'],
                 sectionId: $data['sectionId'],
-                tagIds: $data['tagIds'] ?? [],
+                tagUIds: $data['tagUIds'] ?? [],
                 previewText: $data['previewText'] ?? '',
                 detailText: $data['detailText'] ?? '',
                 pictureIds: $data['pictureIds'] ?? [],
@@ -198,7 +197,7 @@ class TopicController extends BxController
                 id: (int)$data['id'],
                 name: $data['name'],
                 sectionId: $data['sectionId'],
-                tagIds: $data['tagIds'] ?? [],
+                tagUIds: $data['tagUIds'] ?? [],
                 previewText: $data['previewText'] ?? '',
                 detailText: $data['detailText'] ?? '',
                 pictureIds: $data['pictureIds'] ?? [],

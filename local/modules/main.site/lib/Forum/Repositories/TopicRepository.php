@@ -8,6 +8,7 @@ use CIBlockElement;
 use CIBlockSection;
 use CFile;
 use Exception;
+use CUtil;
 
 use Bitrix\Main\DI\ServiceLocator;
 use Bitrix\Main\ObjectNotFoundException;
@@ -17,6 +18,7 @@ use Bitrix\Main\Loader;
 
 use Main\Site\Core\IBlock\Helper;
 use Main\Site\Core\Models\Picture;
+use Main\Site\Core\Interfaces\TempFileServiceInterface;
 use Main\Site\Forum\Interfaces\AuthorRepositoryInterface;
 use Main\Site\Forum\Interfaces\TagsRepositoryInterface;
 use Main\Site\Forum\Interfaces\TopicRepositoryInterface;
@@ -33,10 +35,21 @@ class TopicRepository implements TopicRepositoryInterface
     private const int GROUPS_PAGE_SIZE = 2;
     /** @var int */
     private const int ITEMS_PAGE_SIZE = 4;
+    /** @var string[] */
+    private const CODE_FIELD_GENERATE_PARAMS = [
+        "max_len" => "100",
+        "change_case" => "L",
+        "replace_space" => "_",
+        "replace_other" => "_",
+        "delete_repeat_replace" => "true",
+        "use_google" => "false",
+    ];
     /** @var AuthorRepositoryInterface */
     private AuthorRepositoryInterface $authorRepository;
     /** @var TagsRepositoryInterface */
     private TagsRepositoryInterface $tagsRepository;
+    /** @var TempFileServiceInterface */
+    private TempFileServiceInterface $tempFileService;
 
     /**
      * @throws ObjectNotFoundException
@@ -47,6 +60,7 @@ class TopicRepository implements TopicRepositoryInterface
         $serviceLocator = ServiceLocator::getInstance();
         $this->authorRepository = $serviceLocator->get(AuthorRepositoryInterface::class);
         $this->tagsRepository = $serviceLocator->get(TagsRepositoryInterface::class);
+        $this->tempFileService = $serviceLocator->get(TempFileServiceInterface::class);
     }
 
     /**
@@ -173,6 +187,7 @@ class TopicRepository implements TopicRepositoryInterface
      * @return TopicDetail
      * @throws LoaderException
      * @throws Exception
+     * @throws \Throwable
      */
     public function getById(int $topicId): TopicDetail
     {
@@ -220,8 +235,9 @@ class TopicRepository implements TopicRepositoryInterface
 
     /**
      * @param TopicCreate $topic
+     * @return void
      * @throws LoaderException
-     * @throws Exception
+     * @throws \Throwable
      */
     public function create(TopicCreate $topic): void
     {
@@ -234,13 +250,14 @@ class TopicRepository implements TopicRepositoryInterface
             'IBLOCK_TYPE' => 'forum',
             'ACTIVE' => 'N',
             'NAME' => $topic->name,
+            'CODE' => CUtil::translit($topic->name, LANGUAGE_ID, static::CODE_FIELD_GENERATE_PARAMS),
             'IBLOCK_SECTION_ID' => $topic->sectionId,
             'DATE_ACTIVE_FROM' => new DateTime()->format('d.m.Y'),
             'PREVIEW_TEXT' => $topic->previewText ?? '',
             'DETAIL_TEXT' => $topic->detailText ?? '',
             'PROPERTY_VALUES' => [
                 'AUTHOR' => $USER->getId(),
-                'TAGS' => $topic->tags ?? [],
+                'TAGS' => $topic->tagUIds ?? [],
                 'PICTURES' => $pictures,
             ]
         ]);
@@ -253,6 +270,7 @@ class TopicRepository implements TopicRepositoryInterface
      * @param TopicUpdate $topicUpdate
      * @throws LoaderException
      * @throws Exception
+     * @throws \Throwable
      */
     public function update(TopicUpdate $topicUpdate): void
     {
@@ -263,12 +281,13 @@ class TopicRepository implements TopicRepositoryInterface
         $itemId = $entity->update($topicUpdate->id, [
             'ACTIVE' => 'N',
             'NAME' => $topicUpdate->name,
+            'CODE' => CUtil::translit($topicUpdate->name, LANGUAGE_ID, static::CODE_FIELD_GENERATE_PARAMS),
             'IBLOCK_SECTION_ID' => $topicUpdate->sectionId,
-            'PREVIEW_TEXT' => $topic->previewText ?? '',
-            'DETAIL_TEXT' => $topic->detailText ?? '',
+            'PREVIEW_TEXT' => $topicUpdate->previewText ?? '',
+            'DETAIL_TEXT' => $topicUpdate->detailText ?? '',
             'PROPERTY_VALUES' => [
                 'AUTHOR' => $USER->getId(),
-                'TAGS' => $topic->tags ?? [],
+                'TAGS' => $topicUpdate->tagUIds ?? [],
                 'PICTURES' => $pictures,
             ]
         ]);
@@ -309,8 +328,9 @@ class TopicRepository implements TopicRepositoryInterface
     }
 
     /**
-     * @param array|bool $pictureIds
+     * @param int[]|bool $pictureIds
      * @return array
+     * @throws \Throwable
      */
     private function getUploadedPictures(array|bool $pictureIds): array
     {
@@ -320,12 +340,12 @@ class TopicRepository implements TopicRepositoryInterface
         $pictures = [];
 
         foreach ($pictureIds as $pictureId) {
-            $tmpFile = FileInfo::createFromTempFile($pictureId);
+            $tmpFile = $this->tempFileService->get($pictureId);
             if (empty($tmpFile)) {
                 continue;
             }
             $pictures[] = [
-                'VALUE' => $tmpFile->getFileId(),
+                'VALUE' => $tmpFile['ID'],
             ];
         }
 

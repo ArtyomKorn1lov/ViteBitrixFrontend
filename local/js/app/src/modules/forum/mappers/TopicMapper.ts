@@ -48,20 +48,20 @@ export const fromFormDataToCreate = (formData: TopicFormData): TopicCreate => {
   return {
     name: formData.name,
     sectionId: formData.sectionId as number,
-    tagIds: formData.tagIds ?? [],
-    pictureIds: formData.pictureIds ?? [],
+    tagUIds: formData.tagUIds ?? [],
+    pictureIds: formData.pictures && formData.pictures.length > 0 ? formData.pictures.map((picture) => picture.id) : [],
     previewText: formData.previewText ?? '',
     detailText: formData.detailText ?? '',
   };
 };
 
-export const fromFormDataToUpdate = (formData: TopicFormData, id: number) => {
+export const fromFormDataToUpdate = (formData: TopicFormData, id: number): TopicUpdate => {
   return {
     id: id,
     name: formData.name,
     sectionId: formData.sectionId as number,
-    tagIds: formData.tagIds ?? [],
-    pictureIds: formData.pictureIds ?? [],
+    tagUIds: formData.tagUIds ?? [],
+    pictureIds: formData.pictures && formData.pictures.length > 0 ? formData.pictures.map((picture) => picture.id) : [],
     previewText: formData.previewText ?? '',
     detailText: formData.detailText ?? '',
   };

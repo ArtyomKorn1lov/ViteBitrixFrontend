@@ -1,10 +1,12 @@
+import FileUpload from '@/core/models/FileUpload.ts';
+
 interface TopicFormData {
   name: string;
   sectionId?: number;
-  tagIds?: number[];
+  tagUIds?: string[];
   previewText?: string;
   detailText?: string;
-  pictureIds?: string[];
+  pictures?: FileUpload[];
 }
 
 export default TopicFormData;

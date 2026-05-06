@@ -10,10 +10,10 @@ final class TopicUpdate
      * @param int $id
      * @param string $name
      * @param int $sectionId
-     * @param int[]|null $tagIds
+     * @param int[]|null $tagUIds
      * @param string|null $previewText
      * @param string|null $detailText
-     * @param string[]|null $pictureIds
+     * @param int[]|null $pictureIds
      */
     public function __construct(
         #[NotEmpty]
@@ -22,7 +22,7 @@ final class TopicUpdate
         public string $name,
         #[NotEmpty]
         public int $sectionId,
-        public ?array $tagIds = null,
+        public ?array $tagUIds = null,
         public ?string $previewText = null,
         public ?string $detailText = null,
         public ?array $pictureIds = null,

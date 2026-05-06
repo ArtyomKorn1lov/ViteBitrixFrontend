@@ -4,3 +4,5 @@ export const navigateTo = (page: string): void => {
   }
   window.location.href = page;
 };
+
+export const reloadPage = () => window.location.reload();

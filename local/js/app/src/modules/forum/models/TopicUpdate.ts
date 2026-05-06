@@ -2,10 +2,10 @@ interface TopicUpdate {
   id: number;
   name: string;
   sectionId: number;
-  tagIds?: number[];
+  tagUIds?: string[];
   previewText?: string;
   detailText?: string;
-  pictureIds?: string[];
+  pictureIds?: number[];
 }
 
 export default TopicUpdate;

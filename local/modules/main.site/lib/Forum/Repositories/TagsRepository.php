@@ -34,7 +34,7 @@ class TagsRepository implements TagsRepositoryInterface
 
         $entityDataClass = $this->getEntityClass();
         $rsData = $entityDataClass::getList([
-            'select' => ['ID', 'UF_CODE', 'UF_NAME'],
+            'select' => ['ID', 'UF_CODE', 'UF_NAME', 'UF_XML_ID'],
             'filter' => ['UF_XML_ID' => $uids],
         ]);
 
@@ -45,6 +45,7 @@ class TagsRepository implements TagsRepositoryInterface
                 id: $arData['ID'],
                 title: $arData['UF_NAME'],
                 code: $arData['UF_CODE'],
+                uId: $arData['UF_XML_ID'],
             );
         }
 
@@ -63,7 +64,7 @@ class TagsRepository implements TagsRepositoryInterface
         /** @var DataManager $entityDataClass */
         $entityDataClass = $this->getEntityClass();
         $rsData = $entityDataClass::getList([
-            'select' => ['ID', 'UF_CODE', 'UF_NAME'],
+            'select' => ['ID', 'UF_CODE', 'UF_NAME', 'UF_XML_ID'],
         ]);
 
         /** @var Tag[] $tags */
@@ -73,6 +74,7 @@ class TagsRepository implements TagsRepositoryInterface
                 id: $arData['ID'],
                 title: $arData['UF_NAME'],
                 code: $arData['UF_CODE'],
+                uId: $arData['UF_XML_ID'],
             );
         }
 

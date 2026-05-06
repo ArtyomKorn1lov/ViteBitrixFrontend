@@ -7,7 +7,3 @@ export const buildAddsHeading = (file: FileUpload): SimpleObject => {
     'x-upload-content-name': file.name,
   };
 };
-
-export const fromUploadResponseToUId = (response: SimpleObject): string => {
-  return response['token'] ?? '';
-};

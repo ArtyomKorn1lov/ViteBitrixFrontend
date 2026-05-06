@@ -6,11 +6,14 @@ use Main\Site\Core\Controllers\ViteController;
 use Main\Site\App\Controllers\MockController;
 use Main\Site\Forum\Controllers\TopicController;
 use Main\Site\Forum\Controllers\TagsController;
+use Main\Site\Core\Controllers\PictureUploadController;
 
 return function (RoutingConfigurator $routes) {
     $routes->prefix('api')->group(function (RoutingConfigurator $routes) {
 
         $routes->get('vite/loadAssets', [ViteController::class, 'loadAssetsAction']);
+
+        $routes->post('file/upload', [PictureUploadController::class, 'uploadAction']);
 
         $routes->get('catalog/offers', [MockController::class, 'getOffersAction']);
 

@@ -1,4 +1,4 @@
-import { UploadFile, UploadRawFile, UploadRequestOptions } from 'element-plus';
+import { UploadRawFile, UploadRequestOptions } from 'element-plus';
 import Localisation from '@/core/translations/Localisation';
 import { DependencyContainer } from '@/core/dependency-injection';
 import { FileUpload } from '@/core/models';
@@ -13,7 +13,7 @@ const t = Localisation.global.t;
 export default function useFileUpload() {
   const fileRepository: FileRepositoryInterface = DependencyContainer.get(FileRepositoryServiceId);
 
-  const { fetch: fetchFile, isLoading } = useFetch({
+  const { fetch: fetchFile, isLoading } = useFetch<number>({
     callback: (file: FileUpload) => fileRepository.upload(file),
   });
 
@@ -34,32 +34,37 @@ export default function useFileUpload() {
     return true;
   };
 
-  const sendRequest = async (options: UploadRequestOptions): Promise<string> => {
+  const sendRequest = async (options: UploadRequestOptions): Promise<FileUpload> => {
     const uploadFile: File = options.file;
-    return await fetchFile({
+    const requestFile: FileUpload = {
       id: 0,
       file: uploadFile,
       name: uploadFile.name,
       type: uploadFile.type ?? '',
       fileSize: FileHelper.formatSizeMB(uploadFile.size),
-    } as FileUpload);
+    };
+    requestFile.id = await fetchFile(requestFile);
+    return requestFile;
   };
 
-  const handleFileUpload = <T, K extends keyof T>(object: T, key: K, uploadFile: UploadFile) => {
+  const handleFileUpload = <T, K extends keyof T>(object: T, key: K, uploadFile: FileUpload): void => {
     MessageHelper.showNotification({
       title: t('core.messages.successTitle'),
       message: t('core.file.success.message'),
       type: ResponseStatus.success,
     });
-    const file: FileUpload = {
-      id: uploadFile.uid,
-      file: uploadFile.raw as File,
-      name: uploadFile.name,
-      type: uploadFile.raw?.type ?? '',
-      fileSize: FileHelper.formatSizeMB(uploadFile.size ?? 0),
-    };
     // @ts-ignore
-    object[key]?.push(file);
+    object[key]?.push(uploadFile);
+  };
+
+  const removeFile = <T, K extends keyof T>(object: T, key: K, uploadFile: FileUpload): void => {
+    // @ts-ignore
+    object[key] = object[key]?.filter((item: FileUpload) => item.id !== uploadFile.id);
+  };
+
+  const removeAllFiles = <T, K extends keyof T>(object: T, key: K): void => {
+    // @ts-ignore
+    object[key] = [];
   };
 
   return {
@@ -67,5 +72,7 @@ export default function useFileUpload() {
     beforeFileUpload,
     sendRequest,
     handleFileUpload,
+    removeFile,
+    removeAllFiles,
   };
 }
