@@ -33,7 +33,7 @@ Bitrix\Main\Loader::includeModule('main.site');
 	<![endif]-->
 
     <?php
-    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . '/main.js');
+    Asset::getInstance()->addJs(SITE_DIR . 'local/modules/main.site/assets/js/script.js');
     $APPLICATION->ShowViewContent("custom_dependencies");
     ?>
 	<title><?$APPLICATION->ShowTitle()?></title>

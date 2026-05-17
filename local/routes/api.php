@@ -17,7 +17,7 @@ return function (RoutingConfigurator $routes) {
 
         $routes->get('catalog/offers', [MockController::class, 'getOffersAction']);
 
-        $routes->get('news/', [MockController::class, 'getNewsAction']);
+        $routes->get('news', [MockController::class, 'getNewsAction']);
 
         $routes->post('feedback', [MockController::class, 'createFeedbackAction']);
 
