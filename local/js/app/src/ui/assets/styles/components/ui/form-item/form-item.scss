@@ -1,0 +1,10 @@
+@use '@/ui/assets/styles/vars' as ui;
+
+.b-form-item,
+.el-form-item.b-form-item {
+  .el-form-item {
+    &__label {
+      color: ui.$colorText;
+    }
+  }
+}

@@ -1,12 +1,12 @@
 import axios from 'axios';
-import Translations from '@/translations';
+import Localisation from '@/core/translations/Localisation';
 import { SimpleObject } from '@/core/types';
 import { BodyTypes, RequestTypes } from '@/core/enums';
 import { ResponseException } from '@/core/exceptions';
 import { RequestConfig, RequestResponse } from '@/core/models';
 import { ObjectHelper } from '@/core/utils';
 
-const t = Translations.global.t;
+const t = Localisation.global.t;
 
 /**
  * @description абстрактный класс REST API-клиента, доступные типы запросов: GET, PUT, POST, DELETE
@@ -57,16 +57,20 @@ export default abstract class BaseApiClient {
     return data;
   }
 
+  protected prepareHeaders(additionHeaders: SimpleObject = {}): SimpleObject {
+    return { ...additionHeaders };
+  }
+
   protected async buildRequest<T, K>(
     url: string,
     { data, dataType = BodyTypes.json, params = null, headers = {}, requestType = RequestTypes.post }: RequestConfig<T>,
   ): Promise<RequestResponse<K>> {
     const requestUrl: string = this.prepareUrl(url, params);
 
-    const payload = data ? this.setPayload(data, dataType) : {};
+    const payload = data ? this.setPayload<T>(data, dataType) : {};
     const config: SimpleObject = {};
     if (headers) {
-      config['headers'] = { ...headers };
+      config['headers'] = this.prepareHeaders(headers);
     }
 
     switch (requestType) {
@@ -91,7 +95,7 @@ export default abstract class BaseApiClient {
     return response?.data;
   }
 
-  async createError(exception: any): Promise<void> {
+  async createError(exception: Error | any): Promise<void> {
     throw new ResponseException({
       message: exception?.message,
       status: exception?.status,

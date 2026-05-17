@@ -1,13 +1,14 @@
-import { ApiClient } from '@/core';
+import { injectable, inject } from 'inversify';
+import { ApiClientInterface, ApiClientServiceId } from '@/core';
 import { News, NewsFilter } from '@/modules/news';
-import NewsRepositoryInterface from '@/modules/news/repositories/NewsRepositoryInterface';
+import { NewsRepositoryInterface } from '@/modules/news/interfaces';
 
+@injectable()
 export default class NewsRepository implements NewsRepositoryInterface {
-  private apiClient: ApiClient;
-
-  public constructor(apiClient: ApiClient) {
-    this.apiClient = apiClient;
-  }
+  public constructor(
+    @inject(ApiClientServiceId)
+    private apiClient: ApiClientInterface,
+  ) {}
 
   public async getList(page: number): Promise<News[] | null | undefined> {
     const params: NewsFilter = {

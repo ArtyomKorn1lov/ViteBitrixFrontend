@@ -1,0 +1,24 @@
+{
+  "form": {
+    "validators": {
+      "isRequired": "Обязательно для заполнения",
+      "invalidEmail": "Неверный email"
+    },
+    "fields": {
+      "name": {
+        "title": "Имя",
+        "placeholder": "Введите имя"
+      },
+      "email": {
+        "title": "Email",
+        "placeholder": "Введите email"
+      },
+      "description": {
+        "title": "Описание",
+        "placeholder": "Введите описание"
+      }
+    },
+    "submitTitle": "Отправить",
+    "successTitle": "Успешно!"
+  }
+}

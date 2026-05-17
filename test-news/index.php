@@ -1,9 +1,9 @@
 <?php
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetTitle("News");
+$APPLICATION->SetTitle("Новости");
 
 use Bitrix\Main\Web\Json;
-use Site\ViteFrontendHelper;
+use Main\Site\Core\Providers\ViteFrontendBridge;
 
 ?>
 
@@ -34,6 +34,6 @@ $arCatalogJSData = Json::encode($arCatalogData);
 </script>
 
 <?php
-ViteFrontendHelper::registerEntry('src/entrypoint/news/list.ts');
-ViteFrontendHelper::registerEntry('src/entrypoint/catalog/list.ts');
+ViteFrontendBridge::registerEntry('news.list');
+ViteFrontendBridge::registerEntry('catalog.list');
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

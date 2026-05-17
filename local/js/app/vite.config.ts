@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import svgLoader from 'vite-svg-loader';
 import { resolve } from 'path';
 // @ts-ignore
 import hotFilePlugin from 'vite-hotfile-plugin';
@@ -19,11 +20,6 @@ export default defineConfig(({ mode }) => {
         output: {
           entryFileNames: 'js/entry-[name].[hash].js',
           chunkFileNames: 'js/chunk-[name].[hash].js',
-          manualChunks: (id: string) => {
-            if (id.includes('node_modules')) {
-              return 'node-modules';
-            }
-          },
           esModule: true,
         },
         cache: true,
@@ -43,6 +39,7 @@ export default defineConfig(({ mode }) => {
     envPrefix: 'APP_',
     plugins: [
       vue(),
+      svgLoader(),
       ElementPlus({
         format: 'esm',
       }),

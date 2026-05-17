@@ -1,12 +1,9 @@
-interface ResponseExceptionInterface {
-  message?: string;
-  status?: number;
-}
+import { ResponseError } from '@/core/models';
 
-export default class ResponseException extends Error implements ResponseExceptionInterface {
+export default class ResponseException extends Error implements ResponseError {
   public status?: number;
 
-  public constructor(data: ResponseExceptionInterface | null = null) {
+  public constructor(data: ResponseError | null = null) {
     super(data?.message);
     this.status = data?.status;
   }

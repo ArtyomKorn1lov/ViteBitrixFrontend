@@ -1,0 +1,72 @@
+// Наследуемые стили
+@use 'fonts' as *;
+@use 'colors' as *;
+@use 'blocks' as *;
+@use 'mixins' as *;
+
+%textDefaultOptions {
+  font-weight: $textMedium;
+  line-height: $leadingTited;
+  color: $colorText;
+}
+
+%buttonDefaultOptions {
+  cursor: pointer;
+  background-color: $colorPrimary !important;
+  color: $colorWhite !important;
+  border-color: transparent;
+  height: $m40;
+  border-radius: $rounded4;
+  box-sizing: border-box;
+
+  span,
+  p {
+    font-family: 'Inter', sans-serif;
+    line-height: normal;
+    stroke: $colorPrimary;
+  }
+
+  &:hover,
+  &:active {
+    background-color: $colorPrimaryHover !important;
+    color: $colorText !important;
+    border-color: transparent;
+  }
+}
+
+%buttonDisabledOptions {
+  background-color: $colorGrey !important;
+  color: $colorWhite !important;
+  border-color: transparent;
+
+  span,
+  p {
+    color: $colorWhite;
+  }
+
+  &:hover,
+  &:active {
+    background-color: $colorGrey !important;
+
+    span,
+    p {
+      color: $colorWhite;
+    }
+  }
+}
+
+%inputDefaultOptions {
+  border: 1px solid $colorLightGrey;
+  box-shadow: none;
+  box-sizing: border-box;
+  padding-left: 12px;
+  padding-right: 12px;
+  height: $m40;
+}
+
+%tagDefaultOptions {
+  @include tagPalette();
+  border-color: transparent;
+  height: $m25;
+  border-radius: $rounded4;
+}

@@ -1,0 +1,22 @@
+@use '@/ui/assets/styles/vars' as ui;
+
+.b-section {
+  &_pt {
+    padding-top: ui.$m35;
+  }
+
+  &_pb {
+    padding-bottom: ui.$m35;
+  }
+
+  &__top {
+    @include ui.flex(column, start);
+    gap: ui.$m10;
+    margin-bottom: ui.$m20;
+  }
+
+  &__bottom {
+    @include ui.flex(column, center);
+    margin-top: ui.$m20;
+  }
+}

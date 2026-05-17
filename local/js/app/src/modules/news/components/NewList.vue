@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { ElButton, ElPagination } from 'element-plus';
-import { DependencyInjection, TemplateHelper, useFetch } from '@/core';
+import { DependencyContainer, TemplateHelper, useFetchOld } from '@/core';
 import { useCounterHook } from '@/modules/catalog';
 import { News } from '@/modules/news/models';
 import { GetNews } from '@/modules/news/use-case';
@@ -34,9 +34,9 @@ import NewCard from '@/modules/news/components/NewCard.vue';
 
 const { count, increment, decrement } = useCounterHook();
 
-const getNews: GetNews = DependencyInjection.resolve('GetNews');
+const getNews: GetNews = DependencyContainer.get(GetNews);
 
-const fetchNews = useFetch<GetNews, News[]>({
+const fetchNews = useFetchOld<GetNews, News[]>({
   useCase: getNews,
 });
 

@@ -1,0 +1,38 @@
+@use 'vars' as *;
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+  color: currentColor;
+}
+
+span {
+  @extend %textDefaultOptions;
+  line-height: $leadingSmall;
+  color: currentColor;
+}
+
+p {
+  @extend %textDefaultOptions;
+  margin-top: $m10;
+  margin-bottom: $m10;
+  line-height: $leadingTited;
+  color: currentColor;
+}
+
+a {
+  @extend %textDefaultOptions;
+  line-height: $leadingSmall;
+  text-decoration: none;
+  color: currentColor;
+
+  &:hover,
+  &:active {
+    color: $colorPrimaryHover;
+  }
+}

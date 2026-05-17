@@ -1,0 +1,81 @@
+@use '@/ui/assets/styles/vars' as ui;
+
+.b-btn.el-button + .el-button {
+  margin-left: 0;
+}
+
+.b-btn,
+.el-button.b-btn {
+  &_primary {
+    @extend %buttonDefaultOptions;
+    padding: ui.$m5 ui.$m10;
+
+    &.is-disabled {
+      @extend %buttonDisabledOptions;
+    }
+  }
+
+  &_secondary {
+    @extend %buttonDefaultOptions;
+    padding: ui.$m5 ui.$m10;
+    background-color: ui.$colorWhite !important;
+    border: 1px solid ui.$colorLightGrey;
+    color: ui.$colorText !important;
+
+    span,
+    p {
+      stroke: ui.$colorText;
+    }
+
+    &.is-disabled {
+      @extend %buttonDisabledOptions;
+    }
+
+    &:hover,
+    &:active {
+      background-color: ui.$colorGrey !important;
+      border-color: ui.$colorLightGrey;
+      color: ui.$colorWhite !important;
+
+      span,
+      p {
+        stroke: ui.$colorWhite;
+      }
+    }
+  }
+
+  &_medium {
+    padding: ui.$m10;
+    height: ui.$m35;
+  }
+
+  &_large {
+    padding: ui.$m15;
+    height: ui.$m45;
+  }
+
+  &_full {
+    width: ui.$full;
+  }
+
+  &_icon {
+    span,
+    p {
+      @include ui.flex(false, center);
+      gap: ui.$m5;
+
+      svg {
+        width: ui.$m15;
+        height: ui.$m15;
+      }
+    }
+  }
+
+  &_tag {
+    @extend %tagDefaultOptions;
+  }
+
+  &__arrow {
+    transform: rotate(270deg);
+  }
+}

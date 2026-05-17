@@ -1,7 +1,7 @@
-import Translations from '@/translations';
+import Localisation from '@/core/translations/Localisation';
 import { ArgumentException } from '@/core/exceptions';
 
-const t = Translations.global.t;
+const t = Localisation.global.t;
 
 /**
  * @fileOverview
@@ -35,4 +35,11 @@ export const createFileUrl = (file: Blob): string => {
 
 export const checkMaxFileSize = (file: Blob, maxFileSize: number) => {
   return file.size <= maxFileSize;
+};
+
+export const formatSizeMB = (size: number): string => {
+  if (!size) {
+    return '0';
+  }
+  return `${(size / 1024 / 1024).toFixed(2)} Мб`;
 };

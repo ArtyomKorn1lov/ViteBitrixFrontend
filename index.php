@@ -8,7 +8,11 @@ use Bitrix\Main\Web\Json;
 $arFormData = [
         "templateId" => "newsAsync"
 ];
+$arCatalogFormData = [
+        "templateId" => "catalogAsync"
+];
 $arFormJSData = Json::encode($arFormData);
+$arCatalogFormJSData = Json::encode($arCatalogFormData);
 ?>
     <button
             id="news-async-load"
@@ -23,13 +27,32 @@ $arFormJSData = Json::encode($arFormData);
             const button = document.getElementById('news-async-load');
 
             button.addEventListener('click', function () {
-                BX.Globals.AsyncViteLoader.load('src/entrypoint/news/list.ts')
+                BX.Globals.AsyncViteLoader.load('news.list')
                     .then(function () {
                         button.remove();
-                        // TODO подумать как скрипт выполнить без timeout'а
-                        setTimeout(() => {
-                            BX.Components.NewList(<?= $arFormJSData ?>);
-                        }, 100);
+                        BX.Components.NewList(<?= $arFormJSData ?>);
+                    });
+            });
+        });
+    </script>
+
+    <button
+            id="catalog-async-load"
+    >
+        Mount catalog async
+    </button>
+
+    <div id="<?= $arCatalogFormData['templateId'] ?>"></div>
+
+    <script>
+        BX.ready(function () {
+            const button = document.getElementById('catalog-async-load');
+
+            button.addEventListener('click', function () {
+                BX.Globals.AsyncViteLoader.load('catalog.list')
+                    .then(function () {
+                        button.remove();
+                        BX.Components.CatalogList(<?= $arCatalogFormJSData ?>);
                     });
             });
         });

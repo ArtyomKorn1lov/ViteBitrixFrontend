@@ -27,6 +27,7 @@
         ></time>
         <el-button
           @click="clickButton"
+          class="b-btn b-btn_primary b-btn_medium"
           :class="$style['b-newCard__button']"
         >
           Подробнее

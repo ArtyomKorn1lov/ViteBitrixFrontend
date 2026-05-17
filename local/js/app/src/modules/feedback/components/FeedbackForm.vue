@@ -9,31 +9,31 @@
     @submit.prevent="submit(formRef)"
   >
     <el-form-item
-      label="Name"
+      :label="t('feedback.form.fields.name.title')"
       prop="name"
     >
       <el-input
         v-model="formData['name']"
-        placeholder="Enter name"
+        :placeholder="t('feedback.form.fields.name.placeholder')"
       />
     </el-form-item>
     <el-form-item
-      label="Email"
+      :label="t('feedback.form.fields.email.title')"
       prop="email"
     >
       <el-input
         v-model="formData['email']"
-        placeholder="Enter email"
+        :placeholder="t('feedback.form.fields.email.placeholder')"
       />
     </el-form-item>
     <el-form-item
-      label="Description"
+      :label="t('feedback.form.fields.description.title')"
       prop="description"
     >
       <el-input
         v-model="formData['description']"
         type="textarea"
-        placeholder="Enter description"
+        :placeholder="t('feedback.form.fields.description.placeholder')"
       />
     </el-form-item>
     <el-button
@@ -41,19 +41,22 @@
       native-type="submit"
       :loading="isLoading"
     >
-      Submit
+      {{ t('feedback.form.submitTitle') }}
     </el-button>
   </el-form>
 </template>
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 import { ElButton, ElForm, ElFormItem, ElInput, FormInstance, FormRules } from 'element-plus';
-import { CommonResponse, DependencyInjection, EmailRegex, MessageHelper, MessageTypes, ResponseStatus, useFetch } from '@/core';
+import { useI18n } from 'vue-i18n';
+import { CommonResponse, DependencyContainer, EmailRegex, MessageHelper, MessageTypes, ResponseStatus, useFetchOld } from '@/core';
 import { FeedbackModel } from '@/modules/feedback/models';
-import { SendFeedback } from '@/modules/feedback';
+import { SendFeedback } from '@/modules/feedback/use-case';
 
-const fetchFeedback = useFetch<SendFeedback, CommonResponse>({
-  useCase: DependencyInjection.resolve('SendFeedback') as SendFeedback,
+const { t } = useI18n();
+
+const fetchFeedback = useFetchOld<SendFeedback, CommonResponse>({
+  useCase: DependencyContainer.get(SendFeedback),
   messageType: MessageTypes.messageBox,
 });
 
@@ -64,7 +67,7 @@ const emailValidator = (rule: any, value: any, callback: any): any => {
   if (EmailRegex.test(value)) {
     return callback();
   }
-  return callback(new Error('Invalid email'));
+  return callback(new Error(t('feedback.form.validators.invalidEmail')));
 };
 
 const formData = reactive<FeedbackModel>({
@@ -75,12 +78,28 @@ const formData = reactive<FeedbackModel>({
 
 const rules = reactive<FormRules<FeedbackModel>>({
   name: [
-    { required: true, message: 'Field is required', trigger: 'blur' },
-    { required: true, message: 'Field is required', trigger: 'change' },
+    {
+      required: true,
+      message: t('feedback.form.validators.isRequired'),
+      trigger: 'blur',
+    },
+    {
+      required: true,
+      message: t('feedback.form.validators.isRequired'),
+      trigger: 'change',
+    },
   ],
   email: [
-    { required: true, message: 'Field is required', trigger: 'blur' },
-    { required: true, message: 'Field is required', trigger: 'change' },
+    {
+      required: true,
+      message: t('feedback.form.validators.isRequired'),
+      trigger: 'blur',
+    },
+    {
+      required: true,
+      message: t('feedback.form.validators.isRequired'),
+      trigger: 'change',
+    },
     {
       validator: emailValidator,
       trigger: 'blur',
@@ -111,7 +130,7 @@ const sendForm = async (formRef: FormInstance | undefined): Promise<void> => {
     const response = await fetchFeedback(formData);
     isLoading.value = false;
     await MessageHelper.showMessageBox({
-      title: 'success',
+      title: t('feedback.form.successTitle'),
       message: response?.message,
       type: ResponseStatus.success,
       callback: () => {

@@ -1,13 +1,16 @@
+import { inject, injectable } from 'inversify';
 import { BaseUseCase } from '@/core';
+import { CatalogRepositoryInterface } from '@/modules/catalog/interfaces';
+import { CatalogRepositoryServiceId } from '@/modules/catalog/service-ids';
 import { CatalogItem } from '@/modules/catalog/models';
-import { CatalogRepositoryInterface } from '@/modules/catalog/repositories';
 
+@injectable()
 export default class GetRelated extends BaseUseCase {
-  private repository: CatalogRepositoryInterface;
-
-  public constructor(repository: CatalogRepositoryInterface) {
+  public constructor(
+    @inject(CatalogRepositoryServiceId)
+    private readonly repository: CatalogRepositoryInterface,
+  ) {
     super();
-    this.repository = repository;
   }
 
   public async execute(): Promise<CatalogItem[]> {

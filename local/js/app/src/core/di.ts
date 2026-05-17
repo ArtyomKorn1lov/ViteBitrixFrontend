@@ -1,6 +1,11 @@
-import { DependencyInjection } from '@/core/dependency-injection';
-import { ApiClient } from '@/core/api-client';
+import { DependencyContainer } from '@/core/dependency-injection';
+import { ApiClientServiceId, ValidationProviderServiceId, FileRepositoryServiceId } from '@/core/service-ids';
+import { BxApiClient } from '@/core/api-client';
 import { ValidationProvider } from '@/core/services';
+import { FileBxRepository } from '@/core/repositories';
 
-DependencyInjection.register('ApiClient', ApiClient, [], ['/']);
-DependencyInjection.register('ValidationProvider', ValidationProvider);
+DependencyContainer.bind(ApiClientServiceId)
+  .toDynamicValue(() => new BxApiClient('/'))
+  .inSingletonScope();
+DependencyContainer.bind(ValidationProviderServiceId).to(ValidationProvider);
+DependencyContainer.bind(FileRepositoryServiceId).to(FileBxRepository);

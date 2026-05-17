@@ -1,9 +1,9 @@
 import { ElMessage, ElMessageBox, ElNotification } from 'element-plus';
-import Translations from '@/translations';
-import { MessageBoxProps, NotificationProps, ConfirmMessageBoxProps } from '@/core/utils/types.ts';
+import Localisation from '@/core/translations/Localisation';
+import { MessageBoxProps, NotificationProps, ConfirmMessageBoxProps } from '@/core/utils/types';
 import { ResponseStatus } from '@/core/enums';
 
-const t = Translations.global.t;
+const t = Localisation.global.t;
 
 /**
  * @fileOverview

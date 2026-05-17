@@ -1,9 +1,9 @@
 <?php
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetTitle("Catalog");
+$APPLICATION->SetTitle("Каталог");
 
 use Bitrix\Main\Web\Json;
-use Site\ViteFrontendHelper;
+use Main\Site\Core\Providers\ViteFrontendBridge;
 
 ?>
 
@@ -40,18 +40,15 @@ $arCatalogJSData = Json::encode($arCatalogData);
             const button = document.getElementById('form-async-load');
 
             button.addEventListener('click', function () {
-                BX.Globals.AsyncViteLoader.load('src/entrypoint/feedback/form.ts')
+                BX.Globals.AsyncViteLoader.load('feedback.form')
                     .then(function () {
                         button.remove();
-                        // TODO подумать как скрипт выполнить без timeout'а
-                        setTimeout(() => {
-                            BX.Components.FeedbackForm(<?= $arFormJSData ?>);
-                        }, 100);
+                        BX.Components.FeedbackForm(<?= $arFormJSData ?>);
                     });
             });
         });
     </script>
 
 <?php
-ViteFrontendHelper::registerEntry('src/entrypoint/catalog/list.ts');
+ViteFrontendBridge::registerEntry('catalog.list');
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

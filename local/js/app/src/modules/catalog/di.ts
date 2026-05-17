@@ -1,6 +1,5 @@
-import { DependencyInjection } from '@/core';
+import { DependencyContainer } from '@/core';
+import { CatalogRepositoryServiceId } from '@/modules/catalog/service-ids';
 import { CatalogRepository } from '@/modules/catalog/repositories';
-import { GetRelated } from '@/modules/catalog/use-case';
 
-DependencyInjection.register('CatalogRepositoryInterface', CatalogRepository, ['ApiClient']);
-DependencyInjection.register('GetRelated', GetRelated, ['CatalogRepositoryInterface']);
+DependencyContainer.bind(CatalogRepositoryServiceId).to(CatalogRepository);

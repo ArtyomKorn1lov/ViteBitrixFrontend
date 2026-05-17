@@ -1,15 +1,18 @@
-import { BaseUseCase, ValidationProvider } from '@/core';
-import { NewsRepositoryInterface } from '@/modules/news/repositories';
-import { News } from '@/modules/news';
+import { inject, injectable } from 'inversify';
+import { BaseUseCase, ValidationProviderInterface, ValidationProviderServiceId } from '@/core';
+import { NewsRepositoryInterface } from '@/modules/news/interfaces';
+import { NewsRepositoryServiceId } from '@/modules/news/service-ids';
+import { News } from '@/modules/news/models';
 
+@injectable()
 export default class GetNews extends BaseUseCase {
-  private repository: NewsRepositoryInterface;
-  private validationService: ValidationProvider;
-
-  public constructor(repository: NewsRepositoryInterface, validationService: ValidationProvider) {
+  public constructor(
+    @inject(NewsRepositoryServiceId)
+    private readonly repository: NewsRepositoryInterface,
+    @inject(ValidationProviderServiceId)
+    private readonly validationService: ValidationProviderInterface,
+  ) {
     super();
-    this.repository = repository;
-    this.validationService = validationService;
   }
 
   public async execute(page: number): Promise<News[]> {

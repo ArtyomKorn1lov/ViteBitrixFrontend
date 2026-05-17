@@ -1,9 +1,9 @@
 <?php
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetTitle("Feedback");
+$APPLICATION->SetTitle("Обратная связь");
 
 use Bitrix\Main\Web\Json;
-use Site\ViteFrontendHelper;
+use Main\Site\Core\Providers\ViteFrontendBridge;
 
 ?>
 
@@ -21,5 +21,5 @@ $arJSData = Json::encode($arData);
 </script>
 
 <?php
-ViteFrontendHelper::registerEntry('src/entrypoint/feedback/form.ts');
+ViteFrontendBridge::registerEntry('feedback.form');
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

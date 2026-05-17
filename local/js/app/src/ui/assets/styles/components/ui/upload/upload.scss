@@ -1,0 +1,6 @@
+@use '@/ui/assets/styles/vars' as ui;
+
+.b-upload,
+.el-upload.b-upload {
+  width: ui.$full;
+}

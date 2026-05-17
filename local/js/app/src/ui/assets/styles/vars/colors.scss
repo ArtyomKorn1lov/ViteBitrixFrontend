@@ -1,0 +1,26 @@
+// Цвета
+$colorWhite: #ffffff;
+$colorPrimary: #e40000;
+$colorPrimaryHover: #efede4;
+$colorPrimaryActive: #fc8d3d;
+$colorSecondary: #f7f5ec;
+$colorSecondaryHover: #efede4;
+$colorSecondaryActive: #efede4;
+$colorText: #000000;
+$colorGrey: #a5a5a5;
+$colorLightGrey: #e3e3e3;
+$colorBgBlock: rgba(111, 111, 111, 0.7);
+$colorCardBlock: rgba(255, 133, 51, 0.5);
+$colorShadow: rgba(34, 60, 80, 0.2);
+
+// Цвета для тегов
+$colorTags: (
+  default: #e40000,
+  default-text: #ffffff,
+  catalog: rgb(69, 22, 121),
+  catalog-text: #ffffff,
+  news: rgba(43, 67, 145, 1),
+  news-text: #ffffff,
+  offers: rgba(43, 145, 53, 1),
+  offers-text: #ffffff,
+);

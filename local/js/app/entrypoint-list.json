@@ -1,0 +1,9 @@
+[
+  "src/modules/catalog/entrypoint/list.ts",
+  "src/modules/feedback/entrypoint/form.ts",
+  "src/modules/news/entrypoint/list.ts",
+  "src/modules/news/entrypoint/detail.ts",
+  "src/modules/forum/entrypoint/main.ts",
+  "src/modules/forum/entrypoint/detail.ts",
+  "src/modules/forum/entrypoint/form.ts"
+]

@@ -1,13 +1,23 @@
+import { LocalisationHelper } from '@/core/utils';
+import * as Messages from '@/core/translations';
+
+LocalisationHelper.addMessages('core', Messages);
+
 export type * from '@/core/types';
+export * from '@/core/interfaces';
 export * from '@/core/dependency-injection';
+export * from '@/core/service-ids';
 export * from '@/core/enums';
 export * from '@/core/exceptions';
 export * from '@/core/models';
 export * from '@/core/api-client';
+export * from '@/core/repositories';
 export * from '@/core/use-case';
 export * from '@/core/services';
+export * from '@/core/mappers';
 export * from '@/core/utils';
 export * from '@/core/constants';
 export * from '@/core/composable';
+export * from '@/core/translations';
 
 import '@/core/di';

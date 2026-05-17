@@ -1,4 +1,4 @@
-<?
+<?php
 $aMenuLinks = Array(
 	Array(
 		"Компания", 
@@ -22,28 +22,28 @@ $aMenuLinks = Array(
 		"" 
 	),
 	Array(
-		"Услуги", 
-		"services/", 
-		Array(), 
-		Array(), 
-		"" 
-	),
-	Array(
 		"Контакты", 
 		"contacts/", 
 		Array(), 
 		Array(), 
 		"" 
 	),
+    Array(
+        "Форум",
+        "forum/",
+        Array(),
+        Array(),
+        ""
+    ),
 	Array(
-		"News",
+		"Новости",
 		"test-news/",
 		Array(), 
 		Array(), 
 		"" 
 	),
     Array(
-        "Catalog",
+        "Каталог",
         "test-catalog/",
         Array(),
         Array(),
