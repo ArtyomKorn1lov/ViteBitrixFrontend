@@ -33,6 +33,6 @@ return function (RoutingConfigurator $routes) {
 
         $routes->post('topic/create', [TopicController::class, 'createAction']);
 
-        $routes->put('topic/update', [TopicController::class, 'updateAction']);
+        $routes->post('topic/update', [TopicController::class, 'updateAction']);
     });
 };

@@ -39,6 +39,7 @@
   "file": {
     "error": {
       "fileErrorUploadMessage": "Ошибка загрузки файла",
+      "fileLimitUploadMessage": "Максимально возможное кол-во файлов для загрузки {limit}",
       "invalidFormatMessage": "Некорректный формат файла"
     },
     "success": {

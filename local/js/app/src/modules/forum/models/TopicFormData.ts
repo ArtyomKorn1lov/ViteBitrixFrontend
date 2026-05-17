@@ -1,4 +1,4 @@
-import FileUpload from '@/core/models/FileUpload.ts';
+import { FileUpload } from '@/core';
 
 interface TopicFormData {
   name: string;

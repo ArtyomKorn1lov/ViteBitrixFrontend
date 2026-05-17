@@ -14,6 +14,7 @@ final class TopicDetail
      * @param Author $author
      * @param int $views
      * @param string $detailUrl
+     * @param ShortGroup|null $group
      * @param Tag[]|null $tags
      * @param string|null $previewText
      * @param string|null $detailText
@@ -26,6 +27,7 @@ final class TopicDetail
         public Author $author,
         public int $views,
         public string $detailUrl,
+        public ?ShortGroup $group = null,
         public ?array $tags = null,
         public ?string $previewText = null,
         public ?string $detailText = null,

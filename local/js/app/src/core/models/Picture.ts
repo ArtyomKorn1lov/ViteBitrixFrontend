@@ -1,4 +1,5 @@
 interface Picture {
+  id: number;
   src: string;
 }
 

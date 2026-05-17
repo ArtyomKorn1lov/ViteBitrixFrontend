@@ -1,6 +1,7 @@
 <template>
   <el-form
     v-if="!isLoading && !error"
+    v-loading="isLoadingForUpdate"
     class="b-form"
     ref="formRef"
     label-width="auto"
@@ -88,18 +89,55 @@
         class="b-upload"
         multiple
         drag
+        :file-list="formData.pictures"
         :before-upload="beforeFileUpload"
         :on-success="(response: any) => handleFileUpload(formData, 'pictures', response)"
-        :on-remove="(response: any) => removeFile(formData, 'pictures', response?.response)"
         :http-request="sendUploadRequest"
         :disabled="isLoadingUpload"
+        :show-file-list="false"
+        :accept="acceptFiles"
         :limit="5"
-        list-type="picture"
       >
         <el-icon>
           <Plus />
         </el-icon>
       </el-upload>
+      <ul
+        v-if="formData.pictures && formData.pictures.length > 0"
+        class="el-upload-list el-upload-list--picture b-upload-list"
+      >
+        <li
+          v-for="picture in formData.pictures"
+          :key="picture.id"
+          class="el-upload-list__item"
+        >
+          <img
+            v-if="!!picture.url"
+            class="el-upload-list__item-thumbnail"
+            :src="picture.url"
+            alt=""
+          />
+          <el-icon v-else>
+            <Document />
+          </el-icon>
+          <div class="el-upload-list__item-info">
+            <a class="el-upload-list__item-name">
+              <span
+                class="el-upload-list__item-file-name"
+                :title="picture.name"
+              >
+                {{ picture.name }}
+              </span>
+            </a>
+          </div>
+          <el-icon
+            class="el-icon--close"
+            @click.prevent.stop="removeFile(formData, 'pictures', picture.id)"
+          >
+            <Close />
+          </el-icon>
+        </li>
+      </ul>
     </el-form-item>
     <el-button
       class="b-btn b-btn_medium b-btn_primary"
@@ -114,7 +152,7 @@
 <script setup lang="ts">
 import { computed, PropType, reactive, ref } from 'vue';
 import { ElButton, ElForm, ElFormItem, ElIcon, ElInput, ElOption, ElSelect, ElUpload, FormInstance, FormRules } from 'element-plus';
-import { Plus } from '@element-plus/icons-vue';
+import { Plus, Document, Close } from '@element-plus/icons-vue';
 import { useI18n } from 'vue-i18n';
 import {
   CommonResponse,
@@ -128,13 +166,14 @@ import {
   useFileUpload,
 } from '@/core';
 import { FormTypes } from '@/modules/forum/enums';
-import { TopicCreate, TopicCreateData, TopicFormData, TopicUpdate } from '@/modules/forum/models';
-import { CreateTopic, GetTopicCreateData, UpdateTopic } from '@/modules/forum/use-cases';
+import { TopicCreate, TopicCreateData, TopicFormData, TopicForUpdate, TopicUpdate } from '@/modules/forum/models';
+import { CreateTopic, GetForUpdate, GetTopicCreateData, UpdateTopic } from '@/modules/forum/use-cases';
 import { TopicMapper } from '@/modules/forum/mappers';
 
 const getTopicCreateData: GetTopicCreateData = DependencyContainer.get(GetTopicCreateData);
 const topicCreate: CreateTopic = DependencyContainer.get(CreateTopic);
 const topicUpdate: UpdateTopic = DependencyContainer.get(UpdateTopic);
+const getForUpdate: GetForUpdate = DependencyContainer.get(GetForUpdate);
 
 const { type, topicId } = defineProps({
   type: {
@@ -156,6 +195,9 @@ const {
 } = useFetching<TopicCreateData>({
   callback: async () => await getTopicCreateData.execute(),
 });
+const { fetch: fetchForUpdate, isLoading: isLoadingForUpdate } = useFetch<TopicForUpdate>({
+  callback: async (id: number) => await getForUpdate.execute(id),
+});
 const { fetch: fetchCreate, isLoading: isLoadingCreate } = useFetch<CommonResponse>({
   callback: async (object: TopicCreate) => await topicCreate.execute(object),
   messageType: MessageTypes.messageBox,
@@ -165,7 +207,7 @@ const { fetch: fetchUpdate, isLoading: isLoadingUpdate } = useFetch<CommonRespon
   messageType: MessageTypes.messageBox,
 });
 
-const { isLoading: isLoadingUpload, beforeFileUpload, sendRequest: sendUploadRequest, handleFileUpload, removeFile } = useFileUpload();
+const { isLoading: isLoadingUpload, acceptFiles, beforeFileUpload, sendRequest: sendUploadRequest, handleFileUpload, removeFile } = useFileUpload();
 
 const rules = reactive<FormRules<TopicFormData>>({
   name: [
@@ -211,7 +253,6 @@ const submit = async (formRef: FormInstance | undefined): Promise<void> => {
   if (!formRef) {
     return;
   }
-
   await formRef.validate(async (valid: boolean) => {
     if (!valid) {
       return;
@@ -225,10 +266,10 @@ const sendRequest = async (formRef: FormInstance | undefined): Promise<void> => 
     let object: TopicCreate | TopicUpdate;
     let response: CommonResponse;
     if (isEdit.value) {
-      object = TopicMapper.fromFormDataToCreate(formData);
+      object = TopicMapper.fromFormDataToUpdate(formData, topicId);
       response = await fetchUpdate(object);
     } else {
-      object = TopicMapper.fromFormDataToUpdate(formData, topicId);
+      object = TopicMapper.fromFormDataToCreate(formData);
       response = await fetchCreate(object);
     }
     await MessageHelper.showMessageBox({
@@ -237,7 +278,11 @@ const sendRequest = async (formRef: FormInstance | undefined): Promise<void> => 
       type: ResponseStatus.success,
       callback: () => {
         formRef?.resetFields();
-        UrlHelper.reloadPage();
+        if (isEdit.value) {
+          UrlHelper.navigateTo('/forum/');
+        } else {
+          UrlHelper.reloadPage();
+        }
       },
     });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -245,4 +290,19 @@ const sendRequest = async (formRef: FormInstance | undefined): Promise<void> => 
     /* empty */
   }
 };
+
+const onInit = async () => {
+  try {
+    if (!isEdit.value) {
+      return;
+    }
+    const response: TopicForUpdate = await fetchForUpdate(topicId);
+    Object.assign(formData, TopicMapper.fromForUpdateToFormData(response));
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_) {
+    /* empty */
+  }
+};
+
+onInit();
 </script>

@@ -30,11 +30,19 @@ if (empty($elementId)) {
 }
 
 use Bitrix\Main\Web\Json;
+use Bitrix\Main\DI\ServiceLocator;
 use Main\Site\Core\Providers\ViteFrontendBridge;
+use Main\Site\Forum\Interfaces\TopicRepositoryInterface;
+
+global $USER;
+
+/** @var TopicRepositoryInterface $topicRepository */
+$topicRepository = ServiceLocator::getInstance()->get(TopicRepositoryInterface::class);
 
 $arData = [
     'templateId' => 'forumDetail' . $this->randString(),
     'id' => $elementId,
+    'canEdit' => $USER->IsAuthorized() && !empty($topicRepository->findByUserId($USER->GetID(), $elementId)),
 ];
 $arJsData = Json::encode($arData);
 ?>

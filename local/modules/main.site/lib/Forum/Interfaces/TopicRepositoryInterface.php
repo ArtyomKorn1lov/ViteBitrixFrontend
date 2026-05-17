@@ -19,6 +19,13 @@ interface TopicRepositoryInterface
     public function getGroups(int $page = 1): array;
 
     /**
+     * @param int $groupId
+     * @return ShortGroup|null
+     * @throws \Throwable
+     */
+    public function getGroupById(int $groupId): ?ShortGroup;
+
+    /**
      * @return ShortGroup[]
      * @throws \Throwable
      */
@@ -50,4 +57,12 @@ interface TopicRepositoryInterface
      * @throws \Throwable
      */
     public function update(TopicUpdate $topicUpdate): void;
+
+    /**
+     * @param int $userId
+     * @param int $topicId
+     * @return Topic|null
+     * @throws \Throwable
+     */
+    public function findByUserId(int $userId, int $topicId): ?Topic;
 }

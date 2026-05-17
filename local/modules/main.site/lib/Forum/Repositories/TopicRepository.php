@@ -12,7 +12,6 @@ use CUtil;
 
 use Bitrix\Main\DI\ServiceLocator;
 use Bitrix\Main\ObjectNotFoundException;
-use Bitrix\UI\FileUploader\FileInfo;
 use Psr\Container\NotFoundExceptionInterface;
 use Bitrix\Main\Loader;
 
@@ -129,6 +128,34 @@ class TopicRepository implements TopicRepositoryInterface
 
     /**
      * @param int $groupId
+     * @return ShortGroup|null
+     * @throws LoaderException
+     */
+    public function getGroupById(int $groupId): ?ShortGroup
+    {
+        $this->includeModule();
+
+        $rsObject = CIBlockSection::getList(
+            arFilter: [
+                'ACTIVE' => 'Y',
+                'IBLOCK_ID' => Helper::getIBlock('topics'),
+                'IBLOCK_SECTION_ID' => $groupId,
+            ],
+            arSelect: ['ID', 'CODE', 'NAME'],
+        );
+        $arGroup = $rsObject->fetch();
+        if (empty($arGroup)) {
+            return null;
+        }
+        return new ShortGroup(
+            id: (int)$arGroup['ID'],
+            title: $arGroup['NAME'],
+            code: $arGroup['CODE'],
+        );
+    }
+
+    /**
+     * @param int $groupId
      * @param int $page
      * @return Topic[]
      * @throws \Throwable
@@ -203,7 +230,7 @@ class TopicRepository implements TopicRepositoryInterface
                 'IBLOCK_ID' => Helper::getIBlock('topics'),
                 'ID' => $topicId,
             ],
-            arSelectFields: ['ID', 'NAME', 'DATE_ACTIVE_FROM', 'SHOW_COUNTER', 'DETAIL_PAGE_URL', 'PREVIEW_TEXT', 'DETAIL_TEXT'],
+            arSelectFields: ['ID', 'NAME', 'IBLOCK_SECTION_ID', 'DATE_ACTIVE_FROM', 'SHOW_COUNTER', 'DETAIL_PAGE_URL', 'PREVIEW_TEXT', 'DETAIL_TEXT'],
         );
 
         $obElement = $rsObject->GetNextElement();
@@ -218,6 +245,10 @@ class TopicRepository implements TopicRepositoryInterface
             $tagsUids = [];
         }
         $tags = $this->tagsRepository->getByUids(array_unique($tagsUids));
+        $shortGroup = null;
+        if (!empty($fields['IBLOCK_SECTION_ID'])) {
+            $shortGroup = $this->getGroupById((int)$fields['IBLOCK_SECTION_ID']);
+        }
 
         return new TopicDetail(
             id: (int)$fields['ID'],
@@ -226,6 +257,7 @@ class TopicRepository implements TopicRepositoryInterface
             author: $author,
             views: (int)$fields['SHOW_COUNTER'],
             detailUrl: $fields['DETAIL_PAGE_URL'],
+            group: $shortGroup,
             tags: $tags,
             previewText: $fields['PREVIEW_TEXT'] ?? '',
             detailText: $fields['DETAIL_TEXT'] ?? '',
@@ -297,6 +329,54 @@ class TopicRepository implements TopicRepositoryInterface
     }
 
     /**
+     * @param int $userId
+     * @param int $topicId
+     * @return Topic|null
+     * @throws LoaderException
+     * @throws Exception
+     */
+    public function findByUserId(int $userId, int $topicId): ?Topic
+    {
+        $this->includeModule();
+        $rsObject = CIBlockElement::GetList(
+            arOrder: [
+                'SORT' => 'ASC',
+                'DATE_ACTIVE_FROM' => 'ASC',
+            ],
+            arFilter: [
+                'ACTIVE' => 'Y',
+                'IBLOCK_ID' => Helper::getIBlock('topics'),
+                'PROPERTY_AUTHOR' => $userId,
+                'ID' => $topicId,
+            ],
+            arSelectFields: ['ID', 'NAME', 'DATE_ACTIVE_FROM', 'SHOW_COUNTER', 'DETAIL_PAGE_URL', 'PREVIEW_TEXT'],
+        );
+        $obElement = $rsObject->GetNextElement();
+        if (empty($obElement)) {
+            return null;
+        }
+        $fields = $obElement->getFields();
+        $author = $this->authorRepository->getById((int)$obElement->getProperty('AUTHOR')['VALUE']);
+        $pictures = $this->getPictures($obElement->getProperty('PICTURES')['VALUE']);
+        $tagsUids = $obElement->getProperty('TAGS')['VALUE'];
+        if ($tagsUids === false) {
+            $tagsUids = [];
+        }
+        $tags = $this->tagsRepository->getByUids(array_unique($tagsUids));
+        return new Topic(
+            id: (int)$fields['ID'],
+            name: $fields['NAME'],
+            date: $fields['ACTIVE_FROM_X'],
+            author: $author,
+            views: (int)$fields['SHOW_COUNTER'],
+            detailUrl: $fields['DETAIL_PAGE_URL'],
+            tags: $tags,
+            description: $fields['PREVIEW_TEXT'] ?? '',
+            pictures: $pictures,
+        );
+    }
+
+    /**
      * @return void
      * @throws LoaderException
      * @throws Exception
@@ -321,6 +401,7 @@ class TopicRepository implements TopicRepositoryInterface
         $pictures = [];
         foreach ($pictureIds as $pictureId) {
             $pictures[] = new Picture(
+                id: (int)$pictureId,
                 src: CFile::getPath((int)$pictureId),
             );
         }

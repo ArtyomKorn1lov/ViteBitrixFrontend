@@ -54,7 +54,7 @@ class TopicIBlock20260423174322 extends Version
             'ACTIVE' => 'Y',
             'SORT' => '500',
             'LIST_PAGE_URL' => '#SITE_DIR#/forum/',
-            'DETAIL_PAGE_URL' => '#SITE_DIR#/forum/#ELEMENT_CODE#',
+            'DETAIL_PAGE_URL' => '#SITE_DIR#/forum/#SECTION_CODE#/#ELEMENT_CODE#',
             'SECTION_PAGE_URL' => '#SITE_DIR#/forum/#SECTION_CODE#',
             'CANONICAL_PAGE_URL' => '',
             'PICTURE' => NULL,
@@ -236,7 +236,7 @@ class TopicIBlock20260423174322 extends Version
             'CODE' =>
                 array(
                     'NAME' => 'Символьный код',
-                    'IS_REQUIRED' => 'Y',
+                    'IS_REQUIRED' => 'N',
                     'DEFAULT_VALUE' =>
                         array(
                             'UNIQUE' => 'Y',
@@ -343,7 +343,7 @@ class TopicIBlock20260423174322 extends Version
             'SECTION_CODE' =>
                 array(
                     'NAME' => 'Символьный код',
-                    'IS_REQUIRED' => 'Y',
+                    'IS_REQUIRED' => 'N',
                     'DEFAULT_VALUE' =>
                         array(
                             'UNIQUE' => 'Y',
@@ -558,59 +558,9 @@ class TopicIBlock20260423174322 extends Version
                     'CODE' => 'Символьный код',
                     'XML_ID' => 'Внешний код',
                     'SORT' => 'Сортировка',
+                    'DESCRIPTION' => 'Описание',
                 ),
         ));
-        $helper->UserOptions()->saveElementGrid($iblockId, array(
-            'views' =>
-                array(
-                    'default' =>
-                        array(
-                            'columns' =>
-                                array(
-                                    0 => '',
-                                ),
-                            'columns_sizes' =>
-                                array(
-                                    'expand' => 1,
-                                    'columns' =>
-                                        array(),
-                                ),
-                            'sticked_columns' =>
-                                array(),
-                            'custom_names' =>
-                                array(),
-                        ),
-                ),
-            'filters' =>
-                array(),
-            'current_view' => 'default',
-        ));
-        $helper->UserOptions()->saveSectionGrid($iblockId, array(
-            'views' =>
-                array(
-                    'default' =>
-                        array(
-                            'columns' =>
-                                array(
-                                    0 => '',
-                                ),
-                            'columns_sizes' =>
-                                array(
-                                    'expand' => 1,
-                                    'columns' =>
-                                        array(),
-                                ),
-                            'sticked_columns' =>
-                                array(),
-                            'custom_names' =>
-                                array(),
-                        ),
-                ),
-            'filters' =>
-                array(),
-            'current_view' => 'default',
-        ));
-
     }
 
     public function down()

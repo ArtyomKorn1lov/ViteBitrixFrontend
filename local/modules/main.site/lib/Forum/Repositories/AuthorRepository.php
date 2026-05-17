@@ -38,6 +38,7 @@ class AuthorRepository implements AuthorRepositoryInterface
         $picture = null;
         if (!empty($arUser['UF_PICTURE'])) {
             $picture = new Picture(
+                id: (int)$arUser['UF_PICTURE'],
                 src: CFile::GetPath($arUser['UF_PICTURE']) ?? '',
             );
         }

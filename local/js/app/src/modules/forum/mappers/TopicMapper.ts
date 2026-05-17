@@ -1,5 +1,6 @@
 import Localisation from '@/core/translations/Localisation';
-import { Group, ShortGroup, Topic, TopicDetail, TopicFormData, TopicCreate, TopicUpdate } from '@/modules/forum/models';
+import { Tag, Picture, FileUpload } from '@/core';
+import { Group, ShortGroup, Topic, TopicDetail, TopicFormData, TopicCreate, TopicForUpdate, TopicUpdate } from '@/modules/forum/models';
 
 const t = Localisation.global.t;
 
@@ -44,12 +45,46 @@ export const fromResponseToDetail = (response: TopicDetail | null | undefined): 
   };
 };
 
+export const fromDetailToForUpdate = (response: TopicDetail): TopicForUpdate => {
+  return {
+    id: response.id,
+    name: response.name,
+    sectionId: response.group?.id ?? 0,
+    tagUIds: response.tags?.map((item: Tag): string => item.uId),
+    previewText: response.previewText,
+    detailText: response.detailText,
+    pictures: response.pictures,
+  };
+};
+
+export const fromForUpdateToFormData = (object: TopicForUpdate): TopicFormData => {
+  return {
+    name: object.name,
+    sectionId: object.sectionId,
+    tagUIds: object.tagUIds,
+    pictures: object.pictures?.map((item: Picture): FileUpload => {
+      const path: string = item.src;
+      const fileName: string = path.substring(path.lastIndexOf('/') + 1);
+      const fileExt: string = fileName.substring(fileName.lastIndexOf('.') + 1);
+      return {
+        id: item.id,
+        name: fileName,
+        fileSize: '0',
+        type: fileExt,
+        url: path,
+      };
+    }),
+    previewText: object.previewText,
+    detailText: object.detailText,
+  };
+};
+
 export const fromFormDataToCreate = (formData: TopicFormData): TopicCreate => {
   return {
     name: formData.name,
     sectionId: formData.sectionId as number,
     tagUIds: formData.tagUIds ?? [],
-    pictureIds: formData.pictures && formData.pictures.length > 0 ? formData.pictures.map((picture) => picture.id) : [],
+    pictureIds: formData.pictures && formData.pictures.length > 0 ? formData.pictures.map((picture: FileUpload) => picture.id) : [],
     previewText: formData.previewText ?? '',
     detailText: formData.detailText ?? '',
   };
@@ -61,7 +96,7 @@ export const fromFormDataToUpdate = (formData: TopicFormData, id: number): Topic
     name: formData.name,
     sectionId: formData.sectionId as number,
     tagUIds: formData.tagUIds ?? [],
-    pictureIds: formData.pictures && formData.pictures.length > 0 ? formData.pictures.map((picture) => picture.id) : [],
+    pictureIds: formData.pictures && formData.pictures.length > 0 ? formData.pictures.map((picture: FileUpload) => picture.id) : [],
     previewText: formData.previewText ?? '',
     detailText: formData.detailText ?? '',
   };

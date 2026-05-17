@@ -1,9 +1,9 @@
 interface FileUpload {
   id: number;
-  file: File;
   name: string;
   fileSize: string;
   type: string;
+  file?: File;
   url?: string;
 }
 

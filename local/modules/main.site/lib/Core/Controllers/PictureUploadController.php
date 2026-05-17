@@ -15,8 +15,6 @@ use Bitrix\Main\Request;
 use Psr\Container\NotFoundExceptionInterface;
 use Exception;
 
-use Bitrix\Main\Type\RandomSequence;
-
 use Main\Site\Core\Interfaces\TempFileServiceInterface;
 use Main\Site\Core\Models\FileInfo;
 

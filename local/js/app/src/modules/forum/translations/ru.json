@@ -9,7 +9,8 @@
     "detailText": "Перейти",
     "nextPageTitle": "Показать ещё",
     "notFoundErrorMessage": "Элемент не найден",
-    "backTitle": "Назад"
+    "backTitle": "Назад",
+    "editTitle": "Редактировать"
   },
   "form": {
     "title": {

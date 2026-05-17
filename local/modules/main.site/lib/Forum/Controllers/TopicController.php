@@ -82,7 +82,7 @@ class TopicController extends BxController
             ],
             'update' => [
                 '+prefilters' => [
-                    new HttpMethod([HttpMethod::METHOD_PUT])
+                    new HttpMethod([HttpMethod::METHOD_POST])
                 ],
             ]
         ];

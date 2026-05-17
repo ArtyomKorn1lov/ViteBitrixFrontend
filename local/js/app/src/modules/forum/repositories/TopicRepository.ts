@@ -50,7 +50,7 @@ export default class TopicRepository implements TopicRepositoryInterface {
   }
 
   public async update(object: TopicUpdate): Promise<CommonResponse> {
-    const response: CommonResponse | null | undefined = await this.apiClient.put<TopicUpdate, CommonResponse>('api/topic/update', {
+    const response: CommonResponse | null | undefined = await this.apiClient.post<TopicUpdate, CommonResponse>('api/topic/update', {
       data: object,
     });
     return response as CommonResponse;
